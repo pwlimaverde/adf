@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:home_module/home_module.dart';
+import 'package:jornada_dart/jornada_dart.dart';
 
 void main() {
   test('adds one to input values', () {

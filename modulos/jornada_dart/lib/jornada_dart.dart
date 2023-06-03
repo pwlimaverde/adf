@@ -1,4 +1,4 @@
-library dependencies_module;
+library jornada_dart;
 
 /// A Calculator.
 class Calculator {
