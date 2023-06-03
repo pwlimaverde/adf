@@ -16,7 +16,7 @@ void main() {
       .map(
         (item) => (
           nome: item.split("|")[0],
-          idade: int.parse(item.split("|")[1]),
+          idade: int.tryParse(item.split("|")[1]) ?? 0,
           profissao: item.split("|")[2],
           estado: item.split("|")[3],
         ),
@@ -106,32 +106,20 @@ void main() {
   print("\n");
   //! 1 - Apresente os pacientes com mais de 20 anos e print o nome deles
   print("1 - Apresentação dos pacientes com mais de 20 anos:");
-  pacientesComMaisDe20Anos.forEach((item) {
-    print(item);
-  });
+  pacientesComMaisDe20Anos.forEach(print);
   print("\n");
   //! 2 - Apresente quantos pacientes existem para cada profissão (desenvolvedor, estudante, dentista, jornalista)
   print("2 - Apresentação dos pacientes por profissão.");
   print("${quantidadeDesenvolvedor.length} são Desenvolvedores:");
-  quantidadeDesenvolvedor.forEach((item) {
-    print(item);
-  });
+  quantidadeDesenvolvedor.forEach(print);
   print("${quantidadeEstudante.length} são Estudantes:");
-  quantidadeEstudante.forEach((item) {
-    print(item);
-  });
+  quantidadeEstudante.forEach(print);
   print("${quantidadeDentista.length} são Dentistas:");
-  quantidadeDentista.forEach((item) {
-    print(item);
-  });
+  quantidadeDentista.forEach(print);
   print("${quantidadeJornalista.length} são Jornalistas:");
-  quantidadeJornalista.forEach((item) {
-    print(item);
-  });
+  quantidadeJornalista.forEach(print);
   //! 3 - Apresente a quantidade de pacientes que moram em SP
   print("3 - Apresentação dos pacientes que moram em SP.");
   print("${pacientesEmSP.length} que moram em SP:");
-  pacientesEmSP.forEach((item) {
-    print(item);
-  });
+  pacientesEmSP.forEach(print);
 }
