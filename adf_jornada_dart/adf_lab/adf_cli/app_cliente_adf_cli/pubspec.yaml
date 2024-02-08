@@ -1,0 +1,12 @@
+name: app_cliente_adf_cli
+description: A sample command-line application.
+version: 1.0.0
+environment:
+  sdk: ^3.1.0
+dependencies:
+  args: ^2.4.2
+  http: ^1.1.0
+  return_success_or_error: ^0.12.0
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0

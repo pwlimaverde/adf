@@ -1,0 +1,14 @@
+{ 
+	"folders": [ 
+		{ 
+			"path": "." 
+		}, 
+		{ 
+			"path": "modulos\\jornada_dart" 
+		}, 
+		{ 
+			"path": "app_cliente_adf" 
+		}, 
+	], 
+	"settings": {} 
+} 
