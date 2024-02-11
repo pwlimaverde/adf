@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_module.dart';
+import 'modules/core/splash/splash_page.dart';
 
 final class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FlutterGetIt(
-      modules: AppModule().routes,
-      builder: (context, routes, flutterGetItNavObserver) {
-        return MaterialApp(
-          navigatorObservers: [flutterGetItNavObserver],
-          routes: routes,
-          title: 'Example App Flutter Get',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-        );
-      },
+    return MultiProvider(
+      providers: AppModule().routes,
+      child: MaterialApp(
+        title: 'Todo List Provider',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const SplashPage(),
+      ),
     );
   }
 }

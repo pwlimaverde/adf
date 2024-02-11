@@ -1,13 +1,11 @@
-import 'modules/checkconnect/check_connect_module.dart';
-import 'modules/fibonacci/fibonacci_module.dart';
-import 'modules/home/home_module.dart';
-import 'utils/module.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
+
+import 'modules/core/utils/module.dart';
 
 final class AppModule implements Module {
   @override
-  List<FlutterGetItModule> routes = [
-    HomeModule(),
-    CheckConnectModule(),
-    FibonacciModule(),
+  List<SingleChildWidget> routes = [
+    Provider(create: (_)=> Object())
   ];
 }

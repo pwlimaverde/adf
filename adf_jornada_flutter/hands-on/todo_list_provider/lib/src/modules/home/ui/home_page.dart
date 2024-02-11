@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/routes.dart';
+import '../../core/utils/routes.dart';
 
 final class HomePage extends StatelessWidget {
   const HomePage({super.key});

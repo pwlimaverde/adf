@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 
-import '../../utils/routes.dart';
+import '../core/utils/routes.dart';
 import 'ui/home_page.dart';
 
 final class HomeModule extends FlutterGetItModule {
