@@ -1,6 +1,9 @@
 import 'package:sqflite/sqflite.dart';
 
+import '../database/sqlite/db_info.dart';
+
 abstract interface class Migration {
-  void create(Batch bath);
-  void update(Batch bath);
+  late final DbInfo dbInfo;
+
+  void call(Batch bath);
 }

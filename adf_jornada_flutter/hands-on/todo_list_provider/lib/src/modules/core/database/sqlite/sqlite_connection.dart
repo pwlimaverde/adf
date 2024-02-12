@@ -3,12 +3,23 @@ import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 
 import '../../utils/migration.dart';
-import 'sqlite_migration.dart';
+import 'db_info.dart';
+import 'migration/migration_v1.dart';
+import 'migration/migration_v2.dart';
+import 'migration/migration_v3.dart';
+import 'migration/migration_v4.dart';
+
+
 
 final class SqliteConnection {
-  static const _VERSON = 1;
-  static const _DATABASE_NAME = 'TODO_LIST_PROVIDER';
   final _lock = Lock();
+  static const _dbInfo = DbInfo.v4;
+  final List<Migration> _migrations = [
+    MigrationV1(),
+    MigrationV2(),
+    MigrationV3(),
+    MigrationV4(),
+  ];
   Database? _db;
 
   static SqliteConnection? _instance;
@@ -20,12 +31,12 @@ final class SqliteConnection {
 
   Future<Database> openConnection() async {
     final databasePath = await getDatabasesPath();
-    final databasePathFinal = join(databasePath, _DATABASE_NAME);
+    final databasePathFinal = join(databasePath, _dbInfo.name);
     if (_db == null) {
       await _lock.synchronized(() async {
         _db ??= await openDatabase(
           databasePathFinal,
-          version: _VERSON,
+          version: _dbInfo.version,
           onConfigure: _onConfigure,
           onCreate: _onCreate,
           onUpgrade: _onUpgrade,
@@ -36,32 +47,47 @@ final class SqliteConnection {
     return _db!;
   }
 
-  void closeConnection(){
+  void closeConnection() {
     _db?.close();
     _db = null;
   }
 
-  Future<void> _onConfigure(Database db,)async{
+  Future<void> _onConfigure(
+    Database db,
+  ) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
-  Future<void> _onCreate(Database db, int version,)async{
+
+  Future<void> _onCreate(
+    Database db,
+    int version,
+  ) async {
     final bath = db.batch();
-    final migrations = SqliteMigration().getCreateMigration();
-    for (Migration migration in migrations) {
-      migration.create(bath);
+    for (Migration migration in _migrations) {
+      migration(bath);
     }
 
     bath.commit();
   }
-  Future<void> _onUpgrade(Database db, int oldVersion, int version,)async{
+
+  Future<void> _onUpgrade(
+    Database db,
+    int oldVersion,
+    int version,
+  ) async {
     final bath = db.batch();
-    final migrations = SqliteMigration().getUpdateMigration(oldVersion);
-    for (Migration migration in migrations) {
-      migration.update(bath);
+
+    for (Migration migration in _migrations) {
+      if (migration.dbInfo.version > oldVersion) {}
+      migration(bath);
     }
 
     bath.commit();
   }
-  Future<void> _onDowgrade(Database db, int oldVersion, int version,)async{}
 
+  Future<void> _onDowgrade(
+    Database db,
+    int oldVersion,
+    int version,
+  ) async {}
 }
