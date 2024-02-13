@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_getit/flutter_getit.dart';
-
+import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import 'ui/home_page.dart';
 
-final class HomeModule extends FlutterGetItModule {
-  @override
-  String get moduleRouteName => Routes.initial.caminho;
-
-  @override
-  Map<String, WidgetBuilder> get pages => {
-        '/': (context) => const HomePage(),
-      };
+final class HomeModule extends Module {
+  HomeModule()
+      : super(
+          routes: {
+            Routes.home.caminho: (context) => const HomePage(),
+          },
+        );
 }

@@ -1,7 +1,7 @@
 enum Routes {
   initial(caminho: "/"),
-  fibonacci(caminho: "/fibonacci"),
-  checkconnect(caminho: "/checkconnect");
+  home(caminho: "/home"),
+  login(caminho: "/login");
 
   final String caminho;
   const Routes({required this.caminho});

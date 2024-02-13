@@ -4,11 +4,11 @@ import 'package:provider/single_child_widget.dart';
 
 class TodoListPage extends StatelessWidget {
   final WidgetBuilder _page;
-  final List<SingleChildWidget>? _bindings;
+  final List<SingleChildWidget> _bindings;
 
   const TodoListPage(
       {super.key,
-      List<SingleChildWidget>? bindings,
+      required List<SingleChildWidget> bindings,
       required WidgetBuilder page})
       : _bindings = bindings,
         _page = page;
@@ -16,12 +16,7 @@ class TodoListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: _bindings ??
-          [
-            Provider(
-              create: (_) => Object(),
-            )
-          ],
+      providers: _bindings,
       child: Builder(
         builder: (context) => _page(context),
       ),

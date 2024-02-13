@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/utils/routes.dart';
 
@@ -7,6 +8,7 @@ final class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final teste = context.select<String, String>((value)=>value);
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
       body: Center(
@@ -24,15 +26,15 @@ final class HomePage extends StatelessWidget {
                 IconButton(
                     onPressed: () => Navigator.pushNamed(
                           context,
-                          Routes.fibonacci.caminho,
+                          Routes.login.caminho,
                         ),
                     icon: const Icon(Icons.calculate)),
-                IconButton(
-                    onPressed: () => Navigator.pushNamed(
-                          context,
-                          Routes.checkconnect.caminho,
-                        ),
-                    icon: const Icon(Icons.cast_connected)),
+                Center(
+                  child: Text(teste),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
               ],
             ),
           ],
