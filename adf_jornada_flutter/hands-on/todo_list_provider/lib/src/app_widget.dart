@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'app_module.dart';
 import 'modules/core/database/sqlite/sqlite_adm_connection.dart';
-import 'modules/core/ui/todo_list_ui_config.dart';
+import 'modules/core/ui/ui_config.dart';
 
 
 final class AppWidget extends StatefulWidget {
@@ -37,7 +37,7 @@ class _AppWidgetState extends State<AppWidget> {
       child: MaterialApp(
         title: 'Todo List Provider',
         debugShowCheckedModeBanner: false,
-        theme: TodoListUiConfig.theme,
+        theme: UiConfig.theme,
         routes: AppModule().routes,
       ),
     );

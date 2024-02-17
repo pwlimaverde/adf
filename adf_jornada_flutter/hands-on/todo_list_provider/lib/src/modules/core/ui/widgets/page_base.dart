@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class TodoListPageBase extends StatelessWidget {
+class PageBase extends StatelessWidget {
   final Widget child;
-  const TodoListPageBase({
+  const PageBase({
     super.key,
     required this.child,
   });

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 
-import '../../../core/ui/widgets/todo_list_page_base.dart';
+import '../../../core/ui/widgets/elevated_button_padrao.dart';
+import '../../../core/ui/widgets/field_padrao.dart';
+import '../../../core/ui/widgets/page_base.dart';
 import 'widgets/todo_list_logo.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,7 +12,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TodoListPageBase(
+    return PageBase(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -26,11 +28,11 @@ class LoginPage extends StatelessWidget {
             child: Form(
                 child: Column(
               children: [
-                TextFormField(),
+                FieldPadrao(label: 'Email',),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(),
+                FieldPadrao(label: 'Senha', obscureText: true,),
                 const SizedBox(
                   height: 10,
                 ),
@@ -41,13 +43,10 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {},
                       child: const Text('Esqueceu sua senha?'),
                     ),
-                    ElevatedButton(
+                    ElevatedButtonPadrao(
                       onPressed: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Login'),
-                      ),
-                    )
+                      label: 'Login',
+                    ),
                   ],
                 ),
               ],
