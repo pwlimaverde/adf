@@ -2,8 +2,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 
-import '../../utils/migration.dart';
-import 'db_info.dart';
+import 'interfaces/migration.dart';
+import 'utilite/db_info.dart';
 import 'migration/migration_v1.dart';
 import 'migration/migration_v2.dart';
 import 'migration/migration_v3.dart';

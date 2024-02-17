@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
-import '../../../utils/migration.dart';
-import '../db_info.dart';
+import '../interfaces/migration.dart';
+import '../utilite/db_info.dart';
 
 class MigrationV4 implements Migration {
   @override

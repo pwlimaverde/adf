@@ -16,10 +16,6 @@ final class AppModule extends Module {
               create: (_) => SqliteConnection(),
               lazy: false,
             ),
-            Provider(
-              create: (_) => "Teste Provider ok",
-              lazy: false,
-            ),
           ],
           routes: {
             Routes.initial.caminho: (context) => const SplashPage(),
