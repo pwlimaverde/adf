@@ -19,6 +19,11 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   flutter_signin_button: ^2.0.0
+  flutter_sound_record: ^3.3.2
+  just_audio: ^0.9.21
+  android_power_manager: ^1.0.0
+  permission_handler: ^11.3.0
+  
 
 dev_dependencies:
   flutter_test:
