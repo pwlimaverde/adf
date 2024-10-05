@@ -9,8 +9,6 @@ import 'migration/migration_v2.dart';
 import 'migration/migration_v3.dart';
 import 'migration/migration_v4.dart';
 
-
-
 final class SqliteConnection {
   final _lock = Lock();
   static const _dbInfo = DbInfo.v4;
@@ -34,14 +32,16 @@ final class SqliteConnection {
     final databasePathFinal = join(databasePath, _dbInfo.name);
     if (_db == null) {
       await _lock.synchronized(() async {
-        _db ??= await openDatabase(
-          databasePathFinal,
-          version: _dbInfo.version,
-          onConfigure: _onConfigure,
-          onCreate: _onCreate,
-          onUpgrade: _onUpgrade,
-          onDowngrade: _onDowgrade,
-        );
+        if (_db == null) {
+          _db ??= await openDatabase(
+            databasePathFinal,
+            version: _dbInfo.version,
+            onConfigure: _onConfigure,
+            onCreate: _onCreate,
+            onUpgrade: _onUpgrade,
+            onDowngrade: _onDowgrade,
+          );
+        }
       });
     }
     return _db!;

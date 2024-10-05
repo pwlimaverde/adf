@@ -8,7 +8,7 @@ final class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final teste = context.select<String, String>((value)=>value);
+ 
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
       body: Center(
@@ -29,9 +29,7 @@ final class HomePage extends StatelessWidget {
                           Routes.login.caminho,
                         ),
                     icon: const Icon(Icons.calculate)),
-                Center(
-                  child: Text(teste),
-                ),
+         
                 const SizedBox(
                   width: 10,
                 ),

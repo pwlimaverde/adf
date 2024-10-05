@@ -12,7 +12,7 @@ class ElevatedButtonPadrao extends StatelessWidget {
       onPressed: onPressed,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Text(label),
+        child: Text(label, style: const TextStyle(color: Colors.white),),
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui/widgets/elevated_button_padrao.dart';
+
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
@@ -13,14 +15,14 @@ class SplashPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                      child: const Text('/home'),
+              ElevatedButtonPadrao(
                       onPressed: () => Navigator.of(context).pushNamed('/home'),
+                      label: '/home',
                     ),
                     const SizedBox(width: 40,),
-                    ElevatedButton(
-                      child: const Text('/login'),
+                    ElevatedButtonPadrao(
                       onPressed: () => Navigator.of(context).pushNamed('/login'),
+                      label: '/login',
                     ),
 
             ],

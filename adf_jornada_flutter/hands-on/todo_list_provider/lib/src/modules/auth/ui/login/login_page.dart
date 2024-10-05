@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
                     text: 'Continue com o Google',
                     padding: const EdgeInsets.all(10),
                     shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(13),
+                      borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
                     onPressed: () {},
