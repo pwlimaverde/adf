@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'app_module.dart';
 import 'modules/core/database/sqlite/sqlite_adm_connection.dart';
 import 'modules/core/ui/ui_config.dart';
@@ -16,11 +15,10 @@ final class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
 
   final sqliteAdmConnection = SqliteAdmConnection();
-
+  
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addObserver(sqliteAdmConnection);
   }
 

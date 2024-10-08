@@ -7,11 +7,13 @@ import 'modules/core/splash/splash_page.dart';
 import 'modules/core/utils/module.dart';
 import 'modules/core/utils/routes.dart';
 import 'modules/home/home_module.dart';
+import 'modules/sevices/services_bindings.dart';
 
 final class AppModule extends Module {
   AppModule()
       : super(
           aplicationsBindings: [
+            ...ServicesBindings().aplicationsBindings,
             Provider(
               create: (_) => SqliteConnection(),
               lazy: false,

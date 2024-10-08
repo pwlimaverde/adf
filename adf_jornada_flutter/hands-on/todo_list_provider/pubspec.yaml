@@ -22,13 +22,13 @@ dependencies:
   firebase_remote_config: ^4.3.14
   firebase_auth: ^4.19.3
   google_sign_in: ^6.2.1
-
   cupertino_icons: ^1.0.2
   flutter_signin_button: ^2.0.0
-  flutter_sound_record: ^3.3.2
-  just_audio: ^0.9.21
-  android_power_manager: ^1.0.0
-  permission_handler: ^11.3.0
+  hive: ^4.0.0-dev.2
+  isar_flutter_libs: ^4.0.0-dev.13
+  path_provider: ^2.1.2
+  
+  
   
 
 dev_dependencies:
