@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
@@ -116,4 +117,7 @@ final class FeaturesServicePresenter {
         throw data.result.message;
     }
   }
+
+  static FeaturesServicePresenter get to =>
+      GetIt.I.get<FeaturesServicePresenter>();
 }

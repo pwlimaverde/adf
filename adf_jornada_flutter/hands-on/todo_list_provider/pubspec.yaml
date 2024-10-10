@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   return_success_or_error: ^0.18.0
+  flutter_getit: ^2.0.0
+  get_it: ^7.7.0
   provider: ^6.1.1
   sqflite: ^2.3.2
   path: ^1.8.3

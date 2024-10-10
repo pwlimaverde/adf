@@ -24,14 +24,15 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _initializeServices() async {
-    await startServices(
-      options: DefaultFirebaseOptions.currentPlatform,
-      context: context,
-    );
+    // await startServices(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    //   context: context,
+    // );
 
     final instance = Provider.of<FeaturesServicePresenter>(context, listen: false);
     final collection = await instance.externalStorage
         .readDocument(Registro(colecao: "teste", documento: "testedoc"));
+    print("teste splash");
     print(collection);
   }
 
