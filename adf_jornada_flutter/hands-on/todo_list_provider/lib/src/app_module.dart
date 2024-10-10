@@ -14,10 +14,6 @@ final class AppModule extends Module {
   AppModule()
       : super(
           aplicationsBindings: [
-            Provider(
-              create: (_) => SqliteConnection(),
-              lazy: false,
-            ),
             Provider<FeaturesServicePresenter>(
               create: (_) => GetIt.I.get<FeaturesServicePresenter>(),
               lazy: false,

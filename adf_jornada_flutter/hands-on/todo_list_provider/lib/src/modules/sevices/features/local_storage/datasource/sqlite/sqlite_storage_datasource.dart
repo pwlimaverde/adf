@@ -3,18 +3,17 @@ import 'package:path_provider/path_provider.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 import 'dart:async';
 
-import '../domain/interface/local_storage.dart';
+import '../../domain/interface/local_storage.dart';
 
 ///Datasources
-final class HiveStorageDatasource implements Datasource<LocalStorage> {
-  HiveStorageDatasource();
+final class SqliteStorageDatasource implements Datasource<LocalStorage> {
 
   @override
   Future<LocalStorage> call(
     NoParams parameters,
   ) async {
     try {
-      final localStorage = HiveStorageLocal();
+      final localStorage = SqliteStorageLocal();
       return localStorage;
     } catch (e) {
       throw parameters.error..message = "$e";
@@ -22,8 +21,7 @@ final class HiveStorageDatasource implements Datasource<LocalStorage> {
   }
 }
 
-class HiveStorageLocal implements LocalStorage {
-  HiveStorageLocal();
+class SqliteStorageLocal implements LocalStorage {
   @override
   Future<T> read<T>(String key) async {
     final box = await _hiveInit();
