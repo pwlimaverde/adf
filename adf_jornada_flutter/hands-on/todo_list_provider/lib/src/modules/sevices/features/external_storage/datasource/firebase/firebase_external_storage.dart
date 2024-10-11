@@ -4,9 +4,9 @@ import '../../domain/interface/external_storage.dart';
 import '../../domain/models/registro.dart';
 
 class FirebaseExternalStorage implements ExternalStorage {
-  final FirebaseFirestore instanceFirebase;
+  final FirebaseFirestore _instanceFirebase;
 
-  FirebaseExternalStorage({required this.instanceFirebase});
+  FirebaseExternalStorage({required FirebaseFirestore instanceFirebase}): _instanceFirebase = instanceFirebase;
 
   @override
   Future<Map<String, dynamic>> readDocument(
@@ -14,7 +14,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   ) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
 
       var subData = registro.subColecao;
       while (subData != null) {
@@ -36,7 +36,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   ) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
 
       var subData = registro.subColecao;
       while (subData != null) {
@@ -59,7 +59,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   ) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
 
       var subData = registro.subColecao;
       while (subData != null) {
@@ -85,7 +85,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   ) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
 
       var subData = registro.subColecao;
       while (subData != null) {
@@ -108,7 +108,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   Future<void> remove(Registro registro) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
 
       var subData = registro.subColecao;
       while (subData != null) {
@@ -126,7 +126,7 @@ class FirebaseExternalStorage implements ExternalStorage {
   Future<void> write(Registro registro) async {
     try {
       var caminho =
-          instanceFirebase.collection(registro.colecao).doc(registro.documento);
+          _instanceFirebase.collection(registro.colecao).doc(registro.documento);
       if (registro.dados != null) {
         caminho.set(registro.dados!);
       }

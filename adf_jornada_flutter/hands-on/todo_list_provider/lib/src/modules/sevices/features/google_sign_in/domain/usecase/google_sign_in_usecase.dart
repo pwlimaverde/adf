@@ -3,14 +3,14 @@ import 'package:return_success_or_error/return_success_or_error.dart';
 
 ///Usecase with external Datasource call
 final class GoogleSignInUsecase extends UsecaseBase<GoogleSignIn> {
-  final GoogleSignIn signIn;
+  final GoogleSignIn _signIn;
 
-  GoogleSignInUsecase(this.signIn);
+  GoogleSignInUsecase(GoogleSignIn signIn) : _signIn = signIn;
 
   @override
   Future<ReturnSuccessOrError<GoogleSignIn>> call(NoParams parameters) async {
     return SuccessReturn(
-      success: signIn,
+      success: _signIn,
     );
   }
 }

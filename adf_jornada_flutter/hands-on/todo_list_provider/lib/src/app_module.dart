@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 import 'modules/auth/auth_module.dart';
-import 'modules/core/database/sqlite/sqlite_connection.dart';
 import 'modules/core/splash/splash_page.dart';
 
 import 'modules/core/utils/module.dart';

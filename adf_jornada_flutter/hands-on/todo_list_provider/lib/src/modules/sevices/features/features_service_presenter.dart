@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
+
 import 'package:return_success_or_error/return_success_or_error.dart';
 
 import '../utils/parameters.dart';
@@ -23,7 +23,6 @@ final class FeaturesServicePresenter {
   final EsService _esService;
   final WidService _widService;
   final SignInService _signInService;
-
 
   FeaturesServicePresenter._({
     required FbService fbService,
