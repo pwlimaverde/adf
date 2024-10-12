@@ -3,26 +3,22 @@ import 'package:return_success_or_error/return_success_or_error.dart';
 
 import '../../../../utils/erros.dart';
 import '../../../../utils/parameters.dart';
+import '../model/register_firebase_auth_model.dart';
 
-final class RegisterFirebaseAuthUsecase extends UsecaseBase<User> {
-  final FirebaseAuth _firebaseAuth;
-
-  RegisterFirebaseAuthUsecase(
-    FirebaseAuth firebaseAuth,
-  ) : _firebaseAuth = firebaseAuth;
+final class RegisterFirebaseAuthUsecase extends UsecaseBase<RegisterFirebaseAuthModel> {
 
   @override
-  Future<ReturnSuccessOrError<User>> call(
-      ParametrosRegisterEmail parameters) async {
+  Future<ReturnSuccessOrError<RegisterFirebaseAuthModel>> call(
+      ParametrosEmailAndPassword parameters) async {
     try {
-      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await parameters.authInstance.createUserWithEmailAndPassword(
         email: parameters.email,
         password: parameters.password,
       );
       final user = userCredential.user;
       if (user != null) {
         return SuccessReturn(
-          success: user,
+          success: RegisterFirebaseAuthModel(user: user),
         );
       } else {
         return ErrorReturn(
@@ -34,7 +30,7 @@ final class RegisterFirebaseAuthUsecase extends UsecaseBase<User> {
       print(s);
       if (e.code == 'email-already-in-use') {
         final loginTypes =
-            await _firebaseAuth.fetchSignInMethodsForEmail(parameters.email);
+            await parameters.authInstance.fetchSignInMethodsForEmail(parameters.email);
         if (loginTypes.contains('password')) {
           return ErrorReturn(
             error: AuthError(

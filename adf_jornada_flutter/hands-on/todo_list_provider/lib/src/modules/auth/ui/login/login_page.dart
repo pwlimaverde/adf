@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:provider/provider.dart';
+import 'package:validatorless/validatorless.dart';
 
+import '../../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../../core/ui/widgets/elevated_button_padrao.dart';
 import '../../../core/ui/widgets/field_padrao.dart';
 import '../../../core/ui/widgets/page_base.dart';
+import 'login_controller.dart';
 import 'widgets/todo_list_logo.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailEC = TextEditingController();
+  final _passwordEC = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    final defautListener =
+        DefautListnerNotifier(context.read<LoginController>());
+    defautListener.listener(
+        context: context,
+        successCallback: () {
+          Navigator.of(context).pop();
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,31 +50,59 @@ class LoginPage extends StatelessWidget {
               vertical: 20,
             ),
             child: Form(
+                key: _formKey,
                 child: Column(
-              children: [
-                FieldPadrao(label: 'Email',),
-                const SizedBox(
-                  height: 20,
-                ),
-                FieldPadrao(label: 'Senha', obscureText: true,),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Esqueceu sua senha?'),
+                    FieldPadrao(
+                      label: 'Email',
+                      controller: _emailEC,
+                      validator: Validatorless.multiple([
+                        Validatorless.required("Email obrigatório"),
+                        Validatorless.email("Email inválido"),
+                      ]),
                     ),
-                    ElevatedButtonPadrao(
-                      onPressed: () {},
-                      label: 'Login',
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FieldPadrao(
+                      label: 'Senha',
+                      controller: _passwordEC,
+                      validator: Validatorless.multiple([
+                        Validatorless.required("Senha obrigatória"),
+                        Validatorless.min(
+                            6, "Senha deve ter no mínimo 6 caracteres"),
+                      ]),
+                      obscureText: true,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Esqueceu sua senha?'),
+                        ),
+                        ElevatedButtonPadrao(
+                          onPressed: () {
+                            final formValid =
+                                _formKey.currentState?.validate() ?? false;
+                            if (formValid) {
+                              final email = _emailEC.text;
+                              final password = _passwordEC.text;
+                              context.read<LoginController>().loginWithEmail(
+                                    email,
+                                    password,
+                                  );
+                            }
+                          },
+                          label: 'Login',
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
-            )),
+                )),
           ),
           const SizedBox(
             height: 20,
@@ -86,7 +138,8 @@ class LoginPage extends StatelessWidget {
                     children: [
                       const Text('Não tem conta?'),
                       TextButton(
-                        onPressed: () => Navigator.of(context).pushNamed('/register'),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/register'),
                         child: const Text('Cadastre-se'),
                       ),
                     ],

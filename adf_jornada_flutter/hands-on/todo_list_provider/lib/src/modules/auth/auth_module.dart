@@ -5,6 +5,7 @@ import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import 'features/features_auth_presenter.dart';
 import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
+import 'features/login_with_email/domain/usecase/loguin_with_email_usecase.dart';
 import 'features/register_firebase_auth/domain/usecase/register_firebase_auth_usecase.dart';
 import 'ui/login/login_controller.dart';
 import 'ui/login/login_page.dart';
@@ -25,27 +26,31 @@ final class AuthModule extends Module {
                   FirebaseAuthUsecase(firebaseAuth),
               lazy: true,
             ),
-            ProxyProvider<FirebaseAuth, RFUsecase>(
-              update: (context, firebaseAuth, registerFirebaseAuth) =>
-                  RegisterFirebaseAuthUsecase(firebaseAuth),
+            Provider<RFUsecase>(
+              create: (_) => RegisterFirebaseAuthUsecase(),
+              lazy: true,
+            ),
+            Provider<LWEUsecase>(
+              create: (_) => LoguinWithEmailUsecase(),
               lazy: true,
             ),
             Provider<FeaturesAuthPresenter>(
               create: (context) {
                 final presenter = FeaturesAuthPresenter(
-                  authService: context.read<AuthUsecase>(),
+                  authUsecase: context.read<AuthUsecase>(),
+                  loguinWithEmail: context.read<LWEUsecase>(),
                   registerFirebaseAuth: context.read<RFUsecase>(),
                 );
-                presenter.authService();
+                presenter.authInit();
                 return presenter;
               },
               lazy: false,
             ),
             ChangeNotifierProvider(
-              create: (_) => LoginController(),
+              create: (context) => LoginController(context.read()),
             ),
             ChangeNotifierProvider(
-              create: (_) => RegisterController(),
+              create: (context) => RegisterController(context.read()),
             )
           ],
           routes: {
