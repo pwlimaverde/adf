@@ -5,6 +5,7 @@ import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import 'features/features_auth_presenter.dart';
 import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
+import 'features/forgot_password/domain/usecase/forgot_password_usecase.dart';
 import 'features/login_with_email/domain/usecase/loguin_with_email_usecase.dart';
 import 'features/register_firebase_auth/domain/usecase/register_firebase_auth_usecase.dart';
 import 'ui/login/login_controller.dart';
@@ -34,12 +35,17 @@ final class AuthModule extends Module {
               create: (_) => LoguinWithEmailUsecase(),
               lazy: true,
             ),
+            Provider<FPUsecase>(
+              create: (_) => ForgotPasswordUsecase(),
+              lazy: true,
+            ),
             Provider<FeaturesAuthPresenter>(
               create: (context) {
                 final presenter = FeaturesAuthPresenter(
                   authUsecase: context.read<AuthUsecase>(),
                   loguinWithEmail: context.read<LWEUsecase>(),
                   registerFirebaseAuth: context.read<RFUsecase>(),
+                  forgotPassword: context.read<FPUsecase>(),
                 );
                 presenter.authInit();
                 return presenter;

@@ -31,7 +31,9 @@ class Messages {
             ? Colors.redAccent
             : type == MessagesType.success
                 ? Colors.greenAccent
-                : Colors.orangeAccent,
+                : type == MessagesType.warning
+                    ? Colors.orangeAccent
+                    : Colors.blueAccent,
       ),
     );
   }

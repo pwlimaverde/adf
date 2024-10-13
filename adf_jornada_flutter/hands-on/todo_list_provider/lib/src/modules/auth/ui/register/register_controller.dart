@@ -16,7 +16,7 @@ final class RegisterController extends DefautChangNotifier {
         password,
       );
       if (user != null) {
-        success();
+        setSuccess("Usuário registrado com sucesso!");
       } else {
         setError("Erro ao registrar usuário!");
       }

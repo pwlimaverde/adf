@@ -4,6 +4,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
 import 'package:validatorless/validatorless.dart';
 
+import '../../../core/ui/utilites/messages.dart';
 import '../../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../../core/ui/widgets/elevated_button_padrao.dart';
 import '../../../core/ui/widgets/field_padrao.dart';
@@ -22,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
+  final _emailFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     FieldPadrao(
                       label: 'Email',
+                      focusNode: _emailFocus,
                       controller: _emailEC,
                       validator: Validatorless.multiple([
                         Validatorless.required("Email obrigatório"),
@@ -81,7 +85,19 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_emailEC.text.isNotEmpty) {
+                              context
+                                  .read<LoginController>()
+                                  .forgotPassword(_emailEC.text);
+                            } else {
+                              _emailFocus.requestFocus();
+                              Messages.of(context).showMessage(
+                                "Digite um email válido!",
+                                MessagesType.warning,
+                              );
+                            }
+                          },
                           child: const Text('Esqueceu sua senha?'),
                         ),
                         ElevatedButtonPadrao(

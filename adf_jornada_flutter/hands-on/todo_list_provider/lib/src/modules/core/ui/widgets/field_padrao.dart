@@ -9,6 +9,8 @@ class FieldPadrao extends StatelessWidget {
   final ValueNotifier<bool> obscureTextVN;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
+
 
   FieldPadrao({
     super.key,
@@ -17,6 +19,7 @@ class FieldPadrao extends StatelessWidget {
     this.sufixIconButton,
     this.controller,
     this.validator,
+    this.focusNode,
   })  : assert(
           obscureText == true ? sufixIconButton == null : true,
           'Obscuretext não pode ser enviado em conjunto com sulfixIconButton',
@@ -35,6 +38,7 @@ class FieldPadrao extends StatelessWidget {
           return TextFormField(
             controller: controller,
             validator: validator,
+            focusNode: focusNode,
             obscureText: obscureTextValue,
             decoration: InputDecoration(
               isDense: true,

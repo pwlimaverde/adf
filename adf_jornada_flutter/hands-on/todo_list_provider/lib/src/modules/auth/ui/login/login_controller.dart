@@ -14,15 +14,29 @@ final class LoginController extends DefautChangNotifier {
   ) async {
     try {
       showLoading();
-      final user = await _featuresAuthPresenter.loguinWithEmailUsecase(
+      final user = await _featuresAuthPresenter.loguinWithEmail(
         email,
         password,
       );
       if (user != null) {
-        success();
+        setSuccess("Login realizado com sucesso!");
       } else {
         setError("Erro ao fazer loguin!");
       }
+    } on AuthError catch (e) {
+      setError(e.message);
+    } finally {
+      hideLoading();
+    }
+  }
+
+  void forgotPassword(String email) async {
+    try {
+      showLoading();
+      await _featuresAuthPresenter.forgotPassword(
+        email,
+      );
+      setInfo("Email de recuperação enviado com sucesso!");
     } on AuthError catch (e) {
       setError(e.message);
     } finally {

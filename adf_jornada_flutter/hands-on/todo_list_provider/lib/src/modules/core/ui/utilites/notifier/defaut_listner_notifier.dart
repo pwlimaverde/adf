@@ -19,6 +19,12 @@ class DefautListnerNotifier {
       } else {
         Loader.hide();
       }
+      if (changeNotifier.hasInfo) {
+        Messages.of(context).showMessage(
+          changeNotifier.info ?? "Erro Interno!",
+          MessagesType.info,
+        );
+      }
 
       if (changeNotifier.hasError) {
         Messages.of(context).showMessage(
@@ -30,12 +36,12 @@ class DefautListnerNotifier {
         if (successCallback != null) {
           successCallback();
           Messages.of(context).showMessage(
-            "Sucesso!",
+            changeNotifier.success ?? "Erro Interno!",
             MessagesType.success,
           );
         } else {
           Messages.of(context).showMessage(
-            "Sucesso!",
+            changeNotifier.success ?? "Erro Interno!",
             MessagesType.success,
           );
         }
