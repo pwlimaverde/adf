@@ -6,12 +6,16 @@ import '../../../../utils/parameters.dart';
 import '../model/register_firebase_auth_model.dart';
 
 final class RegisterFirebaseAuthUsecase extends UsecaseBase<RegisterFirebaseAuthModel> {
+  FirebaseAuth authInstance;
+
+  RegisterFirebaseAuthUsecase(this.authInstance);
+
 
   @override
   Future<ReturnSuccessOrError<RegisterFirebaseAuthModel>> call(
       ParametrosEmailAndPassword parameters) async {
     try {
-      final userCredential = await parameters.authInstance.createUserWithEmailAndPassword(
+      final userCredential = await authInstance.createUserWithEmailAndPassword(
         email: parameters.email,
         password: parameters.password,
       );
@@ -30,7 +34,7 @@ final class RegisterFirebaseAuthUsecase extends UsecaseBase<RegisterFirebaseAuth
       print(s);
       if (e.code == 'email-already-in-use') {
         final loginTypes =
-            await parameters.authInstance.fetchSignInMethodsForEmail(parameters.email);
+            await authInstance.fetchSignInMethodsForEmail(parameters.email);
         if (loginTypes.contains('password')) {
           return ErrorReturn(
             error: AuthError(

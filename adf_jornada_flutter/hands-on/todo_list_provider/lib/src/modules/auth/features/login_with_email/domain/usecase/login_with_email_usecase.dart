@@ -6,14 +6,17 @@ import '../../../../utils/erros.dart';
 import '../../../../utils/parameters.dart';
 import '../model/login_with_email_model.dart';
 
-final class LoguinWithEmailUsecase extends UsecaseBase<LoginWithEmailModel> {
+final class LoginWithEmailUsecase extends UsecaseBase<LoginWithEmailModel> {
+  FirebaseAuth authInstance;
+  LoginWithEmailUsecase(this.authInstance);
+
   @override
   Future<ReturnSuccessOrError<LoginWithEmailModel>> call(
     ParametrosEmailAndPassword parameters,
   ) async {
     try {
       final userCredential =
-          await parameters.authInstance.signInWithEmailAndPassword(
+          await authInstance.signInWithEmailAndPassword(
         email: parameters.email,
         password: parameters.password,
       );

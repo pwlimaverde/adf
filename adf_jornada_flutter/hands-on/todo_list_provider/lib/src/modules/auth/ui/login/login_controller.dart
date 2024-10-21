@@ -1,12 +1,17 @@
 import '../../../core/ui/utilites/notifier/defaut_chang_notifier.dart';
+import '../../../sevices/features/features_service_presenter.dart';
 import '../../features/features_auth_presenter.dart';
 import '../../utils/erros.dart';
 
 final class LoginController extends DefautChangNotifier {
   final FeaturesAuthPresenter _featuresAuthPresenter;
+  final FeaturesServicePresenter _featuresServicePresenter;
 
-  LoginController(FeaturesAuthPresenter featuresAuthPresenter)
-      : _featuresAuthPresenter = featuresAuthPresenter;
+  LoginController({
+    required FeaturesAuthPresenter featuresAuthPresenter,
+    required FeaturesServicePresenter featuresServicePresenter,
+  })  : _featuresAuthPresenter = featuresAuthPresenter,
+        _featuresServicePresenter = featuresServicePresenter;
 
   Future<void> loginWithEmail(
     String email,
@@ -14,16 +19,35 @@ final class LoginController extends DefautChangNotifier {
   ) async {
     try {
       showLoading();
-      final user = await _featuresAuthPresenter.loguinWithEmail(
+      final user = await _featuresAuthPresenter.loginWithEmail(
         email,
         password,
       );
       if (user != null) {
         setSuccess("Login realizado com sucesso!");
       } else {
-        setError("Erro ao fazer loguin!");
+        setError("Erro ao fazer login!");
       }
     } on AuthError catch (e) {
+      setError(e.message);
+    } finally {
+      hideLoading();
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      showLoading();
+      await _featuresAuthPresenter.loginWithGoogle();
+      final user = await _featuresServicePresenter.currentUserService();
+      if (user != null) {
+        setSuccess("Login realizado com sucesso!");
+      } else {
+        logout();
+        setError("Erro ao fazer login!");
+      }
+    } on AuthError catch (e) {
+      logout();
       setError(e.message);
     } finally {
       hideLoading();
@@ -41,6 +65,14 @@ final class LoginController extends DefautChangNotifier {
       setError(e.message);
     } finally {
       hideLoading();
+    }
+  }
+
+  void logout() async {
+    try {
+      await _featuresServicePresenter.siginOutService();
+    } on AuthError catch (e) {
+      setError(e.message);
     }
   }
 }

@@ -147,7 +147,9 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(30),
                       borderSide: BorderSide.none,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<LoginController>().loginWithGoogle();
+                    },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

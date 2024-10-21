@@ -1,19 +1,24 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 
-import '../../../../utils/parameters.dart';
 import '../../domain/interface/external_storage.dart';
 import 'firebase_external_storage.dart';
 
 ///Datasources
 final class FirebaseStorageDatasource implements Datasource<ExternalStorage> {
+  FirebaseFirestore instanceFirebase;
+
+  FirebaseStorageDatasource(
+    this.instanceFirebase,
+  );
   @override
   Future<ExternalStorage> call(
-    ParametrosFirebaseStorage parameters,
+    NoParams parameters,
   ) async {
     try {
       final externalStorage = FirebaseExternalStorage(
-        instanceFirebase: parameters.instanceFirebase,
+        instanceFirebase: instanceFirebase,
       );
       return externalStorage;
     } catch (e) {

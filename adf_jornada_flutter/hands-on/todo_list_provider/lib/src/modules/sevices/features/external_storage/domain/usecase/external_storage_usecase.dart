@@ -1,6 +1,4 @@
 import 'package:return_success_or_error/return_success_or_error.dart';
-
-import '../../../../utils/parameters.dart';
 import '../interface/external_storage.dart';
 
 
@@ -10,7 +8,7 @@ final class ExternalStorageUsecase extends UsecaseBaseCallData<
 
   @override
   Future<ReturnSuccessOrError<ExternalStorage>> call(
-      ParametrosFirebaseStorage parameters) async {
+      NoParams parameters) async {
     final resultDatacource = await resultDatasource(
       parameters: parameters,
       datasource: datasource,
