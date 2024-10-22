@@ -39,13 +39,8 @@ final class LoginController extends DefautChangNotifier {
     try {
       showLoading();
       await _featuresAuthPresenter.loginWithGoogle();
-      final user = await _featuresServicePresenter.currentUserService();
-      if (user != null) {
-        setSuccess("Login realizado com sucesso!");
-      } else {
-        logout();
-        setError("Erro ao fazer login!");
-      }
+
+      setSuccess("Login realizado com sucesso!");
     } on AuthError catch (e) {
       logout();
       setError(e.message);

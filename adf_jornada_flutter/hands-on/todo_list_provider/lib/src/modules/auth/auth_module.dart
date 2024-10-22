@@ -3,7 +3,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:provider/provider.dart';
 
-
 import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import '../sevices/features/features_service_presenter.dart';
@@ -34,17 +33,19 @@ final class AuthModule extends Module {
                   featuresServicePresenter.signIn,
               lazy: true,
             ),
-     
             Provider<RFUsecase>(
-              create: (context) => RegisterFirebaseAuthUsecase(context.read<FirebaseAuth>()),
+              create: (context) =>
+                  RegisterFirebaseAuthUsecase(context.read<FirebaseAuth>()),
               lazy: true,
             ),
             Provider<LWEUsecase>(
-              create: (context) => LoginWithEmailUsecase(context.read<FirebaseAuth>()),
+              create: (context) =>
+                  LoginWithEmailUsecase(context.read<FirebaseAuth>()),
               lazy: true,
             ),
             Provider<FPUsecase>(
-              create: (context) => ForgotPasswordUsecase(context.read<FirebaseAuth>()),
+              create: (context) =>
+                  ForgotPasswordUsecase(context.read<FirebaseAuth>()),
               lazy: true,
             ),
             Provider<LWGData>(
@@ -70,7 +71,15 @@ final class AuthModule extends Module {
               lazy: false,
             ),
             ChangeNotifierProvider(
-              create: (context) => RegisterController(context.read()),
+              create: (context) => LoginController(
+                featuresAuthPresenter: context.read(),
+                featuresServicePresenter: context.read(),
+              ),
+            ),
+            ChangeNotifierProvider(
+              create: (context) => RegisterController(
+                context.read(),
+              ),
             )
           ],
           routes: {

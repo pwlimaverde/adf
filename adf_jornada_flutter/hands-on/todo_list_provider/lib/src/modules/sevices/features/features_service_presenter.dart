@@ -128,6 +128,7 @@ final class FeaturesServicePresenter {
     final data = await _currentAccountService(NoParams());
     switch (data) {
       case SuccessReturn<StCAGoogleData>():
+
       account = data.result;
       
         return data.result;
@@ -137,14 +138,14 @@ final class FeaturesServicePresenter {
   }
 
   Future<User?> currentUserService() async {
-    // final data = await _currenUserService(NoParams());
-    // switch (data) {
-    //   case SuccessReturn<CurrentUserModel>():
-    //     user = data.result.user;
+    final data = await _currenUserService(NoParams());
+    switch (data) {
+      case SuccessReturn<CurrentUserModel>():
+        user = data.result.user;
         return user;
-    //   case ErrorReturn<CurrentUserModel>():
-    //     throw Exception("Erro ao checar a conta google.");
-    // }
+      case ErrorReturn<CurrentUserModel>():
+        return null;
+    }
   }
 
   static FeaturesServicePresenter get to =>
