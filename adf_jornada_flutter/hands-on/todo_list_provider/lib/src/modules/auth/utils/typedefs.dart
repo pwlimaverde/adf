@@ -15,8 +15,8 @@ typedef LWEUsecase =  UsecaseBase<LoginWithEmailModel>;
 
 typedef FPUsecase =  UsecaseBase<ForgotPasswordModel>;
 
-typedef LWGUsecase =  UsecaseBaseCallData<LoginWithGoogleModel, GoogleSignInAccount>;
-typedef LWGData =  Datasource<GoogleSignInAccount>;
+typedef LWGUsecase =  UsecaseBaseCallData<LoginWithGoogleModel, LoginWithGoogleModel>;
+typedef LWGData =  Datasource<LoginWithGoogleModel>;
 
 typedef CAGUsecase = UsecaseBase<StCAGoogleData>;
 typedef StCAGoogleData = Stream<GoogleSignInAccount?>;

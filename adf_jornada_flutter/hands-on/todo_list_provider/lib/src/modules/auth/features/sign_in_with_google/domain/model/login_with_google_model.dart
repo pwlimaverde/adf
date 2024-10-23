@@ -1,7 +1,9 @@
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final class LoginWithGoogleModel {
-  final GoogleSignInAccount account;
+  final User user;
 
-  LoginWithGoogleModel({required this.account,});
+  LoginWithGoogleModel({
+    required this.user,
+  });
 }

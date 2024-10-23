@@ -11,7 +11,7 @@ Future<void> startServices() async {
     FeaturesServicePresenter.to.externalStorageService(),
     FeaturesServicePresenter.to.googleSignInService(),
     FeaturesServicePresenter.to.authInitService(),
-    FeaturesServicePresenter.to.currentAccountService(),
+    // FeaturesServicePresenter.to.currentAccountService(),
     // FeaturesServicePresenter.to.currentUserService(),
     FeaturesServicePresenter.to.siginOutService(),
   ];

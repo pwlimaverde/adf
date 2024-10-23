@@ -11,7 +11,7 @@ final class CurrentAccountGoogleUsecase extends UsecaseBase<StCAGoogleData> {
   @override
   Future<ReturnSuccessOrError<StCAGoogleData>> call(NoParams parameters) async {
     try {
-      await _signIn.signInSilently();
+      _signIn.signInSilently();
       return SuccessReturn(success: _signIn.onCurrentUserChanged);
     } catch (e) {
       return ErrorReturn(

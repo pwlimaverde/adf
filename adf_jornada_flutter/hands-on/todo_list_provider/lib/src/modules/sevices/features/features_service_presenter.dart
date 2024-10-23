@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +18,6 @@ final class FeaturesServicePresenter {
   late GoogleSignIn signIn;
   late FirebaseAuth auth;
   late User? user;
-  late Stream<GoogleSignInAccount?> account;
 
   final LsService _lsService;
   final EsService _esService;
@@ -62,7 +63,6 @@ final class FeaturesServicePresenter {
     );
     return _instance!;
   }
-
 
   Future<void> externalStorageService() async {
     final data = await _esService(
@@ -124,18 +124,17 @@ final class FeaturesServicePresenter {
     }
   }
 
-  Future<Stream<GoogleSignInAccount?>> currentAccountService() async {
-    final data = await _currentAccountService(NoParams());
-    switch (data) {
-      case SuccessReturn<StCAGoogleData>():
+  // Future<Unit> currentAccountService() async {
+  //   final data = await _currentAccountService(NoParams());
+  //   switch (data) {
+  //     case SuccessReturn<StCAGoogleData>():
+  //       account = data.result;
 
-      account = data.result;
-      
-        return data.result;
-      case ErrorReturn<StCAGoogleData>():
-        throw Exception("Erro ao checar a conta google.");
-    }
-  }
+  //       return unit;
+  //     case ErrorReturn<StCAGoogleData>():
+  //       throw Exception("Erro ao checar a conta google.");
+  //   }
+  // }
 
   Future<User?> currentUserService() async {
     final data = await _currenUserService(NoParams());
@@ -146,6 +145,13 @@ final class FeaturesServicePresenter {
       case ErrorReturn<CurrentUserModel>():
         return null;
     }
+  }
+
+  _createStream() {
+    final accountController =
+        StreamController<GoogleSignInAccount?>.broadcast();
+    final inAccount = accountController.sink;
+    final outAccount = accountController.stream;
   }
 
   static FeaturesServicePresenter get to =>

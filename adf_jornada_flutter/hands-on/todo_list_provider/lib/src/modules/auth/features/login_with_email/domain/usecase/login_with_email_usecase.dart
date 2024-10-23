@@ -41,6 +41,14 @@ final class LoginWithEmailUsecase extends UsecaseBase<LoginWithEmailModel> {
     } on FirebaseAuthException catch (e, s) {
       print(e);
       print(s);
+      final loginTypes =
+            await authInstance.fetchSignInMethodsForEmail(parameters.email);
+        if (loginTypes.contains('google.com')) {
+          throw AuthError(
+              message:
+                  "Você se cadastrou no TodoList pelo Google, por favor utilize ele para  entrar!");
+        }
+      
       if (e.code == 'user-not-found') {
         return ErrorReturn(
           error: AuthError(

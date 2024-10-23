@@ -16,9 +16,8 @@ final class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-
   final sqliteAdmConnection = SqliteAdmConnection();
-  
+
   @override
   void initState() {
     super.initState();
