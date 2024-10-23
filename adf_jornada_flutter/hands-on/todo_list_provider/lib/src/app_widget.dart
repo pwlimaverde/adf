@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'app_module.dart';
 
 import 'modules/core/splash/splash_page.dart';
 import 'modules/core/ui/ui_config.dart';
 import 'modules/core/utils/todo_list_navigator.dart';
+import 'modules/sevices/features/features_service_presenter.dart';
 import 'modules/sevices/features/local_storage/datasource/sqlite/config/sqlite_adm_connection.dart';
 
 

@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 
-
-
 import '../model/current_user_model.dart';
 
 final class CurrentUserGoogleUsecase extends UsecaseBase<CurrentUserModel> {
@@ -13,6 +11,7 @@ final class CurrentUserGoogleUsecase extends UsecaseBase<CurrentUserModel> {
   @override
   Future<ReturnSuccessOrError<CurrentUserModel>> call(NoParams parameters) async {
     try {
+      
       final user = _firebaseAuth.currentUser;
       if (user == null) {
         return ErrorReturn(

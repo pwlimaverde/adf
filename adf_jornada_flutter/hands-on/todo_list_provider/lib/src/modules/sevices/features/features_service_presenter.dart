@@ -136,22 +136,16 @@ final class FeaturesServicePresenter {
   //   }
   // }
 
-  Future<User?> currentUserService() async {
+  Future<Unit?> currentUserService() async {
     final data = await _currenUserService(NoParams());
     switch (data) {
       case SuccessReturn<CurrentUserModel>():
         user = data.result.user;
-        return user;
+        print("object ${data.result.user}");
+        return unit;
       case ErrorReturn<CurrentUserModel>():
         return null;
     }
-  }
-
-  _createStream() {
-    final accountController =
-        StreamController<GoogleSignInAccount?>.broadcast();
-    final inAccount = accountController.sink;
-    final outAccount = accountController.stream;
   }
 
   static FeaturesServicePresenter get to =>
