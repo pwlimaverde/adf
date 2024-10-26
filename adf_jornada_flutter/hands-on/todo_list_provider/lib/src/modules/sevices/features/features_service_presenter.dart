@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 import '../utils/typedefs.dart';
 import 'current_user_google/domain/model/current_user_model.dart';
@@ -114,6 +115,7 @@ final class FeaturesServicePresenter {
   }
 
   Future<Unit> siginOutService() async {
+    Logger().e("Logout service run!");
     final data = await _siginOutService(NoParams());
     switch (data) {
       case SuccessReturn<SignOutModel>():
@@ -141,7 +143,7 @@ final class FeaturesServicePresenter {
     switch (data) {
       case SuccessReturn<CurrentUserModel>():
         user = data.result.user;
-        print("object ${data.result.user}");
+        print("inicio get user $user");
         return unit;
       case ErrorReturn<CurrentUserModel>():
         return null;

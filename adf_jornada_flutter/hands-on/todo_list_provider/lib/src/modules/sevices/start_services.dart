@@ -12,8 +12,7 @@ Future<void> startServices() async {
     FeaturesServicePresenter.to.googleSignInService(),
     FeaturesServicePresenter.to.authInitService(),
     // FeaturesServicePresenter.to.currentAccountService(),
-    // FeaturesServicePresenter.to.currentUserService(),
-    FeaturesServicePresenter.to.siginOutService(),
+    FeaturesServicePresenter.to.currentUserService(),
   ];
 
   await Service.to.initServices(sevisesInit);

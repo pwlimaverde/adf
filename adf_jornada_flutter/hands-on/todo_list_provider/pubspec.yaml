@@ -30,6 +30,7 @@ dependencies:
   path_provider: ^2.1.2
   validatorless: ^1.2.3
   flutter_overlay_loader: ^2.0.0
+  logger: ^2.2.0
   
   
   

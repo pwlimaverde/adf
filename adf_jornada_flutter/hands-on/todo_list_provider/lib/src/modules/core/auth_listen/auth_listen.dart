@@ -11,22 +11,13 @@ final class AuthListen extends ChangeNotifier {
   AuthListen(FeaturesServicePresenter featuresServicePresenter)
       : _featuresServicePresenter = featuresServicePresenter;
 
-  Future<void> logout() async {
-    await _featuresServicePresenter.siginOutService();
-    notifyListeners();
-  }
-
-  User? get user => _featuresServicePresenter.user;
-
   void loadListen() async {
-    print("Listen auth....");
     _featuresServicePresenter.auth
         .userChanges()
         .listen((_) => notifyListeners());
-
     _featuresServicePresenter.auth.authStateChanges().listen((user) {
-      print("alterações do user $user");
       if (user != null) {
+        
         TodoListNavigator.to.pushNamedAndRemoveUntil("/home", (route) => false);
       } else {
         TodoListNavigator.to
