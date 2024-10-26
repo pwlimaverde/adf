@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'features/current_account_google/domain/usecase/current_account_google_usecase.dart';
 import 'features/current_user_google/domain/usecase/current_user_google_usecase.dart';
 import 'features/external_storage/datasource/firebase/firebase_storage_datasource.dart';
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
@@ -42,11 +41,6 @@ final class ServiceBindings {
     getIt.registerFactory<CUGService>(
       () => CurrentUserGoogleUsecase(getIt.get<FirebaseAuth>()),
     );
-    getIt.registerFactory<CAGService>(
-      () => CurrentAccountGoogleUsecase(
-        getIt.get<GoogleSignIn>(),
-      ),
-    );
     getIt.registerFactory<SignInService>(
       () => GoogleSignInUsecase(
         getIt.get<GoogleSignIn>(),
@@ -73,7 +67,6 @@ final class ServiceBindings {
       lsService: getIt.get<LsService>(),
       signInService: getIt.get<SignInService>(),
       authService: getIt.get<FBAuthService>(),
-      currentAccountService: getIt.get<CAGService>(),
       currenUserService: getIt.get<CUGService>(),
       siginOutService: getIt.get<SIOUsecase>(),
     ));

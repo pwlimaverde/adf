@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 
 import 'features/features_service_presenter.dart';
@@ -11,10 +12,9 @@ Future<void> startServices() async {
     FeaturesServicePresenter.to.externalStorageService(),
     FeaturesServicePresenter.to.googleSignInService(),
     FeaturesServicePresenter.to.authInitService(),
-    // FeaturesServicePresenter.to.currentAccountService(),
     FeaturesServicePresenter.to.currentUserService(),
   ];
 
   await Service.to.initServices(sevisesInit);
-  print("Serviços Iniciados...");
+  Logger().i("Serviços Iniciados...");
 }

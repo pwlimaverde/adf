@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:logger/logger.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
 import '../utils/typedefs.dart';
 import 'current_user_google/domain/model/current_user_model.dart';
@@ -24,7 +23,6 @@ final class FeaturesServicePresenter {
   final EsService _esService;
   final SignInService _signInService;
   final FBAuthService _authService;
-  final CAGService _currentAccountService;
   final CUGService _currenUserService;
   final SIOUsecase _siginOutService;
 
@@ -33,13 +31,11 @@ final class FeaturesServicePresenter {
     required LsService lsService,
     required SignInService signInService,
     required FBAuthService authService,
-    required CAGService currentAccountService,
     required CUGService currenUserService,
     required SIOUsecase siginOutService,
   })  : _signInService = signInService,
         _esService = esService,
         _authService = authService,
-        _currentAccountService = currentAccountService,
         _currenUserService = currenUserService,
         _siginOutService = siginOutService,
         _lsService = lsService;
@@ -49,7 +45,6 @@ final class FeaturesServicePresenter {
     required LsService lsService,
     required SignInService signInService,
     required FBAuthService authService,
-    required CAGService currentAccountService,
     required CUGService currenUserService,
     required SIOUsecase siginOutService,
   }) {
@@ -58,7 +53,6 @@ final class FeaturesServicePresenter {
       lsService: lsService,
       signInService: signInService,
       authService: authService,
-      currentAccountService: currentAccountService,
       currenUserService: currenUserService,
       siginOutService: siginOutService,
     );
@@ -115,7 +109,6 @@ final class FeaturesServicePresenter {
   }
 
   Future<Unit> siginOutService() async {
-    Logger().e("Logout service run!");
     final data = await _siginOutService(NoParams());
     switch (data) {
       case SuccessReturn<SignOutModel>():
@@ -143,7 +136,6 @@ final class FeaturesServicePresenter {
     switch (data) {
       case SuccessReturn<CurrentUserModel>():
         user = data.result.user;
-        print("inicio get user $user");
         return unit;
       case ErrorReturn<CurrentUserModel>():
         return null;
