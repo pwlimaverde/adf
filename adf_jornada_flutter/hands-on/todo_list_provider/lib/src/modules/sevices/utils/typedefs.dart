@@ -5,7 +5,6 @@ import 'package:return_success_or_error/return_success_or_error.dart';
 import '../features/current_user_google/domain/model/current_user_model.dart';
 import '../features/external_storage/domain/interface/external_storage.dart';
 import '../features/local_storage/domain/interface/local_storage.dart';
-import '../features/sign_out/domain/model/sign_out_model.dart';
 
 typedef SignInService = UsecaseBase<GoogleSignIn>;
 
@@ -21,5 +20,3 @@ typedef CAGService = UsecaseBase<StCAGoogleData>;
 typedef StCAGoogleData = Stream<GoogleSignInAccount?>;
 
 typedef CUGService =  UsecaseBase<CurrentUserModel>;
-
-typedef SIOUsecase =  UsecaseBase<SignOutModel>;

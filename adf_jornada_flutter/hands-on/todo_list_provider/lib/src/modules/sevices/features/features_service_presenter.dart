@@ -8,7 +8,6 @@ import '../utils/typedefs.dart';
 import 'current_user_google/domain/model/current_user_model.dart';
 import 'external_storage/domain/interface/external_storage.dart';
 import 'local_storage/domain/interface/local_storage.dart';
-import 'sign_out/domain/model/sign_out_model.dart';
 
 final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
@@ -24,7 +23,6 @@ final class FeaturesServicePresenter {
   final SignInService _signInService;
   final FBAuthService _authService;
   final CUGService _currenUserService;
-  final SIOUsecase _siginOutService;
 
   FeaturesServicePresenter._({
     required EsService esService,
@@ -32,12 +30,10 @@ final class FeaturesServicePresenter {
     required SignInService signInService,
     required FBAuthService authService,
     required CUGService currenUserService,
-    required SIOUsecase siginOutService,
   })  : _signInService = signInService,
         _esService = esService,
         _authService = authService,
         _currenUserService = currenUserService,
-        _siginOutService = siginOutService,
         _lsService = lsService;
 
   factory FeaturesServicePresenter({
@@ -46,7 +42,6 @@ final class FeaturesServicePresenter {
     required SignInService signInService,
     required FBAuthService authService,
     required CUGService currenUserService,
-    required SIOUsecase siginOutService,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
@@ -54,7 +49,6 @@ final class FeaturesServicePresenter {
       signInService: signInService,
       authService: authService,
       currenUserService: currenUserService,
-      siginOutService: siginOutService,
     );
     return _instance!;
   }
@@ -104,17 +98,6 @@ final class FeaturesServicePresenter {
         auth = data.result;
         return unit;
       case ErrorReturn<FirebaseAuth>():
-        throw data.result.message;
-    }
-  }
-
-  Future<Unit> siginOutService() async {
-    final data = await _siginOutService(NoParams());
-    switch (data) {
-      case SuccessReturn<SignOutModel>():
-        user = null;
-        return unit;
-      case ErrorReturn<SignOutModel>():
         throw data.result.message;
     }
   }

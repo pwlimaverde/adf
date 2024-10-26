@@ -1,17 +1,13 @@
 import '../../../core/ui/utilites/notifier/defaut_chang_notifier.dart';
-import '../../../sevices/features/features_service_presenter.dart';
 import '../../features/features_auth_presenter.dart';
 import '../../utils/erros.dart';
 
 final class LoginController extends DefautChangNotifier {
   final FeaturesAuthPresenter _featuresAuthPresenter;
-  final FeaturesServicePresenter _featuresServicePresenter;
 
   LoginController({
     required FeaturesAuthPresenter featuresAuthPresenter,
-    required FeaturesServicePresenter featuresServicePresenter,
-  })  : _featuresAuthPresenter = featuresAuthPresenter,
-        _featuresServicePresenter = featuresServicePresenter;
+  })  : _featuresAuthPresenter = featuresAuthPresenter;
 
   Future<void> loginWithEmail(
     String email,
@@ -65,7 +61,7 @@ final class LoginController extends DefautChangNotifier {
 
   void logout() async {
     try {
-      await _featuresServicePresenter.siginOutService();
+      await _featuresAuthPresenter.siginOutService();
     } on AuthError catch (e) {
       setError(e.message);
     }

@@ -12,7 +12,6 @@ import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
 import 'features/google_sign_in/domain/usecase/google_sign_in_usecase.dart';
 import 'features/local_storage/datasource/sqlite/sqlite_storage_datasource.dart';
 import 'features/local_storage/domain/usecase/local_storage_usecase.dart';
-import 'features/sign_out/domain/usecase/sign_out_usecase.dart';
 import 'utils/scopes.dart';
 import 'utils/typedefs.dart';
 
@@ -27,13 +26,6 @@ final class ServiceBindings {
     );
     getIt.registerSingleton<GoogleSignIn>(
       GoogleSignIn(scopes: scopes),
-    );
-    
-    getIt.registerFactory<SIOUsecase>(
-      () => SignOutUsecase(
-        signIn: getIt.get<GoogleSignIn>(),
-        auth: getIt.get<FirebaseAuth>(),
-      ),
     );
     getIt.registerFactory<FBAuthService>(
       () => FirebaseAuthUsecase(getIt.get<FirebaseAuth>()),
@@ -68,7 +60,6 @@ final class ServiceBindings {
       signInService: getIt.get<SignInService>(),
       authService: getIt.get<FBAuthService>(),
       currenUserService: getIt.get<CUGService>(),
-      siginOutService: getIt.get<SIOUsecase>(),
     ));
   }
 }
