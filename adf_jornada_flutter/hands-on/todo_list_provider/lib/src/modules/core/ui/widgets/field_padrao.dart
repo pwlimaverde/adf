@@ -75,7 +75,7 @@ class FieldPadrao extends StatelessWidget {
                             },
                             icon: Icon(
                               !obscureTextValue
-                                  ? IconsPadrao.eyeSlash
+                                  ? IconsPadrao.eye_slash
                                   : IconsPadrao.eye,
                               size: 15,
                             ),

@@ -9,7 +9,7 @@ class AppWidgetAnimation extends StatelessWidget {
        return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.grey,
       ),
       home: Container(
         color: Colors.amber,
