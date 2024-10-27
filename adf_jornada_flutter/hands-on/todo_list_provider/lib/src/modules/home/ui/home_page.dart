@@ -5,6 +5,7 @@ import '../../core/ui/utilites/theme_extensions.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
+import 'widgets/home_tasks.dart';
 import 'widgets/home_week_filter.dart';
 
 final class HomePage extends StatelessWidget {
@@ -15,7 +16,7 @@ final class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: context.primaryColor),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.grey[50],
         elevation: 0,
         actions: [
           PopupMenuButton(
@@ -50,7 +51,8 @@ final class HomePage extends StatelessWidget {
                     children: [
                       HomeHeader(),
                       HomeFilters(),
-                      HomeWeekFilter()
+                      HomeWeekFilter(),
+                      HomeTasks(),
                     ],
                   ),
                 ),
