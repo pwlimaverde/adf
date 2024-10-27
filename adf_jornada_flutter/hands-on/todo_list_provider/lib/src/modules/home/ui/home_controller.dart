@@ -31,4 +31,16 @@ final class HomeController extends DefautChangNotifier {
       hideLoading();
     }
   }
+  Future<void> updateFoto() async {
+    try {
+      showLoading();
+      await _featuresHomePresenter.updateFoto();
+      await _featuresServicePresenter.currentUserService();
+
+    } on UserError catch (e) {
+      setError(e.message);
+    } finally {
+      hideLoading();
+    }
+  }
 }

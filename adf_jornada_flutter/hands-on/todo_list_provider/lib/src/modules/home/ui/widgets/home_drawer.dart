@@ -115,7 +115,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             final formValid =
                                 _formKey.currentState?.validate() ?? false;
                             if (formValid) {
@@ -135,7 +135,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ),
           ListTile(
             title: Text('Alterar Imagem'),
-            onTap: () {},
+            onTap: () async {
+              await context.read<HomeController>().updateFoto();
+            },
           ),
           ListTile(
             title: Text('Sair'),
