@@ -14,7 +14,6 @@ import 'features/register_firebase_auth/domain/usecase/register_firebase_auth_us
 import 'features/sign_in_with_google/datasources/sign_in_with_google_datasource/sign_in_with_google_android_datasource.dart';
 import 'features/sign_in_with_google/domain/usecase/sign_in_with_google_usecase.dart';
 
-import 'features/sign_out/domain/usecase/sign_out_usecase.dart';
 import 'ui/login/login_controller.dart';
 import 'ui/login/login_page.dart';
 import 'ui/register/register_controller.dart';
@@ -62,27 +61,22 @@ final class AuthModule extends Module {
               ),
               lazy: true,
             ),
-            Provider<SIOUsecase>(
-              create: (context) => SignOutUsecase(
-                signIn: context.read<GoogleSignIn>(),
-                auth: context.read<FirebaseAuth>(),
-              ),
-              lazy: true,
-            ),
             Provider<FeaturesAuthPresenter>(
               create: (context) => FeaturesAuthPresenter(
                 loginWithEmail: context.read<LWEUsecase>(),
                 registerFirebaseAuth: context.read<RFUsecase>(),
                 forgotPassword: context.read<FPUsecase>(),
                 loginWithGoogle: context.read<LWGUsecase>(),
-                siginOut: context.read<SIOUsecase>(),
-                featuresServicePresenter: context.read<FeaturesServicePresenter>(),
+                featuresServicePresenter:
+                    context.read<FeaturesServicePresenter>(),
               ),
               lazy: false,
             ),
             ChangeNotifierProvider(
               create: (context) => LoginController(
                 featuresAuthPresenter: context.read<FeaturesAuthPresenter>(),
+                featuresServicePresenter:
+                    context.read<FeaturesServicePresenter>(),
               ),
             ),
             ChangeNotifierProvider(

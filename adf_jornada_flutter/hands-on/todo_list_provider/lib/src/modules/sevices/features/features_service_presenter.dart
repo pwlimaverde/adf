@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
@@ -8,6 +9,7 @@ import '../utils/typedefs.dart';
 import 'current_user_google/domain/model/current_user_model.dart';
 import 'external_storage/domain/interface/external_storage.dart';
 import 'local_storage/domain/interface/local_storage.dart';
+import 'sign_out/domain/model/sign_out_model.dart';
 
 final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
@@ -16,6 +18,7 @@ final class FeaturesServicePresenter {
   late ExternalStorage externalStorage;
   late GoogleSignIn signIn;
   late FirebaseAuth auth;
+  late FirebaseStorage firebaseStorage;
   late User? user;
 
   final LsService _lsService;
@@ -23,6 +26,10 @@ final class FeaturesServicePresenter {
   final SignInService _signInService;
   final FBAuthService _authService;
   final CUGService _currenUserService;
+  final SIOUsecase _signOutService;
+  final FBStorageService _fbStorageService;
+
+
 
   FeaturesServicePresenter._({
     required EsService esService,
@@ -30,10 +37,14 @@ final class FeaturesServicePresenter {
     required SignInService signInService,
     required FBAuthService authService,
     required CUGService currenUserService,
+    required SIOUsecase signOutService,
+    required FBStorageService fbStorageService,
   })  : _signInService = signInService,
         _esService = esService,
         _authService = authService,
         _currenUserService = currenUserService,
+        _signOutService = signOutService,
+        _fbStorageService = fbStorageService,
         _lsService = lsService;
 
   factory FeaturesServicePresenter({
@@ -42,6 +53,8 @@ final class FeaturesServicePresenter {
     required SignInService signInService,
     required FBAuthService authService,
     required CUGService currenUserService,
+    required SIOUsecase signOutService,
+    required FBStorageService fbStorageService,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
@@ -49,6 +62,8 @@ final class FeaturesServicePresenter {
       signInService: signInService,
       authService: authService,
       currenUserService: currenUserService,
+      signOutService: signOutService,
+      fbStorageService: fbStorageService,
     );
     return _instance!;
   }
@@ -102,6 +117,17 @@ final class FeaturesServicePresenter {
     }
   }
 
+  Future<Unit> firebaseStorageInitService() async {
+    final data = await _fbStorageService(NoParams());
+    switch (data) {
+      case SuccessReturn<FirebaseStorage>():
+        firebaseStorage = data.result;
+        return unit;
+      case ErrorReturn<FirebaseStorage>():
+        throw data.result.message;
+    }
+  }
+
   // Future<Unit> currentAccountService() async {
   //   final data = await _currentAccountService(NoParams());
   //   switch (data) {
@@ -122,6 +148,17 @@ final class FeaturesServicePresenter {
         return unit;
       case ErrorReturn<CurrentUserModel>():
         return null;
+    }
+  }
+
+  Future<Unit> signOutService() async {
+    final data = await _signOutService(NoParams());
+    switch (data) {
+      case SuccessReturn<SignOutModel>():
+        user = null;
+        return unit;
+      case ErrorReturn<SignOutModel>():
+        throw data.result.message;
     }
   }
 

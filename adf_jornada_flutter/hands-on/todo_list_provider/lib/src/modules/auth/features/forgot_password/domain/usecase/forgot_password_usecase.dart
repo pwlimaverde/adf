@@ -7,18 +7,18 @@ import '../../../../utils/parameters.dart';
 import '../model/forgot_password_model.dart';
 
 final class ForgotPasswordUsecase extends UsecaseBase<ForgotPasswordModel> {
-  FirebaseAuth authInstance;
+  FirebaseAuth _authInstance;
   ForgotPasswordUsecase(
-    this.authInstance,
-  );
+    FirebaseAuth authInstance,
+  ):_authInstance = authInstance;
   @override
   Future<ReturnSuccessOrError<ForgotPasswordModel>> call(
       ParametrosEmail parameters) async {
     try {
-      final loginTypes = await authInstance
+      final loginTypes = await _authInstance
           .fetchSignInMethodsForEmail(parameters.email);
       if (loginTypes.contains('password')) {
-        await authInstance
+        await _authInstance
             .sendPasswordResetEmail(email: parameters.email);
         return SuccessReturn(
           success: ForgotPasswordModel(),

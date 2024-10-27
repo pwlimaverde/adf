@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/utils/routes.dart';
+import 'widgets/home_drawer.dart';
 
 final class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,33 +10,8 @@ final class HomePage extends StatelessWidget {
  
     return Scaffold(
       appBar: AppBar(title: const Text('Home Page')),
-      body: Center(
-        child: Column(
-          children: [
-            const Center(
-              child: Text('This is initial page'),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                    onPressed: () => Navigator.pushNamed(
-                          context,
-                          Routes.login.caminho,
-                        ),
-                    icon: const Icon(Icons.calculate)),
-         
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      drawer: HomeDrawer(),
+      body: Container(),
     );
   }
 }

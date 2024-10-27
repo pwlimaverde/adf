@@ -13,6 +13,7 @@ Future<void> startServices() async {
     FeaturesServicePresenter.to.googleSignInService(),
     FeaturesServicePresenter.to.authInitService(),
     FeaturesServicePresenter.to.currentUserService(),
+    FeaturesServicePresenter.to.firebaseStorageInitService(),
   ];
 
   await Service.to.initServices(sevisesInit);
