@@ -33,7 +33,7 @@ dependencies:
   flutter_overlay_loader: ^2.0.0
   image_picker: ^1.1.2
   logger: ^2.2.0
-  
+  date_picker_timeline: ^1.2.6
   
   
 
