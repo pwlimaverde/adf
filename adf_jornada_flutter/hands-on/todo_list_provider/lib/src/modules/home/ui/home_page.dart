@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/ui/utilites/icons_padrao.dart';
 import '../../core/ui/utilites/theme_extensions.dart';
 import 'widgets/home_drawer.dart';
+import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
 
 final class HomePage extends StatelessWidget {
@@ -42,6 +43,7 @@ final class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeHeader(),
+                      HomeFilters(),
                     ],
                   ),
                 ),
