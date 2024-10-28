@@ -7,6 +7,7 @@ import 'modules/core/auth_listen/auth_listen.dart';
 import 'modules/core/utils/module.dart';
 import 'modules/home/home_module.dart';
 import 'modules/sevices/features/features_service_presenter.dart';
+import 'modules/tasks/tasks_module.dart';
 
 final class AppModule extends Module {
   AppModule()
@@ -24,6 +25,7 @@ final class AppModule extends Module {
           routes: {
             ...HomeModule().routes,
             ...AuthModule().routes,
+            ...TasksModule().routes,
           },
         );
 }

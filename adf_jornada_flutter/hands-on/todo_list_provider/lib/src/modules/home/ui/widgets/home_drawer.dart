@@ -7,7 +7,14 @@ import '../../../sevices/features/features_service_presenter.dart';
 import '../home_controller.dart';
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer({super.key});
+  final HomeController _controller;
+  final FeaturesServicePresenter _featuresServicePresenter;
+  const HomeDrawer({
+    super.key,
+    required HomeController controller,
+    required FeaturesServicePresenter featuresServicePresenter,
+  })  : _controller = controller,
+        _featuresServicePresenter = featuresServicePresenter;
 
   @override
   State<HomeDrawer> createState() => _HomeDrawerState();
@@ -79,7 +86,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   context: context,
                   builder: (_) {
                     _displayNameEC.text =
-                        context.read<HomeController>().user?.displayName ?? '';
+                        widget._controller.user?.displayName ?? '';
                     return AlertDialog(
                       title: Text('Alterar Nome'),
                       content: Column(
@@ -120,9 +127,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 _formKey.currentState?.validate() ?? false;
                             if (formValid) {
                               final name = _displayNameEC.text;
-                              await context
-                                  .read<HomeController>()
-                                  .updateDisplayName(name);
+                              await widget._controller.updateDisplayName(name);
                               Navigator.of(context).pop();
                             }
                           },
@@ -136,13 +141,13 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ListTile(
             title: Text('Alterar Imagem'),
             onTap: () async {
-              await context.read<HomeController>().updateFoto();
+              await widget._controller.updateFoto();
             },
           ),
           ListTile(
             title: Text('Sair'),
             onTap: () async {
-              await context.read<FeaturesServicePresenter>().signOutService();
+              await widget._featuresServicePresenter.signOutService();
             },
           )
         ],

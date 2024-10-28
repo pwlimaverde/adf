@@ -59,12 +59,18 @@ final class HomeModule extends Module {
             ChangeNotifierProvider(
               create: (context) => HomeController(
                 featuresHomePresenter: context.read<FeaturesHomePresenter>(),
-                featuresServicePresenter: context.read<FeaturesServicePresenter>(),
-              ),lazy: false,
+                featuresServicePresenter:
+                    context.read<FeaturesServicePresenter>(),
+              ),
+              lazy: false,
             )
           ],
           routes: {
-            Routes.home.caminho: (context) => const HomePage(),
+            Routes.home.caminho: (context) => HomePage(
+                  controller: context.read<HomeController>(),
+                  featuresServicePresenter:
+                      context.read<FeaturesServicePresenter>(),
+                ),
           },
         );
 }
