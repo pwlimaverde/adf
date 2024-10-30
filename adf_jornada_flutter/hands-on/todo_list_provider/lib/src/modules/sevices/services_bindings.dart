@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../core/database/sqlite/sqlite_connection.dart';
 import 'features/current_user_google/domain/usecase/current_user_google_usecase.dart';
 import 'features/external_storage/datasource/firebase/firebase_storage_datasource.dart';
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
@@ -55,8 +56,11 @@ final class ServiceBindings {
         getIt.get<EsServiceData>(),
       ),
     );
+    getIt.registerFactory<SqliteConnection>(
+      () => SqliteConnection(),
+    );
     getIt.registerFactory<LsServiceData>(
-      () => SqliteStorageDatasource(),
+      () => SqliteStorageDatasource(getIt.get<SqliteConnection>()),
     );
     getIt.registerFactory<LsService>(
       () => LocalStorageUsecase(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/ui/utilites/theme_extensions.dart';
 import '../../../core/ui/widgets/field_padrao.dart';
+import '../../../sevices/features/local_storage/domain/interface/local_storage.dart';
 import 'task_create_controller.dart';
 import 'widgets/calendar_button.dart';
 
@@ -30,7 +32,11 @@ final class TaskCreatePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: context.primaryColor,
-        onPressed: () {},
+        onPressed: () {
+          final data = (date: DateTime.now(), description: 'teste segundo todo');
+
+          context.read<LocalStorage>().write<({DateTime date, String description})>(key: 'todo', data: data);
+        },
         label: Text(
           'Salvar task',
           style: TextStyle(
