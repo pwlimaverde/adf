@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   return_success_or_error: ^0.18.0
   flutter_getit: ^2.0.0
   get_it: ^7.7.0
@@ -34,6 +36,8 @@ dependencies:
   image_picker: ^1.1.2
   logger: ^2.2.0
   date_picker_timeline: ^1.2.6
+  intl: ^0.19.0
+  
   
   
 

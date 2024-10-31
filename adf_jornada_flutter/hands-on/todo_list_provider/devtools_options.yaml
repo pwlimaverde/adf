@@ -1,1 +1,3 @@
 extensions:
+  - provider: true
+  - flutter_getit: true

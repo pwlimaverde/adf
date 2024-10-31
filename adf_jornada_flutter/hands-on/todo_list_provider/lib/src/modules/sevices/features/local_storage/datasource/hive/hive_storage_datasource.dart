@@ -47,13 +47,17 @@ class HiveStorageLocal implements LocalStorage {
   }
 
   @override
-  Future<void> write<T>({
-    required String key,
-    required T data,
+  Future<void> write({
+    required String id,
+    required ({
+      String descricao,
+      DateTime dataHora,
+      bool finalizado,
+    }) data,
   }) async {
     try {
       final box = await _hiveInit();
-      box.put(key, data);
+      box.put(id, data);
     } catch (e) {
       throw Exception("Dado local não escrito");
     }

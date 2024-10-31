@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'app_module.dart';
 
@@ -39,6 +40,14 @@ class _AppWidgetState extends State<AppWidget> {
         debugShowCheckedModeBanner: false,
         theme: UiConfig.theme,
         navigatorKey: TodoListNavigator.navigatorKey,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('pt', 'BR'),
+        ],
         routes: AppModule().routes,
         home: const SplashPage(),
       ),

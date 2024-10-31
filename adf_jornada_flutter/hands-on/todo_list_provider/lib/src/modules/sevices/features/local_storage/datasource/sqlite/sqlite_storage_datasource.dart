@@ -1,8 +1,8 @@
 import 'package:return_success_or_error/return_success_or_error.dart';
 import 'dart:async';
 
-import '../../../../../core/database/sqlite/sqlite_connection.dart';
 import '../../domain/interface/local_storage.dart';
+import 'config/sqlite_connection.dart';
 import 'sqlite_local_storage.dart';
 
 ///Datasources

@@ -16,7 +16,7 @@ base class DefautChangNotifier extends ChangeNotifier {
 
   void showLoading() {
     _loading = true;
-    _resetStatus();
+    resetStatus();
     notifyListeners();
   }
 
@@ -31,7 +31,7 @@ base class DefautChangNotifier extends ChangeNotifier {
 
   void setInfo(String? message) => _info = message;
 
-  void _resetStatus() {
+  void resetStatus() {
     _error = null;
     _success = null;
     _info = null;

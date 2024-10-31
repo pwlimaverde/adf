@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:validatorless/validatorless.dart';
+import '../../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../../core/ui/utilites/theme_extensions.dart';
 import '../../../core/ui/widgets/field_padrao.dart';
-import '../../../sevices/features/local_storage/domain/interface/local_storage.dart';
 import 'task_create_controller.dart';
 import 'widgets/calendar_button.dart';
 
-final class TaskCreatePage extends StatelessWidget {
+final class TaskCreatePage extends StatefulWidget {
   final TaskCreateController _controller;
-  const TaskCreatePage({
+
+  TaskCreatePage({
     super.key,
     required TaskCreateController controller,
   }) : _controller = controller;
+
+  @override
+  State<TaskCreatePage> createState() => _TaskCreatePageState();
+}
+
+class _TaskCreatePageState extends State<TaskCreatePage> {
+  final _descriptionEC = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+   @override
+  void initState() {
+    super.initState();
+    final defautListener =
+        DefautListnerNotifier(widget._controller);
+    defautListener.listener(
+        context: context,
+        successCallback: () {
+          Navigator.of(context).pop();
+        });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _descriptionEC.dispose();
+    
+    print('Listener removido');
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +64,12 @@ final class TaskCreatePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: context.primaryColor,
         onPressed: () {
-          final data = (date: DateTime.now(), description: 'teste segundo todo');
-
-          context.read<LocalStorage>().write<({DateTime date, String description})>(key: 'todo', data: data);
+          final formMalid = _formKey.currentState?.validate() ?? false;
+          if (formMalid) {
+            widget._controller.createTask(
+              description: _descriptionEC.text,
+            );
+          }
         },
         label: Text(
           'Salvar task',
@@ -44,7 +78,9 @@ final class TaskCreatePage extends StatelessWidget {
           ),
         ),
       ),
+      backgroundColor: Colors.grey[50],
       body: Form(
+        key: _formKey,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 30),
           color: Colors.grey[50],
@@ -66,6 +102,8 @@ final class TaskCreatePage extends StatelessWidget {
               ),
               FieldPadrao(
                 label: '',
+                controller: _descriptionEC,
+                validator: Validatorless.required('Descrição é obrigatória!'),
               ),
               SizedBox(
                 height: 20,

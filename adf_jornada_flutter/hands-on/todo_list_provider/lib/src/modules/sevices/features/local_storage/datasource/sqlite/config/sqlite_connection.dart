@@ -5,18 +5,12 @@ import 'package:synchronized/synchronized.dart';
 import 'interfaces/migration.dart';
 import 'utilite/db_info.dart';
 import 'migration/migration_v1.dart';
-import 'migration/migration_v2.dart';
-import 'migration/migration_v3.dart';
-import 'migration/migration_v4.dart';
 
 final class SqliteConnection {
   final _lock = Lock();
   static const _dbInfo = DbInfo.v4;
   final List<Migration> _migrations = [
     MigrationV1(),
-    MigrationV2(),
-    MigrationV3(),
-    MigrationV4(),
   ];
   Database? _db;
 

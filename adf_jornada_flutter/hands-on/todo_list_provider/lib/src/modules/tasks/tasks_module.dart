@@ -16,7 +16,9 @@ final class TasksModule extends Module {
               lazy: true,
             ),
             ChangeNotifierProvider(
-              create: (context) => TaskCreateController(),
+              create: (context) => TaskCreateController(
+                localStorage: context.read<LocalStorage>(),
+              ),
               lazy: false,
             )
           ],

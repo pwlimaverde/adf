@@ -1,5 +1,5 @@
-import '../../../../../core/database/sqlite/sqlite_connection.dart';
 import '../../domain/interface/local_storage.dart';
+import 'config/sqlite_connection.dart';
 
 final class SqliteLocalStorage implements LocalStorage {
   final SqliteConnection _sqliteConnection;
@@ -19,17 +19,22 @@ final class SqliteLocalStorage implements LocalStorage {
   }
 
   @override
-  Future<void> write<T>({required String key, required T data}) async {
-    if (data is ({DateTime date, String description})) {
-      final ({DateTime date, String description}) result = data;
-
+  Future<void> write({
+    required String id,
+    required ({
+      String descricao,
+      DateTime dataHora,
+      bool finalizado,
+    }) data,
+  }) async {
+    if (id == '') {
       final conn = await _sqliteConnection.openConnection();
       await conn.insert(
-        key,
+        'todo',
         {
           'id': null,
-          'descricao': result.description,
-          'data_hora': result.date.toIso8601String(),
+          'descricao': data.descricao,
+          'data_hora': data.dataHora.toIso8601String(),
           'finalizado': 0,
         },
       );
