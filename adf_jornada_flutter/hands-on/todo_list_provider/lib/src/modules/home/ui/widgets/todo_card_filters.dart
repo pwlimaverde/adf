@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/ui/utilites/theme_extensions.dart';
+import '../../features/filtro_tasks/domain/model/filtro_tasks_enum.dart';
+import '../../features/filtro_tasks/domain/model/total_tasks_model.dart';
+import '../home_controller.dart';
 
-class TodoCardFilters extends StatefulWidget {
-  const TodoCardFilters({super.key});
+class TodoCardFilters extends StatelessWidget {
+  final FiltroTasksEnum filtroTasksEnum;
+  final TotalTasksModel? totalTasksModel;
 
-  @override
-  State<TodoCardFilters> createState() => _TodoCardFiltersState();
-}
-
-class _TodoCardFiltersState extends State<TodoCardFilters> {
+  const TodoCardFilters({
+    super.key,
+    this.totalTasksModel,
+    required this.filtroTasksEnum,
+  });
   @override
   Widget build(BuildContext context) {
+    final selecionado = context.select<HomeController, FiltroTasksEnum>(
+                        (value) => value.filtroSelecionado) ==
+                    filtroTasksEnum;
     return Container(
       constraints: BoxConstraints(
         minHeight: 120,
@@ -20,7 +28,7 @@ class _TodoCardFiltersState extends State<TodoCardFilters> {
       margin: EdgeInsets.only(right: 10),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: context.primaryColor,
+        color: selecionado ? context.primaryColor:Colors.white,
         border: Border.all(
           color: Colors.grey.withOpacity(0.8),
           width: 1,
@@ -31,23 +39,23 @@ class _TodoCardFiltersState extends State<TodoCardFilters> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text(
-            '10 TASKS',
+            '${totalTasksModel?.totalTasks ?? 0} TASKS',
             style: context.titleStyle.copyWith(
               fontSize: 10,
-              color: Colors.white,
+              color: selecionado ? Colors.white : Colors.grey,
             ),
           ),
           SizedBox(
             height: 10,
           ),
           Text(
-            'Hoje',
+            filtroTasksEnum.descricao,
             style: context.titleStyle.copyWith(
               fontSize: 20,
-              color: Colors.white,
+              color:  selecionado ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(
@@ -59,17 +67,36 @@ class _TodoCardFiltersState extends State<TodoCardFilters> {
             child: Container(
               width: 110,
               height: 6,
-              child: LinearProgressIndicator(
-                backgroundColor: context.primaryColorLight,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                value: 0.4,
-                color: Colors.white,
-                minHeight: 5,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(
+                  begin: 0.0,
+                  end: _getPercentFinish(),
+                ),
+                duration: Duration(seconds: 1),
+                builder: (context, value, child) {
+                  return LinearProgressIndicator(
+                    backgroundColor: selecionado? context.primaryColorLight:Colors.grey.shade300,
+                    valueColor: AlwaysStoppedAnimation<Color>(selecionado? Colors.white :context.primaryColor),
+                    value: value,
+                    minHeight: 5,
+                  );
+                },
               ),
             ),
           ),
         ],
       ),
     );
+  }
+  
+  double _getPercentFinish() {
+    final total = totalTasksModel?.totalTasks ?? 0.0;
+    final finish = totalTasksModel?.totalTasksFinish ?? 0.1;
+    if (totalTasksModel == 0) {
+      return 0;
+    }
+    final percent = (finish * 100)/total;
+    return percent/100;
+  
   }
 }

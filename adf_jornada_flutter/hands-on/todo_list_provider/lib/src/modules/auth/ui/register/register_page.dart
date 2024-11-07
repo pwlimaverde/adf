@@ -27,8 +27,8 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     super.initState();
     final defautListener = DefautListnerNotifier(context.read<RegisterController>());
-    defautListener.listener(context: context, successCallback: () {
-      Navigator.of(context).pop();
+    defautListener.listener(context: context, successCallback: (notifier, listenerInstance) {
+      listenerInstance.dispose();
     });
   }
 

@@ -9,3 +9,13 @@ final class UserError implements AppError {
     return "UserError - $message";
   }
 }
+
+final class FilterError implements AppError {
+  @override
+  String message;
+  FilterError({required this.message});
+  @override
+  String toString() {
+    return "FilterError - $message";
+  }
+}

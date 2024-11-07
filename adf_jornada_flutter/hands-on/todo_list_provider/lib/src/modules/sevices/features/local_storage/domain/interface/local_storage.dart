@@ -1,5 +1,11 @@
 abstract interface class LocalStorage {
-  Future<T> read<T>(String key);
+  Future<List<Map<String, dynamic>>> read({
+    String? id,
+    ({
+      DateTime start,
+      DateTime end,
+    })? periodo,
+  });
   Future<void> write({
     required String id,
     required ({

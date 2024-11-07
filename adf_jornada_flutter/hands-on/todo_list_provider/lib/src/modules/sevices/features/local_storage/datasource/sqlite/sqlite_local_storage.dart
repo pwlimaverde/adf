@@ -9,8 +9,47 @@ final class SqliteLocalStorage implements LocalStorage {
   ) : _sqliteConnection = sqliteConnection;
 
   @override
-  Future<T> read<T>(String key) {
-    throw UnimplementedError();
+  Future<List<Map<String, dynamic>>> read({
+    String? id,
+    ({
+      DateTime start,
+      DateTime end,
+    })? periodo,
+  }) async {
+    final conn = await _sqliteConnection.openConnection();
+    if (periodo != null) {
+      final startFilter = DateTime(
+        periodo.start.year,
+        periodo.start.month,
+        periodo.start.day,
+        0,
+        0,
+        0,
+      );
+      final endFilter = DateTime(
+        periodo.end.year,
+        periodo.end.month,
+        periodo.end.day,
+        23,
+        59,
+        59,
+      );
+      final result = await conn.rawQuery(
+        '''
+        SELECT * 
+        FROM todo
+        WHERE data_hora BETWEEN ? AND ?
+        ORDER BY data_hora
+      ''',
+        [
+          startFilter.toIso8601String(),
+          endFilter.toIso8601String(),
+        ],
+      );
+      return result;
+    } else {
+      throw Exception('Não foi possível ler o dado');
+    }
   }
 
   @override

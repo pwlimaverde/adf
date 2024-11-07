@@ -3,11 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/ui/utilites/notifier/defaut_chang_notifier.dart';
 import '../../sevices/features/features_service_presenter.dart';
 import '../features/features_home_presenter.dart';
+import '../features/filtro_tasks/domain/model/filtro_tasks_enum.dart';
 import '../utils/erros.dart';
 
 final class HomeController extends DefautChangNotifier {
   final FeaturesHomePresenter _featuresHomePresenter;
   final FeaturesServicePresenter _featuresServicePresenter;
+
+  var filtroSelecionado = FiltroTasksEnum.todas;
+
 
   HomeController({
     required FeaturesHomePresenter featuresHomePresenter,
@@ -41,6 +45,16 @@ final class HomeController extends DefautChangNotifier {
       setError(e.message);
     } finally {
       hideLoading();
+    }
+  }
+
+  Future<void> filtroTasks() async {
+    try {
+   
+      await _featuresHomePresenter.filtroTasks(filtroSelecionado);
+
+    } on FilterError catch (e) {
+      setError(e.message);
     }
   }
 }

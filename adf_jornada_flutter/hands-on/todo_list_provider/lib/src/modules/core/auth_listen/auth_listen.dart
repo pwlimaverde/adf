@@ -15,10 +15,10 @@ final class AuthListen extends ChangeNotifier {
         .listen((_) => notifyListeners());
     _featuresServicePresenter.auth.authStateChanges().listen((user) async {
       if (user != null) {
-        await Future.delayed(const Duration(milliseconds: 800));
+        await Future.delayed(const Duration(milliseconds: 300));
         TodoListNavigator.to.pushNamedAndRemoveUntil("/home", (route) => false);
       } else {
-        await Future.delayed(const Duration(milliseconds: 800));
+        await Future.delayed(const Duration(milliseconds: 300));
         TodoListNavigator.to
             .pushNamedAndRemoveUntil("/login", (route) => false);
       }

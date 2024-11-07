@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/ui/utilites/icons_padrao.dart';
 import '../../core/ui/utilites/theme_extensions.dart';
 import '../../sevices/features/features_service_presenter.dart';
@@ -10,7 +11,7 @@ import 'widgets/home_header.dart';
 import 'widgets/home_tasks.dart';
 import 'widgets/home_week_filter.dart';
 
-final class HomePage extends StatelessWidget {
+final class HomePage extends StatefulWidget {
   final HomeController _controller;
   final FeaturesServicePresenter _featuresServicePresenter;
   const HomePage({
@@ -21,7 +22,19 @@ final class HomePage extends StatelessWidget {
         _featuresServicePresenter = featuresServicePresenter;
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeController>().filtroTasks();
+  }
+  
+  @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: context.primaryColor),
@@ -44,8 +57,8 @@ final class HomePage extends StatelessWidget {
       ),
       backgroundColor: Colors.grey[50],
       drawer: HomeDrawer(
-        controller: _controller,
-        featuresServicePresenter: _featuresServicePresenter,
+        controller: widget._controller,
+        featuresServicePresenter: widget._featuresServicePresenter,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

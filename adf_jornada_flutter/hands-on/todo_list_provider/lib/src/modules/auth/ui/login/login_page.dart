@@ -32,9 +32,17 @@ class _LoginPageState extends State<LoginPage> {
         DefautListnerNotifier(context.read<LoginController>());
     defautListener.listener(
         context: context,
-        successCallback: () {
-          // Navigator.of(context).pop();
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
         });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailEC.dispose();
+    _passwordEC.dispose();
+    _emailFocus.dispose();
   }
 
   @override

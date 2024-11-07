@@ -30,7 +30,8 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
         DefautListnerNotifier(widget._controller);
     defautListener.listener(
         context: context,
-        successCallback: () {
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
           Navigator.of(context).pop();
         });
   }
@@ -39,9 +40,6 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
   void dispose() {
     super.dispose();
     _descriptionEC.dispose();
-    
-    print('Listener removido');
-    
   }
 
   @override

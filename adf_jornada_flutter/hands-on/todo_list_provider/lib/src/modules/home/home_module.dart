@@ -5,7 +5,11 @@ import 'package:provider/provider.dart';
 import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import '../sevices/features/features_service_presenter.dart';
+import '../sevices/features/local_storage/domain/interface/local_storage.dart';
 import 'features/features_home_presenter.dart';
+import 'features/filtro_tasks/datasouces/filtro_tasks_datasource.dart';
+import 'features/filtro_tasks/domain/usecase/filtro_tasks_usecase.dart';
+import 'features/get_periodo/domain/usecase/get_periodo_usecase.dart';
 import 'features/update_display_name/domain/usecase/update_display_name_usecase.dart';
 import 'features/update_foto/datasources/update_foto_datasource.dart';
 import 'features/update_foto/domain/usecase/update_foto_usecase.dart';
@@ -17,6 +21,10 @@ final class HomeModule extends Module {
   HomeModule()
       : super(
           bindings: [
+            Provider<LocalStorage>(
+              create: (_) => FeaturesServicePresenter.to.localStorage,
+              lazy: true,
+            ),
             Provider<ImagePicker>(
               create: (_) => ImagePicker(),
               lazy: true,
@@ -49,10 +57,28 @@ final class HomeModule extends Module {
               ),
               lazy: true,
             ),
+            Provider<FTdata>(
+              create: (context) => FiltroTasksDatasource(
+                context.read<LocalStorage>(),
+              ),
+              lazy: true,
+            ),
+            Provider<FTusecase>(
+              create: (context) => FiltroTasksUsecase(
+                context.read<FTdata>(),
+              ),
+              lazy: true,
+            ),
+            Provider<GPusecase>(
+              create: (context) => GetPeriodoUsecase(),
+              lazy: true,
+            ),
             Provider<FeaturesHomePresenter>(
               create: (context) => FeaturesHomePresenter(
                 updateDisplayName: context.read<UDNusecase>(),
                 updateFoto: context.read<UFusecase>(),
+                filtroTasks: context.read<FTusecase>(),
+                getPeriodoUsecase: context.read<GPusecase>(),
               ),
               lazy: true,
             ),
