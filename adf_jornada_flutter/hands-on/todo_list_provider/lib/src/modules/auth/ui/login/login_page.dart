@@ -54,7 +54,10 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 10,
           ),
-          const TodoListLogo(),
+          const Padding(
+            padding: EdgeInsets.all(30.0),
+            child: TodoListLogo(),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 40,

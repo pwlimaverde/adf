@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../features/filtro_tasks/domain/model/task_model.dart';
 
 class Tasks extends StatelessWidget {
-  const Tasks({super.key});
+  final TaskModel taskModel;
+  final dateFormat = DateFormat(
+    'dd/MM/yyyy',
+  );
+  Tasks({
+    super.key,
+    required this.taskModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +19,7 @@ class Tasks extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.grey,
             // spreadRadius: 2,
@@ -18,26 +28,27 @@ class Tasks extends StatelessWidget {
           ),
         ],
       ),
-      margin: EdgeInsets.symmetric(vertical: 5),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(10),
       child: IntrinsicHeight(
         child: ListTile(
           leading: Checkbox(
-            value: true,
+            value: taskModel.finalizado,
             onChanged: (value) {},
           ),
           title: Text(
-            'Descrição da TASK',
-            style: TextStyle(decoration: true ? TextDecoration.lineThrough:null),
+            taskModel.descricao,
+            style:
+                TextStyle(decoration: taskModel.finalizado ? TextDecoration.lineThrough : null),
           ),
           subtitle: Text(
-            '27/10/2024',
-            style: TextStyle(decoration: true ? TextDecoration.lineThrough:null),
+            dateFormat.format(taskModel.dataHora),
+            style:
+                TextStyle(decoration: taskModel.finalizado ? TextDecoration.lineThrough : null),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(width: 1)
-          ),
+              borderRadius: BorderRadius.circular(20),
+              side: const BorderSide(width: 1)),
         ),
       ),
     );

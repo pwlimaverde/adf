@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../core/ui/utilites/icons_padrao.dart';
+import '../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../core/ui/utilites/theme_extensions.dart';
 import '../../sevices/features/features_service_presenter.dart';
 import '../../tasks/tasks_module.dart';
+import '../features/filtro_tasks/domain/model/filtro_tasks_enum.dart';
 import 'home_controller.dart';
 import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
@@ -29,7 +30,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeController>().filtroTasks();
+    DefautListnerNotifier(widget._controller).listener(context: context, successCallback: (notifier, listenerInstance){
+      listenerInstance.dispose();
+    });
+    
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      widget._controller.loadTotalTasks();
+      widget._controller.alterarFiltroAtual(FiltroTasksEnum.hoje);
+    });
+
   }
   
   @override
@@ -44,16 +53,16 @@ class _HomePageState extends State<HomePage> {
           PopupMenuButton(
               icon: const Icon(IconsPadrao.filter),
               itemBuilder: (_) => [
-                    PopupMenuItem<bool>(
+                    const PopupMenuItem<bool>(
                       child: Text('Mostrar tarefas concluídas'),
                     ),
                   ]),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _goToTaskCreate(context),
-        child: const Icon(Icons.add),
+        onPressed: () async => await _goToTaskCreate(context),
         backgroundColor: context.primaryColor,
+        child: const Icon(Icons.add),
       ),
       backgroundColor: Colors.grey[50],
       drawer: HomeDrawer(
@@ -70,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: IntrinsicHeight(
+                child: const IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -89,8 +98,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _goToTaskCreate(BuildContext context) {
-    Navigator.of(context).push(
+  Future<void> _goToTaskCreate(BuildContext context) async{
+    await Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -108,5 +117,6 @@ class _HomePageState extends State<HomePage> {
             TasksModule().getPage(context: context, routeName: '/task/create'),
       ),
     );
+    await widget._controller.refreshPage();
   }
 }

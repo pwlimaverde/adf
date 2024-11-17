@@ -8,6 +8,8 @@ import '../home_controller.dart';
 import 'todo_card_filters.dart';
 
 class HomeFilters extends StatelessWidget {
+  const HomeFilters({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +19,7 @@ class HomeFilters extends StatelessWidget {
           'FILTROS',
           style: context.titleStyle,
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SingleChildScrollView(
@@ -26,37 +28,44 @@ class HomeFilters extends StatelessWidget {
             children: [
               TodoCardFilters(
                 filtroTasksEnum: FiltroTasksEnum.hoje,
-                totalTasksModel: TotalTasksModel(
-                  totalTasks: 8,
-                  totalTasksFinish: 4,
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.hojeTotalTasks,
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               TodoCardFilters(
                 filtroTasksEnum: FiltroTasksEnum.amanha,
-                totalTasksModel: TotalTasksModel(
-                  totalTasks: 10,
-                  totalTasksFinish: 10,
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.amanhaTotalTasks,
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               TodoCardFilters(
                 filtroTasksEnum: FiltroTasksEnum.semana,
-                totalTasksModel: TotalTasksModel(
-                  totalTasks: 20,
-                  totalTasksFinish: 7,
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.semanaTotalTasks,
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               TodoCardFilters(
                 filtroTasksEnum: FiltroTasksEnum.mes,
-                totalTasksModel: TotalTasksModel(
-                  totalTasks: 10,
-                  totalTasksFinish: 1,
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.mesTotalTasks,
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               TodoCardFilters(
                 filtroTasksEnum: FiltroTasksEnum.todas,
-                totalTasksModel: TotalTasksModel(
-                  totalTasks: 10,
-                  totalTasksFinish: 1,
+                totalTasksModel: context.select<HomeController, TotalTasksModel?>(
+                  (controller) => controller.todasTotalTasks,
                 ),
               ),
             ],
