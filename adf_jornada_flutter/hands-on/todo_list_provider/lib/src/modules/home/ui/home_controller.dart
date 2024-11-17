@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
 import '../../core/ui/utilites/notifier/defaut_chang_notifier.dart';
 import '../../sevices/features/features_service_presenter.dart';
 import '../features/features_home_presenter.dart';
@@ -16,6 +14,9 @@ final class HomeController extends DefautChangNotifier {
   var filtroSelecionado = FiltroTasksEnum.hoje;
   List<TaskModel> tasksAtual = [];
   List<TaskModel> tasksAtualFilter = [];
+  DateTime? dataInicial;
+  DateTime? dataFinal;
+  DateTime? dataSelecionada;
 
   TotalTasksModel? hojeTotalTasks;
   TotalTasksModel? amanhaTotalTasks;
@@ -77,10 +78,7 @@ final class HomeController extends DefautChangNotifier {
     try {
       final data =
           await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.hoje);
-      hojeTotalTasks = TotalTasksModel(
-        totalTasks: data.length,
-        totalTasksFinish: data.where((task) => task.finalizado).length,
-      );
+      hojeTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
     } catch (e) {
       setError(e.toString());
     }
@@ -90,10 +88,7 @@ final class HomeController extends DefautChangNotifier {
     try {
       final data =
           await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.amanha);
-      amanhaTotalTasks = TotalTasksModel(
-        totalTasks: data.length,
-        totalTasksFinish: data.where((task) => task.finalizado).length,
-      );
+      amanhaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
     } catch (e) {
       setError(e.toString());
     }
@@ -103,10 +98,7 @@ final class HomeController extends DefautChangNotifier {
     try {
       final data =
           await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.semana);
-      semanaTotalTasks = TotalTasksModel(
-        totalTasks: data.length,
-        totalTasksFinish: data.where((task) => task.finalizado).length,
-      );
+      semanaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
     } catch (e) {
       setError(e.toString());
     }
@@ -116,10 +108,7 @@ final class HomeController extends DefautChangNotifier {
     try {
       final data =
           await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.mes);
-      mesTotalTasks = TotalTasksModel(
-        totalTasks: data.length,
-        totalTasksFinish: data.where((task) => task.finalizado).length,
-      );
+      mesTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
     } catch (e) {
       setError(e.toString());
     }
@@ -129,23 +118,39 @@ final class HomeController extends DefautChangNotifier {
     try {
       final data =
           await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.todas);
-      todasTotalTasks = TotalTasksModel(
-        totalTasks: data.length,
-        totalTasksFinish: data.where((task) => task.finalizado).length,
-      );
+      todasTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
     } catch (e) {
       setError(e.toString());
     }
   }
 
-  Future<void> alterarFiltroAtual(FiltroTasksEnum filtroAtual) async {
+  TotalTasksModel _setTotalTasksModel({required List<TaskModel> listTasks}) {
+    return TotalTasksModel(
+      totalTasks: listTasks.length,
+      totalTasksFinish: listTasks.where((task) => task.finalizado).length,
+    );
+  }
+
+  Future<void> alterarFiltroAtual(
+    FiltroTasksEnum filtroAtual, [
+    bool? force,
+  ]) async {
     try {
-      showLoading();
-      filtroSelecionado = filtroAtual;
-      List<TaskModel> tasks =
-          await _featuresHomePresenter.filtroTasks(filtroAtual);
-      tasksAtualFilter = tasks;
-      tasksAtual = tasks;
+      if (filtroAtual != filtroSelecionado || force == true) {
+        filtroSelecionado = FiltroTasksEnum.hoje;
+        showLoading();
+        await Future.delayed(const Duration(milliseconds: 15));
+        filtroSelecionado = filtroAtual;
+        final result = await _featuresHomePresenter.filtroTasks(filtroAtual);
+        dataInicial = result.start;
+        dataFinal = result.end;
+        tasksAtualFilter = result.listTasks;
+        tasksAtual = result.listTasks;
+        if(filtroAtual == FiltroTasksEnum.semana || filtroAtual == FiltroTasksEnum.mes){
+          filtroPorData(result.start);
+        }
+
+      }
     } catch (e) {
       setError(e.toString());
     } finally {
@@ -153,11 +158,17 @@ final class HomeController extends DefautChangNotifier {
     }
   }
 
+  void filtroPorData(DateTime data) {
+    dataSelecionada = data;
+    tasksAtualFilter = tasksAtual.where((task) => task.dataHora == data).toList();
+    notifyListeners();
+  }
+
   Future<void> refreshPage() async {
     try {
       showLoading();
       await loadTotalTasks();
-      await alterarFiltroAtual(filtroSelecionado);
+      await alterarFiltroAtual(filtroSelecionado, true);
     } catch (e) {
       setError(e.toString());
     } finally {

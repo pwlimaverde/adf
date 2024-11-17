@@ -21,8 +21,8 @@ final class GetPeriodoUsecase extends UsecaseBase<PeriodoModel> {
         case FiltroTasksEnum.amanha:
           return SuccessReturn(
             success: PeriodoModel(
-              start: DateTime.now().add(Duration(days: 1)),
-              end: DateTime.now().add(Duration(days: 1)),
+              start: DateTime.now().add(const Duration(days: 1)),
+              end: DateTime.now().add(const Duration(days: 1)),
             ),
           );
         case FiltroTasksEnum.semana:
@@ -31,7 +31,7 @@ final class GetPeriodoUsecase extends UsecaseBase<PeriodoModel> {
           if (start.weekday != DateTime.monday) {
             start = start.subtract(Duration(days: (start.weekday - 1)));
           }
-          final end = start.add(Duration(days: 7));
+          final end = start.add(const Duration(days: 7));
           return SuccessReturn(
             success: PeriodoModel(
               start: start,
@@ -42,7 +42,7 @@ final class GetPeriodoUsecase extends UsecaseBase<PeriodoModel> {
           final hoje = DateTime.now();
           var start = DateTime(hoje.year, hoje.month, 1, 0, 0, 0);
           var end = DateTime(hoje.year, hoje.month + 1, 1, 0, 0, 0)
-              .subtract(Duration(days: 1));
+              .subtract(const Duration(days: 1));
 
           return SuccessReturn(
             success: PeriodoModel(
@@ -54,7 +54,7 @@ final class GetPeriodoUsecase extends UsecaseBase<PeriodoModel> {
           final hoje = DateTime.now();
           var start = DateTime(2020, 1, 1, 0, 0, 0);
           var end = DateTime(hoje.year, hoje.month + 1, 1, 0, 0, 0)
-              .add(Duration(days: 10 * 365));
+              .add(const Duration(days: 10 * 365));
 
           return SuccessReturn(
             success: PeriodoModel(

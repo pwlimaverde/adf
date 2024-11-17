@@ -19,7 +19,7 @@ class HomeTasks extends StatelessWidget {
             height: 20,
           ),
           Selector<HomeController, String>(selector: (context, controller) {
-            return controller.filtroSelecionado.descricao;
+            return controller.filtroSelecionado?.descricao??'';
           },builder: (context, value, child){
             return Text(
             value == 'TODAS' ? 'TODAS AS TASK\'S' : 'TASK\'S $value',

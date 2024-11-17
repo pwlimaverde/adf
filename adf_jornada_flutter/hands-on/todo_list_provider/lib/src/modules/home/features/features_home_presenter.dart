@@ -71,8 +71,8 @@ final class FeaturesHomePresenter {
     }
   }
 
-  Future<List<TaskModel>> filtroTasks(FiltroTasksEnum filtro) async {
-    final periodo = await getPeriodo(filtro);
+  Future<({List<TaskModel> listTasks, DateTime end, DateTime start})> filtroTasks(FiltroTasksEnum filtro) async {
+    final periodo = await _getPeriodo(filtro);
     final data = await _filtroTasks(
       ParametrosFiltroTasks(
         error: FilterError(message: "Erro ao filtrar as tasks!"),
@@ -81,13 +81,13 @@ final class FeaturesHomePresenter {
     );
     switch (data) {
       case SuccessReturn<List<TaskModel>>():
-        return data.result;
+        return (listTasks: data.result, end: periodo.end, start: periodo.start);
       case ErrorReturn<List<TaskModel>>():
         throw data.result;
     }
   }
 
-  Future<({DateTime start, DateTime end})> getPeriodo(FiltroTasksEnum filtro) async {
+  Future<({DateTime start, DateTime end})> _getPeriodo(FiltroTasksEnum filtro) async {
     final data = await _getPeriodoUsecase(
       ParametrosGetPeriodo(
         error: FilterError(message: "Erro ao filtrar as tasks!"),

@@ -10,7 +10,7 @@ import 'widgets/home_drawer.dart';
 import 'widgets/home_filters.dart';
 import 'widgets/home_header.dart';
 import 'widgets/home_tasks.dart';
-import 'widgets/home_week_filter.dart';
+import 'widgets/home_data_filter.dart';
 
 final class HomePage extends StatefulWidget {
   final HomeController _controller;
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     
     WidgetsBinding.instance.addPostFrameCallback((_){
       widget._controller.loadTotalTasks();
-      widget._controller.alterarFiltroAtual(FiltroTasksEnum.hoje);
+      widget._controller.alterarFiltroAtual(FiltroTasksEnum.hoje, true);
     });
 
   }
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       HomeHeader(),
                       HomeFilters(),
-                      HomeWeekFilter(),
+                      HomeDataFilter(),
                       HomeTasks(),
                     ],
                   ),
