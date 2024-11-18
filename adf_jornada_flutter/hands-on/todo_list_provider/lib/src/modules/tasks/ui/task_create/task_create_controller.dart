@@ -1,13 +1,13 @@
 import '../../../core/ui/utilites/notifier/defaut_chang_notifier.dart';
-import '../../../sevices/features/local_storage/domain/interface/local_storage.dart';
+import '../../features/features_tasks_presenter.dart';
 
 final class TaskCreateController extends DefautChangNotifier {
-  final LocalStorage _localStorage;
+  final FeaturesTaskPresenter _featuresTaskPresenter;
   DateTime? _selectedDate;
 
   TaskCreateController({
-    required LocalStorage localStorage,
-  }) : _localStorage = localStorage;
+    required FeaturesTaskPresenter featuresTaskPresenter,
+  }) : _featuresTaskPresenter = featuresTaskPresenter;
 
   set selectedDate(DateTime? value) {
     resetStatus();
@@ -23,20 +23,17 @@ final class TaskCreateController extends DefautChangNotifier {
     try {
       showLoading();
       if (_selectedDate != null) {
-        await _localStorage.write(id: '', data: (
+        await _featuresTaskPresenter.createTask(
           dataHora: _selectedDate!,
           descricao: description,
-          finalizado: false
-        ));
+        );
         setSuccess('Task criada com sucesso!');
-      }else{
-        setError('Data da Atividade não selecionada!');
+      } else {
+        setError('Data da Task não selecionada!');
       }
-    } catch (e, s) {
-      print(e);
-      print(s);
-      setError('Erro ao cadastrar Atividade!');
-    }finally{
+    } catch (e) {
+      setError('Erro ao cadastrar Task! - $e');
+    } finally {
       hideLoading();
     }
   }

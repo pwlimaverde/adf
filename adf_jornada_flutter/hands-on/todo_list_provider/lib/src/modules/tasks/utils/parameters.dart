@@ -2,13 +2,15 @@ import 'package:return_success_or_error/return_success_or_error.dart';
 
 import 'erros.dart';
 
-final class ParametrosUpdateDisplayName implements ParametersReturnResult {
-  final String nome;
+final class ParametrosCreateTasks implements ParametersReturnResult {
+  final String descricao;
+  final DateTime dataHora;
   @override
-  final UserError error;
+  final TaskError error;
 
-  ParametrosUpdateDisplayName({
-    required this.nome,
+  ParametrosCreateTasks({
+    required this.descricao,
+    required this.dataHora,
     required this.error,
   });
 }

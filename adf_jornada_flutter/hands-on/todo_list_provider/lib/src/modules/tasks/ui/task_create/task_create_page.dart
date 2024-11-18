@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:validatorless/validatorless.dart';
 import '../../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../../core/ui/utilites/theme_extensions.dart';
@@ -10,7 +9,7 @@ import 'widgets/calendar_button.dart';
 final class TaskCreatePage extends StatefulWidget {
   final TaskCreateController _controller;
 
-  TaskCreatePage({
+  const TaskCreatePage({
     super.key,
     required TaskCreateController controller,
   }) : _controller = controller;
@@ -69,7 +68,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
             );
           }
         },
-        label: Text(
+        label: const Text(
           'Salvar task',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -80,7 +79,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       body: Form(
         key: _formKey,
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 30),
+          margin: const EdgeInsets.symmetric(horizontal: 30),
           color: Colors.grey[50],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +94,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               FieldPadrao(
@@ -103,7 +102,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                 controller: _descriptionEC,
                 validator: Validatorless.required('Descrição é obrigatória!'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               CalendarButton(),

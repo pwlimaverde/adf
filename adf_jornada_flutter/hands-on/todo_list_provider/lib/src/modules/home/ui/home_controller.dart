@@ -137,7 +137,6 @@ final class HomeController extends DefautChangNotifier {
   ]) async {
     try {
       if (filtroAtual != filtroSelecionado || force == true) {
-        filtroSelecionado = FiltroTasksEnum.hoje;
         showLoading();
         await Future.delayed(const Duration(milliseconds: 15));
         filtroSelecionado = filtroAtual;
@@ -146,10 +145,16 @@ final class HomeController extends DefautChangNotifier {
         dataFinal = result.end;
         tasksAtualFilter = result.listTasks;
         tasksAtual = result.listTasks;
-        if(filtroAtual == FiltroTasksEnum.semana || filtroAtual == FiltroTasksEnum.mes){
-          filtroPorData(result.start);
+        if (filtroAtual == FiltroTasksEnum.semana ||
+            filtroAtual == FiltroTasksEnum.mes) {
+          if (dataSelecionada != null) {
+            filtroPorData(dataSelecionada!);
+          } else {
+            filtroPorData(result.start);
+          }
+        } else {
+          dataSelecionada = null;
         }
-
       }
     } catch (e) {
       setError(e.toString());
@@ -160,7 +165,8 @@ final class HomeController extends DefautChangNotifier {
 
   void filtroPorData(DateTime data) {
     dataSelecionada = data;
-    tasksAtualFilter = tasksAtual.where((task) => task.dataHora == data).toList();
+    tasksAtualFilter =
+        tasksAtual.where((task) => task.dataHora == data).toList();
     notifyListeners();
   }
 
