@@ -5,14 +5,20 @@ import '../../../utils/parameters.dart';
 import '../domain/model/tasks_maps_model.dart';
 
 final class FiltroTasksDatasource implements Datasource<TasksMapsModel> {
-  final LocalStorage _localStorage;
+  final LocalStorage? _localStorage;
 
   FiltroTasksDatasource(
     LocalStorage localStorage,
   ) : _localStorage = localStorage;
   @override
   Future<TasksMapsModel> call(ParametrosFiltroTasks parameters) async {
-    final result = await _localStorage.read(periodo: parameters.periodo);
+    if (_localStorage == null) {
+      throw parameters.error;
+    }
+    final result = await _localStorage.read(
+      periodo: parameters.periodo,
+      uid: parameters.uid,
+    );
 
     return TasksMapsModel(result);
   }

@@ -12,6 +12,7 @@ final class HomeController extends DefautChangNotifier {
   final FeaturesServicePresenter _featuresServicePresenter;
 
   var filtroSelecionado = FiltroTasksEnum.hoje;
+
   List<TaskModel> tasksAtual = [];
   List<TaskModel> tasksAtualFilter = [];
   DateTime? dataInicial;
@@ -76,9 +77,11 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> _loadHojeTasks() async {
     try {
-      final data =
-          await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.hoje);
-      hojeTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      if (user != null) {
+        final data = await _featuresHomePresenter.filtroTasks(
+            filtro: FiltroTasksEnum.hoje, uid: user!.uid);
+        hojeTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      }
     } catch (e) {
       setError(e.toString());
     }
@@ -86,9 +89,11 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> _loadAmanhaTasks() async {
     try {
-      final data =
-          await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.amanha);
-      amanhaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      if (user != null) {
+        final data = await _featuresHomePresenter.filtroTasks(
+            filtro: FiltroTasksEnum.amanha, uid: user!.uid);
+        amanhaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      }
     } catch (e) {
       setError(e.toString());
     }
@@ -96,9 +101,11 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> _loadSemanaTasks() async {
     try {
-      final data =
-          await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.semana);
-      semanaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      if (user != null) {
+        final data = await _featuresHomePresenter.filtroTasks(
+            filtro: FiltroTasksEnum.semana, uid: user!.uid);
+        semanaTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      }
     } catch (e) {
       setError(e.toString());
     }
@@ -106,9 +113,11 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> _loadMesTasks() async {
     try {
-      final data =
-          await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.mes);
-      mesTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      if (user != null) {
+        final data = await _featuresHomePresenter.filtroTasks(
+            filtro: FiltroTasksEnum.mes, uid: user!.uid);
+        mesTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      }
     } catch (e) {
       setError(e.toString());
     }
@@ -116,9 +125,11 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> _loadTodasTasks() async {
     try {
-      final data =
-          await _featuresHomePresenter.filtroTasks(FiltroTasksEnum.todas);
-      todasTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      if (user != null) {
+        final data = await _featuresHomePresenter.filtroTasks(
+            filtro: FiltroTasksEnum.todas, uid: user!.uid);
+        todasTotalTasks = _setTotalTasksModel(listTasks: data.listTasks);
+      }
     } catch (e) {
       setError(e.toString());
     }
@@ -136,11 +147,11 @@ final class HomeController extends DefautChangNotifier {
     bool? force,
   ]) async {
     try {
-      if (filtroAtual != filtroSelecionado || force == true) {
+      if (filtroAtual != filtroSelecionado || force == true && user != null) {
         showLoading();
         await Future.delayed(const Duration(milliseconds: 15));
         filtroSelecionado = filtroAtual;
-        final result = await _featuresHomePresenter.filtroTasks(filtroAtual);
+        final result = await _featuresHomePresenter.filtroTasks(filtro: filtroAtual, uid: user!.uid);
         dataInicial = result.start;
         dataFinal = result.end;
         tasksAtualFilter = result.listTasks;
@@ -180,5 +191,33 @@ final class HomeController extends DefautChangNotifier {
     } finally {
       hideLoading();
     }
+  }
+
+  Future<void> signOut() async {
+    try {
+      showLoading();
+
+      cleanStatus();
+      await Future.delayed(const Duration(seconds: 3));
+      await _featuresServicePresenter.signOutService();
+    } catch (e) {
+      setError(e.toString());
+    } finally {
+      hideLoading();
+    }
+  }
+
+  void cleanStatus() {
+    tasksAtual = [];
+    tasksAtualFilter = [];
+    dataInicial = null;
+    dataFinal = null;
+    dataSelecionada = null;
+    hojeTotalTasks = null;
+    amanhaTotalTasks = null;
+    semanaTotalTasks = null;
+    mesTotalTasks = null;
+    todasTotalTasks = null;
+    filtroSelecionado = FiltroTasksEnum.hoje;
   }
 }

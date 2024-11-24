@@ -8,13 +8,12 @@ import '../home_controller.dart';
 
 class HomeDrawer extends StatefulWidget {
   final HomeController _controller;
-  final FeaturesServicePresenter _featuresServicePresenter;
+
   const HomeDrawer({
     super.key,
     required HomeController controller,
     required FeaturesServicePresenter featuresServicePresenter,
-  })  : _controller = controller,
-        _featuresServicePresenter = featuresServicePresenter;
+  })  : _controller = controller;
 
   @override
   State<HomeDrawer> createState() => _HomeDrawerState();
@@ -80,7 +79,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
           ),
           ListTile(
-            title: Text('Alterar Nome'),
+            title: const Text('Alterar Nome'),
             onTap: () {
               showDialog(
                   context: context,
@@ -88,7 +87,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     _displayNameEC.text =
                         widget._controller.user?.displayName ?? '';
                     return AlertDialog(
-                      title: Text('Alterar Nome'),
+                      title: const Text('Alterar Nome'),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -116,7 +115,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             'Cancelar',
                             style: TextStyle(color: Colors.red),
                           ),
@@ -128,10 +127,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             if (formValid) {
                               final name = _displayNameEC.text;
                               await widget._controller.updateDisplayName(name);
-                              Navigator.of(context).pop();
+                              _pop();
                             }
                           },
-                          child: Text('Salvar'),
+                          child: const Text('Salvar'),
                         ),
                       ],
                     );
@@ -139,19 +138,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
             },
           ),
           ListTile(
-            title: Text('Alterar Imagem'),
+            title: const Text('Alterar Imagem'),
             onTap: () async {
               await widget._controller.updateFoto();
             },
           ),
           ListTile(
-            title: Text('Sair'),
+            title: const Text('Sair'),
             onTap: () async {
-              await widget._featuresServicePresenter.signOutService();
+              await widget._controller.signOut();
             },
           )
         ],
       ),
     );
+  }
+
+  _pop() {
+    Navigator.of(context).pop();
   }
 }

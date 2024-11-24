@@ -24,3 +24,14 @@ final class ParametrosFirebaseInit implements ParametersReturnResult {
     required this.error,
   });
 }
+
+final class ParametrosUid implements ParametersReturnResult {
+  final String uid;
+  @override
+  final AppError error;
+
+  ParametrosUid({
+    required this.uid,
+    required this.error,
+  });
+}

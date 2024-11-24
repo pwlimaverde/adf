@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
 
 import '../../sevices/features/features_service_presenter.dart';
 import '../utils/todo_list_navigator.dart';
@@ -16,6 +17,8 @@ final class AuthListen extends ChangeNotifier {
     _featuresServicePresenter.auth.authStateChanges().listen((user) async {
       if (user != null) {
         await Future.delayed(const Duration(milliseconds: 300));
+        Logger().i('uid AuthListen: ${user.uid}');
+        await _featuresServicePresenter.localStorageService(user.uid);
         TodoListNavigator.to.pushNamedAndRemoveUntil("/home", (route) => false);
       } else {
         await Future.delayed(const Duration(milliseconds: 300));

@@ -1,22 +1,26 @@
+import 'package:logger/logger.dart';
+
 import '../../domain/interface/local_storage.dart';
 import 'config/sqlite_connection.dart';
 
 final class SqliteLocalStorage implements LocalStorage {
   final SqliteConnection _sqliteConnection;
 
-  SqliteLocalStorage(
-    SqliteConnection sqliteConnection,
-  ) : _sqliteConnection = sqliteConnection;
+  SqliteLocalStorage({
+    required SqliteConnection sqliteConnection,
+  })  : _sqliteConnection = sqliteConnection;
 
   @override
   Future<List<Map<String, dynamic>>> read({
+    required String uid,
     String? id,
     ({
       DateTime start,
       DateTime end,
     })? periodo,
   }) async {
-    final conn = await _sqliteConnection.openConnection();
+    final conn = await _sqliteConnection.openConnection(uid);
+    Logger().d('_uid read: $uid');
     if (periodo != null) {
       final startFilter = DateTime(
         periodo.start.year,
@@ -37,7 +41,7 @@ final class SqliteLocalStorage implements LocalStorage {
       final result = await conn.rawQuery(
         '''
         SELECT * 
-        FROM todo
+        FROM todo_${uid.replaceAll('-', '_')}
         WHERE data_hora BETWEEN ? AND ?
         ORDER BY data_hora
       ''',
@@ -60,16 +64,17 @@ final class SqliteLocalStorage implements LocalStorage {
   @override
   Future<void> write({
     required String id,
+    required String uid,
     required ({
       String descricao,
       DateTime dataHora,
       bool finalizado,
     }) data,
   }) async {
+    final conn = await _sqliteConnection.openConnection(uid);
     if (id == '') {
-      final conn = await _sqliteConnection.openConnection();
       await conn.insert(
-        'todo',
+        'todo_${uid.replaceAll('-', '_')}',
         {
           'id': null,
           'descricao': data.descricao,
@@ -78,7 +83,17 @@ final class SqliteLocalStorage implements LocalStorage {
         },
       );
     } else {
-      throw Exception('Não foi possível salvar o dado, verifique o tipo.');
+      final check = data.finalizado ? 1 : 0;
+      conn.rawUpdate('''
+        UPDATE todo_${uid.replaceAll('-', '_')}
+        SET descricao = ?, data_hora = ?, finalizado = ?
+        WHERE id = ?
+      ''', [
+        data.descricao,
+        data.dataHora.toIso8601String(),
+        check,
+        id,
+      ]);
     }
   }
 }

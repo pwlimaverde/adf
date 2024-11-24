@@ -8,10 +8,7 @@ import 'migration/migration_v1.dart';
 
 final class SqliteConnection {
   final _lock = Lock();
-  static const _dbInfo = DbInfo.v4;
-  final List<Migration> _migrations = [
-    MigrationV1(),
-  ];
+  static const _dbInfo = DbInfo.v1;
   Database? _db;
 
   static SqliteConnection? _instance;
@@ -21,21 +18,24 @@ final class SqliteConnection {
     return _instance!;
   }
 
-  Future<Database> openConnection() async {
+  Future<Database> openConnection(String uid) async {
+    final List<Migration> migrations = [
+      MigrationV1(uid: uid),
+    ];
     final databasePath = await getDatabasesPath();
     final databasePathFinal = join(databasePath, _dbInfo.name);
     if (_db == null) {
       await _lock.synchronized(() async {
-        if (_db == null) {
-          _db ??= await openDatabase(
-            databasePathFinal,
-            version: _dbInfo.version,
-            onConfigure: _onConfigure,
-            onCreate: _onCreate,
-            onUpgrade: _onUpgrade,
-            onDowngrade: _onDowgrade,
-          );
-        }
+        _db ??= await openDatabase(
+          databasePathFinal,
+          version: _dbInfo.version,
+          onConfigure: _onConfigure,
+          onCreate: (db, version) => _onCreate(db, version, migrations),
+          onUpgrade: (db, oldVersion, version) =>
+              _onUpgrade(db, oldVersion, version, migrations),
+          onDowngrade: _onDowgrade,
+          onOpen: (db) => _onOpen(db, migrations),
+        );
       });
     }
     return _db!;
@@ -51,13 +51,25 @@ final class SqliteConnection {
   ) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
+  Future<void> _onOpen(
+    Database db,
+    List<Migration> migrations,
+  ) async {
+    final bath = db.batch();
+    for (Migration migration in migrations) {
+      migration(bath);
+    }
+
+    bath.commit();
+  }
 
   Future<void> _onCreate(
     Database db,
     int version,
+    List<Migration> migrations,
   ) async {
     final bath = db.batch();
-    for (Migration migration in _migrations) {
+    for (Migration migration in migrations) {
       migration(bath);
     }
 
@@ -68,10 +80,11 @@ final class SqliteConnection {
     Database db,
     int oldVersion,
     int version,
+    List<Migration> migrations,
   ) async {
     final bath = db.batch();
 
-    for (Migration migration in _migrations) {
+    for (Migration migration in migrations) {
       if (migration.dbInfo.version > oldVersion) {}
       migration(bath);
     }

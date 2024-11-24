@@ -18,7 +18,6 @@ final class FeaturesHomePresenter {
   final FTusecase _filtroTasks;
   final GPusecase _getPeriodoUsecase;
 
-
   FeaturesHomePresenter._({
     required UDNusecase updateDisplayName,
     required UFusecase updateFoto,
@@ -71,10 +70,19 @@ final class FeaturesHomePresenter {
     }
   }
 
-  Future<({List<TaskModel> listTasks, DateTime end, DateTime start})> filtroTasks(FiltroTasksEnum filtro) async {
+  Future<
+      ({
+        List<TaskModel> listTasks,
+        DateTime end,
+        DateTime start,
+      })> filtroTasks({
+    required FiltroTasksEnum filtro,
+    required String uid,
+  }) async {
     final periodo = await _getPeriodo(filtro);
     final data = await _filtroTasks(
       ParametrosFiltroTasks(
+        uid: uid,
         error: FilterError(message: "Erro ao filtrar as tasks!"),
         periodo: periodo,
       ),
@@ -87,7 +95,8 @@ final class FeaturesHomePresenter {
     }
   }
 
-  Future<({DateTime start, DateTime end})> _getPeriodo(FiltroTasksEnum filtro) async {
+  Future<({DateTime start, DateTime end})> _getPeriodo(
+      FiltroTasksEnum filtro) async {
     final data = await _getPeriodoUsecase(
       ParametrosGetPeriodo(
         error: FilterError(message: "Erro ao filtrar as tasks!"),
@@ -96,7 +105,7 @@ final class FeaturesHomePresenter {
     );
     switch (data) {
       case SuccessReturn<PeriodoModel>():
-        return (start:data.result.start, end: data.result.end);
+        return (start: data.result.start, end: data.result.end);
       case ErrorReturn<PeriodoModel>():
         throw data.result;
     }

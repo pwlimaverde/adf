@@ -8,7 +8,6 @@ Future<void> startServices() async {
   await Service.to
       .initDependences(() => ServiceBindings().initBindings());
   List<Future<dynamic>> sevisesInit = [
-    FeaturesServicePresenter.to.localStorageService(),
     FeaturesServicePresenter.to.externalStorageService(),
     FeaturesServicePresenter.to.googleSignInService(),
     FeaturesServicePresenter.to.authInitService(),

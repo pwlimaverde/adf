@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import '../../core/ui/utilites/icons_padrao.dart';
 import '../../core/ui/utilites/notifier/defaut_listner_notifier.dart';
 import '../../core/ui/utilites/theme_extensions.dart';
 import '../../sevices/features/features_service_presenter.dart';
+import '../../sevices/features/local_storage/datasource/sqlite/config/sqlite_adm_connection.dart';
 import '../../tasks/tasks_module.dart';
 import '../features/filtro_tasks/domain/model/filtro_tasks_enum.dart';
 import 'home_controller.dart';
@@ -30,20 +32,37 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    DefautListnerNotifier(widget._controller).listener(context: context, successCallback: (notifier, listenerInstance){
-      listenerInstance.dispose();
-    });
-    
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      widget._controller.loadTotalTasks();
-      widget._controller.alterarFiltroAtual(FiltroTasksEnum.hoje, true);
-    });
+    final uid = widget._controller.user?.uid;
+    Logger().t('uid HomePage: $uid');
+    if (uid != null) {
+      final sqliteAdmConnection = SqliteAdmConnection();
 
+      WidgetsBinding.instance.addObserver(sqliteAdmConnection);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget._controller.loadTotalTasks();
+        widget._controller.alterarFiltroAtual(FiltroTasksEnum.hoje, true);
+      });
+    }
+    DefautListnerNotifier(widget._controller).listener(
+        context: context,
+        successCallback: (notifier, listenerInstance) {
+          listenerInstance.dispose();
+        });
   }
-  
+
+  @override
+  void dispose() {
+    super.dispose();
+    final uid = widget._controller.user?.uid;
+    if (uid != null) {
+      final sqliteAdmConnection = SqliteAdmConnection();
+
+      WidgetsBinding.instance.removeObserver(sqliteAdmConnection);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: context.primaryColor),
@@ -98,7 +117,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _goToTaskCreate(BuildContext context) async{
+  Future<void> _goToTaskCreate(BuildContext context) async {
     await Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 400),

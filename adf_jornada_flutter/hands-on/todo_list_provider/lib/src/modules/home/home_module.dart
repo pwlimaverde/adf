@@ -21,7 +21,7 @@ final class HomeModule extends Module {
   HomeModule()
       : super(
           bindings: [
-            Provider<LocalStorage>(
+            Provider<LocalStorage?>(
               create: (_) => FeaturesServicePresenter.to.localStorage,
               lazy: true,
             ),

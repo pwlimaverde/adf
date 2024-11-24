@@ -16,7 +16,7 @@ final class SignOutUsecase extends UsecaseBase<SignOutModel> {
   Future<ReturnSuccessOrError<SignOutModel>> call(NoParams parameters) async {
     try {
       await _signIn.signOut();
-      _auth.signOut();
+      await _auth.signOut();
       return SuccessReturn(success: SignOutModel());
     } catch (e) {
       return ErrorReturn(error: ErrorGeneric(message: e.toString()));

@@ -4,17 +4,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 import 'package:return_success_or_error/return_success_or_error.dart';
+import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 import 'current_user_google/domain/model/current_user_model.dart';
 import 'external_storage/domain/interface/external_storage.dart';
+import 'local_storage/datasource/sqlite/config/sqlite_connection.dart';
 import 'local_storage/domain/interface/local_storage.dart';
 import 'sign_out/domain/model/sign_out_model.dart';
 
 final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
 
-  late LocalStorage localStorage;
+  LocalStorage? localStorage;
   late ExternalStorage externalStorage;
   late GoogleSignIn signIn;
   late FirebaseAuth auth;
@@ -28,8 +31,6 @@ final class FeaturesServicePresenter {
   final CUGService _currenUserService;
   final SIOUsecase _signOutService;
   final FBStorageService _fbStorageService;
-
-
 
   FeaturesServicePresenter._({
     required EsService esService,
@@ -84,8 +85,11 @@ final class FeaturesServicePresenter {
     }
   }
 
-  Future<Unit> localStorageService() async {
-    final data = await _lsService(NoParams());
+  Future<Unit> localStorageService(String uid) async {
+    final data = await _lsService(ParametrosUid(
+      uid: uid,
+      error: ErrorGeneric(message: 'Erro Geral'),
+    ));
     switch (data) {
       case SuccessReturn<LocalStorage>():
         localStorage = data.result;
@@ -145,6 +149,8 @@ final class FeaturesServicePresenter {
     switch (data) {
       case SuccessReturn<CurrentUserModel>():
         user = data.result.user;
+        Logger().f('_uid currentUserService: ${data.result.user.uid}');
+        await localStorageService(data.result.user.uid);
         return unit;
       case ErrorReturn<CurrentUserModel>():
         return null;
@@ -155,7 +161,9 @@ final class FeaturesServicePresenter {
     final data = await _signOutService(NoParams());
     switch (data) {
       case SuccessReturn<SignOutModel>():
+        GetIt.I.get<SqliteConnection>().closeConnection();
         user = null;
+        localStorage = null;
         return unit;
       case ErrorReturn<SignOutModel>():
         throw data.result.message;

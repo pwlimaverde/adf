@@ -15,11 +15,13 @@ final class ParametrosUpdateDisplayName implements ParametersReturnResult {
 }
 
 final class ParametrosFiltroTasks implements ParametersReturnResult {
+  final String uid;
   final ({DateTime start, DateTime end}) periodo;
   @override
   final FilterError error;
 
   ParametrosFiltroTasks({
+    required this.uid,
     required this.periodo,
     required this.error,
   });

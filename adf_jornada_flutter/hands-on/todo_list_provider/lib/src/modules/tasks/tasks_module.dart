@@ -14,11 +14,10 @@ final class TasksModule extends Module {
   TasksModule()
       : super(
           bindings: [
-            Provider<LocalStorage>(
+            Provider<LocalStorage?>(
               create: (_) => FeaturesServicePresenter.to.localStorage,
               lazy: true,
             ),
-            
             Provider<CTusecase>(
               create: (context) => CreateTaskUsecase(
                 context.read<LocalStorage>(),
@@ -34,6 +33,7 @@ final class TasksModule extends Module {
             ChangeNotifierProvider(
               create: (context) => TaskCreateController(
                 featuresTaskPresenter: context.read<FeaturesTaskPresenter>(),
+                featuresServicePresenter:  FeaturesServicePresenter.to,
               ),
               lazy: false,
             ),

@@ -1,5 +1,6 @@
 import 'package:return_success_or_error/return_success_or_error.dart';
 
+import '../../../../utils/parameters.dart';
 import '../interface/local_storage.dart';
 
 final class LocalStorageUsecase extends UsecaseBaseCallData<
@@ -8,7 +9,7 @@ final class LocalStorageUsecase extends UsecaseBaseCallData<
 
   @override
   Future<ReturnSuccessOrError<LocalStorage>> call(
-      NoParams parameters) async {
+      ParametrosUid parameters) async {
     final resultDatacource = await resultDatasource(
       parameters: parameters,
       datasource: datasource,

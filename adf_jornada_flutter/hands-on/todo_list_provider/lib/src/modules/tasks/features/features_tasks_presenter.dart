@@ -26,8 +26,10 @@ final class FeaturesTaskPresenter {
   Future<Unit> createTask({
     required String descricao,
     required DateTime dataHora,
+    required String uid,
   }) async {
     final data = await _createTask(ParametrosCreateTasks(
+      uid: uid,
       error: TaskError(message: "Erro ao atualizar criar Task"),
       descricao: descricao,
       dataHora: dataHora,

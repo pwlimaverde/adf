@@ -5,7 +5,7 @@ import '../../../../utils/parameters.dart';
 import '../model/create_tasks_model.dart';
 
 final class CreateTaskUsecase extends UsecaseBase<CreateTasksModel> {
-  final LocalStorage _localStorage;
+  final LocalStorage? _localStorage;
   CreateTaskUsecase(
     LocalStorage localStorage,
   ) : _localStorage = localStorage;
@@ -13,7 +13,12 @@ final class CreateTaskUsecase extends UsecaseBase<CreateTasksModel> {
   Future<ReturnSuccessOrError<CreateTasksModel>> call(
       ParametrosCreateTasks parameters) async {
     try {
-      await _localStorage.write(id: '', data: (
+      if (_localStorage == null) {
+        return ErrorReturn(
+          error: parameters.error,
+        );
+      }
+      await _localStorage.write(id: '', uid: parameters.uid ,data: (
         dataHora: parameters.dataHora,
         descricao: parameters.descricao,
         finalizado: false
