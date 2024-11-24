@@ -151,7 +151,8 @@ final class HomeController extends DefautChangNotifier {
         showLoading();
         await Future.delayed(const Duration(milliseconds: 15));
         filtroSelecionado = filtroAtual;
-        final result = await _featuresHomePresenter.filtroTasks(filtro: filtroAtual, uid: user!.uid);
+        final result = await _featuresHomePresenter.filtroTasks(
+            filtro: filtroAtual, uid: user!.uid);
         dataInicial = result.start;
         dataFinal = result.end;
         tasksAtualFilter = result.listTasks;
@@ -183,13 +184,10 @@ final class HomeController extends DefautChangNotifier {
 
   Future<void> refreshPage() async {
     try {
-      showLoading();
       await loadTotalTasks();
       await alterarFiltroAtual(filtroSelecionado, true);
     } catch (e) {
       setError(e.toString());
-    } finally {
-      hideLoading();
     }
   }
 

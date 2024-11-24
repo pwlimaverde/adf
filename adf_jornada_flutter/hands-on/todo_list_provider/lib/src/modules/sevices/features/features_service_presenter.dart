@@ -149,7 +149,6 @@ final class FeaturesServicePresenter {
     switch (data) {
       case SuccessReturn<CurrentUserModel>():
         user = data.result.user;
-        Logger().f('_uid currentUserService: ${data.result.user.uid}');
         await localStorageService(data.result.user.uid);
         return unit;
       case ErrorReturn<CurrentUserModel>():

@@ -1,7 +1,7 @@
 abstract interface class LocalStorage {
   Future<List<Map<String, dynamic>>> read({
     required String uid,
-    String? id,
+    int? id,
     ({
       DateTime start,
       DateTime end,
@@ -9,7 +9,7 @@ abstract interface class LocalStorage {
   });
   Future<void> write({
     required String uid,
-    required String id,
+    required int id,
     required ({
       String descricao,
       DateTime dataHora,

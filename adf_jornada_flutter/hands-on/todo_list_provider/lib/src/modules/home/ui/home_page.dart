@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     final uid = widget._controller.user?.uid;
-    Logger().t('uid HomePage: $uid');
     if (uid != null) {
       final sqliteAdmConnection = SqliteAdmConnection();
 

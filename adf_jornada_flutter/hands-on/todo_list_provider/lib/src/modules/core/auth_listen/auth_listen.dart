@@ -17,7 +17,6 @@ final class AuthListen extends ChangeNotifier {
     _featuresServicePresenter.auth.authStateChanges().listen((user) async {
       if (user != null) {
         await Future.delayed(const Duration(milliseconds: 300));
-        Logger().i('uid AuthListen: ${user.uid}');
         await _featuresServicePresenter.localStorageService(user.uid);
         TodoListNavigator.to.pushNamedAndRemoveUntil("/home", (route) => false);
       } else {

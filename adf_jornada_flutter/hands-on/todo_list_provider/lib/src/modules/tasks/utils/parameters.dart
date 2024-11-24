@@ -19,7 +19,7 @@ final class ParametrosCreateTasks implements ParametersReturnResult {
 
 final class ParametrosUpdateTasks implements ParametersReturnResult {
   final String uid;
-  final String id;
+  final int id;
   final ({
     String descricao,
     DateTime dataHora,

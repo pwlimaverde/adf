@@ -18,7 +18,7 @@ final class CreateTaskUsecase extends UsecaseBase<CreateTasksModel> {
           error: parameters.error,
         );
       }
-      await _localStorage.write(id: '', uid: parameters.uid ,data: (
+      await _localStorage.write(id: 0, uid: parameters.uid ,data: (
         dataHora: parameters.dataHora,
         descricao: parameters.descricao,
         finalizado: false

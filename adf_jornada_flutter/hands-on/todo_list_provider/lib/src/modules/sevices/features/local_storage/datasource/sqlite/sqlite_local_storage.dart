@@ -1,5 +1,3 @@
-import 'package:logger/logger.dart';
-
 import '../../domain/interface/local_storage.dart';
 import 'config/sqlite_connection.dart';
 
@@ -13,14 +11,13 @@ final class SqliteLocalStorage implements LocalStorage {
   @override
   Future<List<Map<String, dynamic>>> read({
     required String uid,
-    String? id,
+    int? id,
     ({
       DateTime start,
       DateTime end,
     })? periodo,
   }) async {
     final conn = await _sqliteConnection.openConnection(uid);
-    Logger().d('_uid read: $uid');
     if (periodo != null) {
       final startFilter = DateTime(
         periodo.start.year,
@@ -63,7 +60,7 @@ final class SqliteLocalStorage implements LocalStorage {
 
   @override
   Future<void> write({
-    required String id,
+    required int id,
     required String uid,
     required ({
       String descricao,
@@ -72,7 +69,7 @@ final class SqliteLocalStorage implements LocalStorage {
     }) data,
   }) async {
     final conn = await _sqliteConnection.openConnection(uid);
-    if (id == '') {
+    if (id == 0) {
       await conn.insert(
         'todo_${uid.replaceAll('-', '_')}',
         {

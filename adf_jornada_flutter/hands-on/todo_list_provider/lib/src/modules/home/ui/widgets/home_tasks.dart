@@ -18,18 +18,26 @@ class HomeTasks extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Selector<HomeController, String>(selector: (context, controller) {
-            return controller.filtroSelecionado?.descricao??'';
-          },builder: (context, value, child){
-            return Text(
-            value == 'TODAS' ? 'TODAS AS TASK\'S' : 'TASK\'S $value',
-            style: context.titleStyle,
-          );
-          }, ),
-          Column(
-            children: context.select<HomeController, List<TaskModel>>(
-              (controller)=>controller.tasksAtualFilter).map((task) => Tasks(taskModel: task,)).toList()
+          Selector<HomeController, String>(
+            selector: (context, controller) {
+              return controller.filtroSelecionado?.descricao ?? '';
+            },
+            builder: (context, value, child) {
+              return Text(
+                value == 'TODAS' ? 'TODAS AS TASK\'S' : 'TASK\'S $value',
+                style: context.titleStyle,
+              );
+            },
           ),
+          Column(children:
+              context.select<HomeController, List<Tasks>>((controller) {
+            final tasks = controller.tasksAtualFilter;
+            return tasks.map((task) => Tasks(
+                        taskModel: task,
+                        controller: controller,
+                      ))
+                  .toList();
+          })),
         ],
       ),
     );

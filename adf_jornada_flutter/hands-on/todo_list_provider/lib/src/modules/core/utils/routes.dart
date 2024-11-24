@@ -1,7 +1,8 @@
 enum Routes {
   initial(caminho: "/"),
   home(caminho: "/home"),
-  task_create(caminho: "/task/create"),
+  taskCreate(caminho: "/task/create"),
+  taskUpdate(caminho: "/task/update"),
   login(caminho: "/login"),
   register(caminho: "/register");
 
