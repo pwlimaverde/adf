@@ -69,7 +69,6 @@ final class HomeController extends DefautChangNotifier {
         _loadMesTasks(),
         _loadTodasTasks(),
       ]);
-
       notifyListeners();
     } on FilterError catch (e) {
       setError(e.message);
@@ -90,12 +89,27 @@ final class HomeController extends DefautChangNotifier {
           descricao: taskModel.descricao,
           finalizado: taskModel.finalizado,
         );
+      await refreshPage();
       }
-      refreshPage();
     } catch (e) {
       setError(e.toString());
     } finally {
       hideLoading();
+    }
+  }
+
+  Future<void> apagarTasks(TaskModel task) async {
+    try {
+      if (user != null) {
+        await _featuresHomePresenter.apagarTask(
+          id: task.id,
+          uid: user!.uid,
+        );
+      }
+      
+      await refreshPage();
+    } catch (e) {
+      setError(e.toString());
     }
   }
 
@@ -195,7 +209,8 @@ final class HomeController extends DefautChangNotifier {
         }
 
         if (!tasksFinalizadas) {
-          tasksAtualFilter = tasksAtualFilter.where((task) => !task.finalizado).toList();
+          tasksAtualFilter =
+              tasksAtualFilter.where((task) => !task.finalizado).toList();
         }
       }
     } catch (e) {

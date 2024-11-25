@@ -6,6 +6,7 @@ import '../core/utils/module.dart';
 import '../core/utils/routes.dart';
 import '../sevices/features/features_service_presenter.dart';
 import '../sevices/features/local_storage/domain/interface/local_storage.dart';
+import 'features/apagar_task/domain/usecase/apagar_task_usecase.dart';
 import 'features/features_home_presenter.dart';
 import 'features/filtro_tasks/datasouces/filtro_tasks_datasource.dart';
 import 'features/filtro_tasks/domain/usecase/filtro_tasks_usecase.dart';
@@ -70,6 +71,12 @@ final class HomeModule extends Module {
               ),
               lazy: true,
             ),
+            Provider<ATusecase>(
+              create: (context) => ApagarTaskUsecase(
+                context.read<LocalStorage>(),
+              ),
+              lazy: true,
+            ),
             Provider<FTusecase>(
               create: (context) => FiltroTasksUsecase(
                 context.read<FTdata>(),
@@ -87,6 +94,7 @@ final class HomeModule extends Module {
                 filtroTasks: context.read<FTusecase>(),
                 getPeriodoUsecase: context.read<GPusecase>(),
                 homeUpdateTask: context.read<UHTusecase>(),
+                apagarTask: context.read<ATusecase>(),
               ),
               lazy: true,
             ),

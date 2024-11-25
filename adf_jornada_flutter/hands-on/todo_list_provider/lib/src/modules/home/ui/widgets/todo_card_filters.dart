@@ -18,10 +18,11 @@ class TodoCardFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selecionado = context.select<HomeController, FiltroTasksEnum>(
-                        (value) => value.filtroSelecionado) ==
-                    filtroTasksEnum;
+            (value) => value.filtroSelecionado) ==
+        filtroTasksEnum;
     return InkWell(
-      onTap: () => context.read<HomeController>().alterarFiltroAtual(filtroTasksEnum),
+      onTap: () =>
+          context.read<HomeController>().alterarFiltroAtual(filtroTasksEnum),
       borderRadius: BorderRadius.circular(30),
       child: Container(
         constraints: const BoxConstraints(
@@ -31,7 +32,7 @@ class TodoCardFilters extends StatelessWidget {
         // margin: EdgeInsets.only(right: 10),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: selecionado ? context.primaryColor:Colors.white,
+          color: selecionado ? context.primaryColor : Colors.white,
           border: Border.all(
             color: Colors.grey.withOpacity(0.8),
             width: 1,
@@ -45,7 +46,7 @@ class TodoCardFilters extends StatelessWidget {
               height: 5,
             ),
             Text(
-              '${totalTasksModel?.totalTasks ?? 0} TASKS',
+              '${_getTotalTasks()} TASKS',
               style: context.titleStyle.copyWith(
                 fontSize: 10,
                 color: selecionado ? Colors.white : Colors.grey,
@@ -58,7 +59,7 @@ class TodoCardFilters extends StatelessWidget {
               filtroTasksEnum.descricao,
               style: context.titleStyle.copyWith(
                 fontSize: 20,
-                color:  selecionado ? Colors.white : Colors.black,
+                color: selecionado ? Colors.white : Colors.black,
               ),
             ),
             const SizedBox(
@@ -78,8 +79,11 @@ class TodoCardFilters extends StatelessWidget {
                   duration: const Duration(seconds: 1),
                   builder: (context, value, child) {
                     return LinearProgressIndicator(
-                      backgroundColor: selecionado? context.primaryColorLight:Colors.grey.shade300,
-                      valueColor: AlwaysStoppedAnimation<Color>(selecionado? Colors.white :context.primaryColor),
+                      backgroundColor: selecionado
+                          ? context.primaryColorLight
+                          : Colors.grey.shade300,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          selecionado ? Colors.white : context.primaryColor),
                       value: value,
                       minHeight: 5,
                     );
@@ -92,15 +96,24 @@ class TodoCardFilters extends StatelessWidget {
       ),
     );
   }
-  
+
   double _getPercentFinish() {
     final total = totalTasksModel?.totalTasks ?? 0.0;
     final finish = totalTasksModel?.totalTasksFinish ?? 0.1;
     if (total == 0) {
       return 0;
     }
-    final percent = (finish * 100)/total;
-    return percent/100;
-  
+    final percent = (finish * 100) / total;
+    return percent / 100;
+  }
+
+  int _getTotalTasks() {
+    final total = totalTasksModel?.totalTasks ?? 0;
+    final finish = totalTasksModel?.totalTasksFinish ?? 0;
+    if (total == 0) {
+      return 0;
+    }
+
+    return total - finish;
   }
 }

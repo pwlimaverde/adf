@@ -16,5 +16,5 @@ abstract interface class LocalStorage {
       bool finalizado,
     }) data,
   });
-  Future<void> remove(String key);
+  Future<void> remove({required int id, required String uid});
 }

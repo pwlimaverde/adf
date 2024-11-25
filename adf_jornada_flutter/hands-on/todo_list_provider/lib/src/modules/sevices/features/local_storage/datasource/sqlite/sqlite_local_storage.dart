@@ -54,8 +54,12 @@ final class SqliteLocalStorage implements LocalStorage {
   }
 
   @override
-  Future<void> remove(String key) {
-    throw UnimplementedError();
+  Future<void> remove({required int id, required String uid}) async{
+    final conn = await _sqliteConnection.openConnection(uid);
+    await conn.rawDelete('''
+      DELETE FROM todo_${uid.replaceAll('-', '_')}
+      WHERE id = ?
+    ''', [id]);
   }
 
   @override

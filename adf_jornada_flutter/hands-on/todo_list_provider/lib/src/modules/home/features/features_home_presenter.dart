@@ -3,6 +3,7 @@ import 'package:return_success_or_error/return_success_or_error.dart';
 import '../utils/erros.dart';
 import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
+import 'apagar_task/domain/model/apagar_tasks_model.dart';
 import 'filtro_tasks/domain/model/filtro_tasks_enum.dart';
 import 'filtro_tasks/domain/model/task_model.dart';
 import 'get_periodo/domain/model/periodo_model.dart';
@@ -18,6 +19,8 @@ final class FeaturesHomePresenter {
   final FTusecase _filtroTasks;
   final GPusecase _getPeriodoUsecase;
   final UHTusecase _homeUpdateTask;
+  final ATusecase _apagarTask;
+
 
   FeaturesHomePresenter._({
     required UDNusecase updateDisplayName,
@@ -25,10 +28,12 @@ final class FeaturesHomePresenter {
     required FTusecase filtroTasks,
     required GPusecase getPeriodoUsecase,
     required UHTusecase homeUpdateTask,
+    required ATusecase apagarTask,
   })  : _updateDisplayName = updateDisplayName,
         _filtroTasks = filtroTasks,
         _getPeriodoUsecase = getPeriodoUsecase,
         _homeUpdateTask = homeUpdateTask,
+        _apagarTask = apagarTask,
         _updateFoto = updateFoto;
 
   factory FeaturesHomePresenter({
@@ -37,6 +42,7 @@ final class FeaturesHomePresenter {
     required FTusecase filtroTasks,
     required UHTusecase homeUpdateTask,
     required GPusecase getPeriodoUsecase,
+    required ATusecase apagarTask,
   }) {
     _instance ??= FeaturesHomePresenter._(
       updateDisplayName: updateDisplayName,
@@ -44,6 +50,7 @@ final class FeaturesHomePresenter {
       filtroTasks: filtroTasks,
       homeUpdateTask: homeUpdateTask,
       getPeriodoUsecase: getPeriodoUsecase,
+      apagarTask: apagarTask,
     );
     return _instance!;
   }
@@ -133,6 +140,23 @@ final class FeaturesHomePresenter {
       case SuccessReturn<HomeUpdateTasksModel>():
         return unit;
       case ErrorReturn<HomeUpdateTasksModel>():
+        throw data.result;
+    }
+  }
+
+  Future<Unit> apagarTask({
+    required int id,
+    required String uid,
+  }) async {
+    final data = await _apagarTask(ParametrosApagarTasks(
+      id: id,
+      uid: uid,
+      error: TaskUpdateError(message: "Erro ao atualizar Task"),
+    ));
+    switch (data) {
+      case SuccessReturn<ApagarTasksModel>():
+        return unit;
+      case ErrorReturn<ApagarTasksModel>():
         throw data.result;
     }
   }

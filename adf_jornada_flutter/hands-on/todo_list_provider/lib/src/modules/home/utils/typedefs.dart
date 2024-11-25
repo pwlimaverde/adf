@@ -1,6 +1,7 @@
 import 'package:return_success_or_error/return_success_or_error.dart';
 
 
+import '../features/apagar_task/domain/model/apagar_tasks_model.dart';
 import '../features/filtro_tasks/domain/model/task_model.dart';
 import '../features/filtro_tasks/domain/model/tasks_maps_model.dart';
 import '../features/get_periodo/domain/model/periodo_model.dart';
@@ -14,6 +15,8 @@ typedef UDNusecase =  UsecaseBase<UpdateDisplayNameModel>;
 typedef GPusecase =  UsecaseBase<PeriodoModel>;
 
 typedef UHTusecase =  UsecaseBase<HomeUpdateTasksModel>;
+
+typedef ATusecase =  UsecaseBase<ApagarTasksModel>;
 
 typedef UFusecase =  UsecaseBaseCallData<UpdateFotoModel, UpdateFotoModel>;
 typedef UFdata =  Datasource<UpdateFotoModel>;

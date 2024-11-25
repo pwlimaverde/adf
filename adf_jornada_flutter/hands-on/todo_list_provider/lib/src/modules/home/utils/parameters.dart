@@ -56,3 +56,16 @@ final class ParametrosHomeUpdateTasks implements ParametersReturnResult {
     required this.error,
   });
 }
+
+final class ParametrosApagarTasks implements ParametersReturnResult {
+  final String uid;
+  final int id;
+  @override
+  final TaskUpdateError error;
+
+  ParametrosApagarTasks({
+    required this.uid,
+    required this.id,
+    required this.error,
+  });
+}
