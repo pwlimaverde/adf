@@ -37,3 +37,22 @@ final class ParametrosGetPeriodo implements ParametersReturnResult {
     required this.error,
   });
 }
+
+final class ParametrosHomeUpdateTasks implements ParametersReturnResult {
+  final String uid;
+  final int id;
+  final ({
+    String descricao,
+    DateTime dataHora,
+    bool finalizado,
+  }) data;
+  @override
+  final TaskUpdateError error;
+
+  ParametrosHomeUpdateTasks({
+    required this.uid,
+    required this.id,
+    required this.data,
+    required this.error,
+  });
+}

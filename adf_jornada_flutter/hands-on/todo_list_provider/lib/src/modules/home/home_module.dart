@@ -10,6 +10,7 @@ import 'features/features_home_presenter.dart';
 import 'features/filtro_tasks/datasouces/filtro_tasks_datasource.dart';
 import 'features/filtro_tasks/domain/usecase/filtro_tasks_usecase.dart';
 import 'features/get_periodo/domain/usecase/get_periodo_usecase.dart';
+import 'features/home_update_task/domain/usecase/home_update_task_usecase.dart';
 import 'features/update_display_name/domain/usecase/update_display_name_usecase.dart';
 import 'features/update_foto/datasources/update_foto_datasource.dart';
 import 'features/update_foto/domain/usecase/update_foto_usecase.dart';
@@ -63,6 +64,12 @@ final class HomeModule extends Module {
               ),
               lazy: true,
             ),
+            Provider<UHTusecase>(
+              create: (context) => HomeUpdateTaskUsecase(
+                context.read<LocalStorage>(),
+              ),
+              lazy: true,
+            ),
             Provider<FTusecase>(
               create: (context) => FiltroTasksUsecase(
                 context.read<FTdata>(),
@@ -79,6 +86,7 @@ final class HomeModule extends Module {
                 updateFoto: context.read<UFusecase>(),
                 filtroTasks: context.read<FTusecase>(),
                 getPeriodoUsecase: context.read<GPusecase>(),
+                homeUpdateTask: context.read<UHTusecase>(),
               ),
               lazy: true,
             ),

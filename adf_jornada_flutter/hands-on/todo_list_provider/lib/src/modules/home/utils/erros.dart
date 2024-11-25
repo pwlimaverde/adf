@@ -19,3 +19,13 @@ final class FilterError implements AppError {
     return "FilterError - $message";
   }
 }
+
+final class TaskUpdateError implements AppError {
+  @override
+  String message;
+  TaskUpdateError({required this.message});
+  @override
+  String toString() {
+    return "TaskError - $message";
+  }
+}

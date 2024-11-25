@@ -18,6 +18,7 @@ final class HomeController extends DefautChangNotifier {
   DateTime? dataInicial;
   DateTime? dataFinal;
   DateTime? dataSelecionada;
+  bool tasksFinalizadas = false;
 
   TotalTasksModel? hojeTotalTasks;
   TotalTasksModel? amanhaTotalTasks;
@@ -72,6 +73,29 @@ final class HomeController extends DefautChangNotifier {
       notifyListeners();
     } on FilterError catch (e) {
       setError(e.message);
+    }
+  }
+
+  Future<void> checkOrUncheckTasks(TaskModel task) async {
+    try {
+      showLoading();
+      if (user != null) {
+        final taskModel = task.copyWith(
+          finalizado: !task.finalizado,
+        );
+        await _featuresHomePresenter.homeUpdateTask(
+          id: taskModel.id,
+          uid: user!.uid,
+          dataHora: taskModel.dataHora,
+          descricao: taskModel.descricao,
+          finalizado: taskModel.finalizado,
+        );
+      }
+      refreshPage();
+    } catch (e) {
+      setError(e.toString());
+    } finally {
+      hideLoading();
     }
   }
 
@@ -152,7 +176,9 @@ final class HomeController extends DefautChangNotifier {
         await Future.delayed(const Duration(milliseconds: 15));
         filtroSelecionado = filtroAtual;
         final result = await _featuresHomePresenter.filtroTasks(
-            filtro: filtroAtual, uid: user!.uid);
+          filtro: filtroAtual,
+          uid: user!.uid,
+        );
         dataInicial = result.start;
         dataFinal = result.end;
         tasksAtualFilter = result.listTasks;
@@ -166,6 +192,10 @@ final class HomeController extends DefautChangNotifier {
           }
         } else {
           dataSelecionada = null;
+        }
+
+        if (!tasksFinalizadas) {
+          tasksAtualFilter = tasksAtualFilter.where((task) => !task.finalizado).toList();
         }
       }
     } catch (e) {
@@ -194,7 +224,6 @@ final class HomeController extends DefautChangNotifier {
   Future<void> signOut() async {
     try {
       showLoading();
-
       cleanStatus();
       await Future.delayed(const Duration(seconds: 3));
       await _featuresServicePresenter.signOutService();
@@ -203,6 +232,11 @@ final class HomeController extends DefautChangNotifier {
     } finally {
       hideLoading();
     }
+  }
+
+  void mostrarTasksFinalizadas() {
+    tasksFinalizadas = !tasksFinalizadas;
+    refreshPage();
   }
 
   void cleanStatus() {

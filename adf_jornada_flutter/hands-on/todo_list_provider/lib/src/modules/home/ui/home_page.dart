@@ -70,9 +70,13 @@ class _HomePageState extends State<HomePage> {
         actions: [
           PopupMenuButton(
               icon: const Icon(IconsPadrao.filter),
+              onSelected: (value) => widget._controller.mostrarTasksFinalizadas(),
               itemBuilder: (_) => [
-                    const PopupMenuItem<bool>(
-                      child: Text('Mostrar tarefas concluídas'),
+                    PopupMenuItem<bool>(
+                      value: true,
+                      child: widget._controller.tasksFinalizadas
+                          ? const Text('Ocultar tarefas concluídas')
+                          : const Text('Mostrar tarefas concluídas'),
                     ),
                   ]),
         ],

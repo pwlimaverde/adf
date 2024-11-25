@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../../tasks/tasks_module.dart';
 import '../../features/filtro_tasks/domain/model/task_model.dart';
 import '../home_controller.dart';
@@ -12,7 +13,8 @@ class Tasks extends StatefulWidget {
     super.key,
     required TaskModel taskModel,
     required HomeController controller,
-  }) : _taskModel = taskModel, _controller = controller;
+  })  : _taskModel = taskModel,
+        _controller = controller;
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -49,7 +51,8 @@ class _TasksState extends State<Tasks> {
           child: ListTile(
             leading: Checkbox(
               value: widget._taskModel.finalizado,
-              onChanged: (value) {},
+              onChanged: (value) =>
+                  widget._controller.checkOrUncheckTasks(widget._taskModel),
             ),
             title: Text(
               widget._taskModel.descricao,
