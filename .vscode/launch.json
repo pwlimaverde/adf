@@ -1,0 +1,74 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "app_cliente_adf",
+            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "app_cliente_adf (profile mode)",
+            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "app_cliente_adf (release mode)",
+            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "todo_list_provider",
+            "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "todo_list_provider (profile mode)",
+            "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "todo_list_provider (release mode)",
+            "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "jornada_dart",
+            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "jornada_dart (profile mode)",
+            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "jornada_dart (release mode)",
+            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "app_cliente_adf_cli",
+            "cwd": "adf_jornada_dart\\adf_lab\\adf_cli\\app_cliente_adf_cli",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
