@@ -1,0 +1,26 @@
+name: client_android_cuidapet
+description: "A new Flutter project."
+publish_to: 'none' 
+version: 0.0.1
+environment:
+  sdk: ^3.5.4
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.8.1
+  flutter_modular: ^6.3.4
+  mobx: ^2.4.0
+  flutter_mobx: ^2.2.1+1
+  asuka: ^2.2.1
+  dio: ^5.7.0
+  flutter_screenutil: ^5.9.3
+ 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  mobx_codegen: ^2.6.2
+  build_runner: ^2.4.13
+flutter:
+  uses-material-design: true

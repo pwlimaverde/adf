@@ -25,6 +25,15 @@
             "flutterMode": "release"
         },
         {
+            "name": "client_android_cuidapet",
+            "cwd": "adf_jornada_flutter\\hands-on\\cuidapet\\cuidapet_app\\apps\\client_android_cuidapet",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=env/dev.json"
+            ]
+        },
+        {
             "name": "todo_list_provider",
             "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
             "request": "launch",
