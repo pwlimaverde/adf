@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Atualizar Pacotes bash",
+      "type": "shell",
+      "command": "C:\\Program Files\\Git\\bin\\bash.exe", // Caminho completo para o bash.exe
+      "args": [
+        "-c",
+        "cd \"adf_jornada_flutter/hands-on/cuidapet/cuidapet_app\" && ./update_packages.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}
+

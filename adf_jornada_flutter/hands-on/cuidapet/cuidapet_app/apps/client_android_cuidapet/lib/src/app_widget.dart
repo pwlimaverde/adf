@@ -1,7 +1,5 @@
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:asuka/asuka.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -9,6 +7,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modular.setObservers([Asuka.asukaHeroController]);
+    Modular.setInitialRoute('/auth');
 
     return ScreenUtilInit(
       designSize: const Size(390, 844),
@@ -18,11 +17,8 @@ class AppWidget extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           builder: Asuka.builder,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          title: 'Cuidapet',
+          theme: UiConfig.theme,
+          title: UiConfig.title,
           routerConfig: Modular.routerConfig,
         );
       },

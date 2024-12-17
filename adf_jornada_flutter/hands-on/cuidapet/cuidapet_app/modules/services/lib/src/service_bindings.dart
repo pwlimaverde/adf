@@ -5,43 +5,25 @@ import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
 import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
 import 'utils/typedefs.dart';
 
-final class ServiceBindings implements Binding {
-  @override
-  List<Bind> dependencies() => [
-        Bind.put<FirebaseFirestore>(
-          FirebaseFirestore.instance,
-          permanent: true,
-        ),
-        Bind.put<FirebaseStorage>(
-          FirebaseStorage.instance,
-          permanent: true,
-        ),
-        Bind.lazyPut<EsServiceData>(
-          () => FirebaseStorageDatasource(
-            firebaseFirestore: Get.find<FirebaseFirestore>(),
-            firebaseStorage: Get.find<FirebaseStorage>(),
-          ),
-        ),
-        Bind.lazyPut<EsService>(
-          () => ExternalStorageUsecase(
-            Get.find<EsServiceData>(),
-          ),
-        ),
-        Bind.put<FirebaseAuth>(
-          FirebaseAuth.instance,
-          permanent: true,
-        ),
-        Bind.lazyPut<FAService>(
-          () => FirebaseAuthUsecase(
-            Get.find<FirebaseAuth>(),
-          ),
-        ),
-        Bind.put<FeaturesServicePresenter>(
-          FeaturesServicePresenter(
-            esService: Get.find<EsService>(),
-            authService: Get.find<FAService>(),
-          ),
-          permanent: true,
-        ),
-      ];
+final autoInjector = AutoInjector();
+
+final class ServiceBindings {
+  void initBindings() {
+    final bindings = AutoInjector(
+      tag: 'service_bindings',
+      on: (i) {
+        i.addInstance<FirebaseFirestore>(FirebaseFirestore.instance);
+        i.addInstance<FirebaseStorage>(FirebaseStorage.instance);
+        i.addInstance<FirebaseAuth>(FirebaseAuth.instance);
+        i.add<EsServiceData>(FirebaseStorageDatasource.new);
+        i.add<EsService>(ExternalStorageUsecase.new);
+        i.add<FAService>(FirebaseAuthUsecase.new);
+        i.commit();
+      },
+    );
+    autoInjector.addInstance<FeaturesServicePresenter>(FeaturesServicePresenter(
+        esService: bindings.get<EsService>(),
+        authService: bindings.get<FAService>()));
+    autoInjector.commit();
+  }
 }

@@ -9,6 +9,7 @@ void main() async {
   await startInitialLoading(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await startServices();
   return runApp(ModularApp(
     module: AppModule(),
     child: const AppWidget(),

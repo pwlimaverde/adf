@@ -1,11 +1,10 @@
 name: services
 description: "A new Flutter package project."
 publish_to: 'none'
-homepage: https://github.com/pwlimaverdesd/cliente-cms-projeto.git
 
 environment:
-  sdk: ^3.5.4
-  flutter: ">=3.24.4"
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:

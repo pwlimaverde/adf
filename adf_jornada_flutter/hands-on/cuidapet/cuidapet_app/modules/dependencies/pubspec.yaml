@@ -3,14 +3,18 @@ description: "Modulo responsável pelo gerenciamento das dependencias."
 publish_to: 'none'
 
 environment:
-  sdk: ^3.5.4
-  flutter: ">=3.24.4"
+  sdk: ^3.6.0
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:
     sdk: flutter
   return_success_or_error: ^0.18.0
   firebase_core: ^3.8.1
+  firebase_storage: ^12.3.7 
+  cloud_firestore: ^5.5.1
+  firebase_remote_config: ^5.2.0
+  firebase_auth: ^5.3.4
   auto_injector: ^2.0.5
   flutter_modular: ^6.3.4
   mobx: ^2.4.0
@@ -23,16 +27,16 @@ dependencies:
   #modulos
   initial_loading:
     path: ../initial_loading
-  # services:
-  #   path: ../services
+  services:
+    path: ../services
   auth:
     path: ../auth
   core:
     path: ../core
   design_system:
     path: ../design_system
-  # home:
-  #   path: ../home
+  home:
+    path: ../home
   # login:
   #   path: ../login
 

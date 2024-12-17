@@ -12,7 +12,7 @@ final autoInjector = AutoInjector();
 final class InitialLoadingBindings {
   void initBindings() {
     final bindings = AutoInjector(
-      tag: 'bindings',
+      tag: 'initial_bindings',
       on: (i) {
         i.add<FbServiceData>(FirebaseInitDatasource.new);
         i.add<FbService>(FirebaseInitUsecase.new);

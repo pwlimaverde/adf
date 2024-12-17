@@ -1,5 +1,6 @@
 import 'package:dependencies/dependencies.dart';
 
+import '../service_bindings.dart';
 import '../utils/typedefs.dart';
 
 final class FeaturesServicePresenter {
@@ -56,5 +57,5 @@ final class FeaturesServicePresenter {
   }
 
   static FeaturesServicePresenter get to =>
-      Get.find<FeaturesServicePresenter>();
+      autoInjector.get<FeaturesServicePresenter>();
 }
