@@ -18,10 +18,14 @@ class _SplashPageState extends State<SplashPage> {
     _setLogo();
     reaction<UserModel?>((_) => widget._authStore.userLogged, (userLoggerd){
       if (userLoggerd != null && userLoggerd.email.isNotEmpty) {
-        
+        Modular.to.navigate(Routes.home.caminho);
       } else {
+        Modular.to.navigate(Routes.login.caminho);
         
       }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget._authStore.loadUserLogged();
     });
 
   }

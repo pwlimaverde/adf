@@ -14,6 +14,7 @@ export 'package:flutter_mobx/flutter_mobx.dart' hide version;
 export 'package:asuka/asuka.dart';
 export 'package:dio/dio.dart' hide Interceptors, Interceptor;
 export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:validatorless/validatorless.dart';
 
 
 

@@ -12,7 +12,7 @@ class AuthModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/', child: (_) => SplashPage(authStore: Modular.get()));
-    r.module('/login', module: LoginModule());
+    r.child(Modular.initialRoute, child: (_) => SplashPage(authStore: Modular.get()));
+    r.module('/login/', module: LoginModule());
   }
 }
