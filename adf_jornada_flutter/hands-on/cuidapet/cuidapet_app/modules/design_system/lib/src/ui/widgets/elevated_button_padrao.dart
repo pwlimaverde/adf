@@ -27,25 +27,27 @@ class ElevatedButtonPadrao extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(padding),
-      width: width,
-      height: height,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? context.primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(padding),
+        width: width,
+        height: height,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor ?? context.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
           ),
-        ),
-        onPressed: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            label,
-            style: TextStyle(
-              color: labelColor ?? Colors.white,
-              fontSize: labelSize,
+          onPressed: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: labelColor ?? Colors.white,
+                fontSize: labelSize,
+              ),
             ),
           ),
         ),

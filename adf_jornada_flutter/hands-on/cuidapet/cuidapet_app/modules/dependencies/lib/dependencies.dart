@@ -6,6 +6,7 @@ export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_remote_config/firebase_remote_config.dart';
+export 'package:firebase_analytics/firebase_analytics.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:flutter_modular/flutter_modular.dart';
 export 'package:auto_injector/auto_injector.dart';

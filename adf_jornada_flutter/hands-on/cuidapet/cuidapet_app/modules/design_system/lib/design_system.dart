@@ -9,3 +9,4 @@ export 'src/ui/widgets/logo_cliente.dart';
 export 'src/ui/icons/cuidapet_icons.dart';
 export 'src/ui/widgets/botao_login_with.dart';
 export 'src/ui/widgets/elevated_button_padrao.dart';
+export 'src/ui/widgets/page_base.dart';

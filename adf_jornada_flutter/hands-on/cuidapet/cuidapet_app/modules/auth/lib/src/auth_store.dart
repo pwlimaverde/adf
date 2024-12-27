@@ -10,6 +10,7 @@ abstract class AuthStoreBase with Store {
 
   @action
   Future<void> loadUserLogged() async {
+    await Future.delayed(const Duration(seconds: 2));
     _userLogged = UserModel.empit();
   }
 

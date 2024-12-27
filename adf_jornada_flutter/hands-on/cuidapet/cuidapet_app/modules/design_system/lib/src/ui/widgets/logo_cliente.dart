@@ -1,3 +1,4 @@
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 
 class LogoCliente extends StatelessWidget {
@@ -17,7 +18,8 @@ class LogoCliente extends StatelessWidget {
       children: [
         Image.network(
           _urlLogoCliente,
-          height: 200,
+          height: 150.csh,
+          fit: BoxFit.fill,
         ),
         Text(
           _label ?? '',

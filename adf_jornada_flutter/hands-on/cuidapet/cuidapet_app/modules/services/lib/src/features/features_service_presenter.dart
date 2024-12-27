@@ -8,23 +8,30 @@ final class FeaturesServicePresenter {
 
   late ExternalStorage externalStorage;
   late FirebaseAuth authInstance;
+  late FirebaseRemoteConfig remoteConfigInstance;
+  late String? urlLogo;
 
   final EsService _esService;
   final FAService _authService;
+  final FRCService _remoteConfigService;
 
   FeaturesServicePresenter._({
     required EsService esService,
     required FAService authService,
+    required FRCService remoteConfigService,
   })  : _authService = authService,
+        _remoteConfigService = remoteConfigService,
         _esService = esService;
 
   factory FeaturesServicePresenter({
     required EsService esService,
     required FAService authService,
+    required FRCService remoteConfigService,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
       authService: authService,
+      remoteConfigService: remoteConfigService,
     );
     return _instance!;
   }
@@ -40,9 +47,14 @@ final class FeaturesServicePresenter {
     switch (data) {
       case SuccessReturn<ExternalStorage>():
         externalStorage = data.result;
+        await _setLogo();
       case ErrorReturn<ExternalStorage>():
         throw data.result.message;
     }
+  }
+
+  Future<void> _setLogo() async {
+    urlLogo = await externalStorage.readUrlMidia('institucional/logo.png');
   }
 
   Future<Unit> authService() async {
@@ -52,6 +64,17 @@ final class FeaturesServicePresenter {
         authInstance = data.result;
         return unit;
       case ErrorReturn<FirebaseAuth>():
+        throw data.result.message;
+    }
+  }
+
+  Future<Unit> remoteConfigService() async {
+    final data = await _remoteConfigService(NoParams());
+    switch (data) {
+      case SuccessReturn<FirebaseRemoteConfig>():
+        remoteConfigInstance = data.result;
+        return unit;
+      case ErrorReturn<FirebaseRemoteConfig>():
         throw data.result.message;
     }
   }

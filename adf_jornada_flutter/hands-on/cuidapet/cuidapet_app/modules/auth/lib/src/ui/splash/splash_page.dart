@@ -10,12 +10,11 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  String? urlLogo;
-
+  final String? urlLogo = FeaturesServicePresenter.to.urlLogo;
+ 
   @override
   void initState() {
     super.initState();
-    _setLogo();
     reaction<UserModel?>((_) => widget._authStore.userLogged, (userLoggerd){
       if (userLoggerd != null && userLoggerd.email.isNotEmpty) {
         Modular.to.navigate(Routes.home.caminho);
@@ -27,7 +26,6 @@ class _SplashPageState extends State<SplashPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget._authStore.loadUserLogged();
     });
-
   }
 
   @override
@@ -36,19 +34,8 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: urlLogo == null
             ? const CircularProgressIndicator()
-            : Image.network(
-                urlLogo!,
-                width: 162.csw,
-                height: 130.csh,
-                fit: BoxFit.contain,
-              ),
+            : LogoCliente(urlLogoCliente: urlLogo!,),
       ),
     );
-  }
-
-  void _setLogo() async {
-    urlLogo = await FeaturesServicePresenter.to.externalStorage
-        .readUrlMidia('institucional/logo.png');
-    setState(() {});
   }
 }
