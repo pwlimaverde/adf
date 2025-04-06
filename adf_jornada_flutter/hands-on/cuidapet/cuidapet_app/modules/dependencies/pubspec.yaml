@@ -24,6 +24,7 @@ dependencies:
   dio: ^5.7.0
   flutter_screenutil: ^5.9.3
   validatorless: ^1.2.4
+  logger: ^2.5.0
 
 
   #modulos

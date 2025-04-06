@@ -1,12 +1,15 @@
 import 'package:dependencies/dependencies.dart';
 
 import '../service_bindings.dart';
+import '../utils/erros.dart';
+import '../utils/parameters.dart';
 import '../utils/typedefs.dart';
 
 final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
 
   late ExternalStorage externalStorage;
+  late RestClientCuidaPet restClientCuidaPet;
   late FirebaseAuth authInstance;
   late FirebaseRemoteConfig remoteConfigInstance;
   late String? urlLogo;
@@ -14,24 +17,29 @@ final class FeaturesServicePresenter {
   final EsService _esService;
   final FAService _authService;
   final FRCService _remoteConfigService;
+  final RCCService _restClientCuidaPetApiService;
 
   FeaturesServicePresenter._({
     required EsService esService,
     required FAService authService,
     required FRCService remoteConfigService,
+    required RCCService restClientCuidaPetApiService,
   })  : _authService = authService,
         _remoteConfigService = remoteConfigService,
+        _restClientCuidaPetApiService = restClientCuidaPetApiService,
         _esService = esService;
 
   factory FeaturesServicePresenter({
     required EsService esService,
     required FAService authService,
     required FRCService remoteConfigService,
+    required RCCService restClientCuidaPetApiService,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
       authService: authService,
       remoteConfigService: remoteConfigService,
+      restClientCuidaPetApiService: restClientCuidaPetApiService
     );
     return _instance!;
   }
@@ -49,6 +57,22 @@ final class FeaturesServicePresenter {
         externalStorage = data.result;
         await _setLogo();
       case ErrorReturn<ExternalStorage>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> restClientCuidaPetApiService() async {
+    final data = await _restClientCuidaPetApiService(
+      ParametrosRestClientResponse(
+        error: RestClientResponseError(
+          message: "Erro  ao carregar instancia do RestClientCuidaPet",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<RestClientCuidaPet>():
+        restClientCuidaPet = data.result;
+      case ErrorReturn<RestClientCuidaPet>():
         throw data.result.message;
     }
   }

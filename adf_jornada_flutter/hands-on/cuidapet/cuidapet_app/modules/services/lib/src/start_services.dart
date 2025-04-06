@@ -11,6 +11,7 @@ Future<void> startServices() async {
     FeaturesServicePresenter.to.externalStorageService(),
     FeaturesServicePresenter.to.authService(),
     FeaturesServicePresenter.to.remoteConfigService(),
+    FeaturesServicePresenter.to.restClientCuidaPetApiService(),
   ];
   await Service.to.initServices(sevisesInit);
   print("serviços iniciados");
