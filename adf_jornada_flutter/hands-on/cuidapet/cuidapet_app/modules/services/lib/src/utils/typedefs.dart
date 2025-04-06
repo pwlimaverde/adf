@@ -7,6 +7,9 @@ typedef FRCService = UsecaseBase<FirebaseRemoteConfig>;
 typedef EsService = UsecaseBaseCallData<ExternalStorage, ExternalStorage>;
 typedef EsServiceData = Datasource<ExternalStorage>;
 
+typedef LSService = UsecaseBaseCallData<LocalStorage, LocalStorage>;
+typedef LSServiceData = Datasource<LocalStorage>;
+
 typedef RCCService = UsecaseBaseCallData<RestClientCuidaPet, RestClientCuidaPet>;
 typedef RCCServiceData = Datasource<RestClientCuidaPet>;
 

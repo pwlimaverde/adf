@@ -6,6 +6,8 @@ import 'features/external_storage/datasource/firebase/firebase_storage_datasourc
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
 import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
 import 'features/firebase_remote_config/domain/usecase/firebase_remote_config_usecase.dart';
+import 'features/local_storage/datasource/hive/hive_storage_datasource.dart';
+import 'features/local_storage/domain/usecase/local_storage_usecase.dart';
 import 'features/rest_client_cuidapet_api/datasource/dio/config/dio_connection.dart';
 import 'features/rest_client_cuidapet_api/datasource/dio/dio_rest_client_datasource.dart';
 import 'features/rest_client_cuidapet_api/domain/usecase/rest_client_cuidapet_api_usecase.dart';
@@ -26,6 +28,8 @@ final class ServiceBindings {
         i.add<DioConnection>(DioConnection.new);
         i.add<RCCServiceData>(DioRestClientDatasource.new);
         i.add<RCCService>(RestClientCuidapetApiUsecase.new);
+        i.add<LSServiceData>(HiveStorageDatasource.new);
+        i.add<LSService>(LocalStorageUsecase.new);
         i.add<EsServiceData>(FirebaseStorageDatasource.new);
         i.add<EsService>(ExternalStorageUsecase.new);
         i.add<FAService>(FirebaseAuthUsecase.new);
@@ -38,6 +42,7 @@ final class ServiceBindings {
     autoInjector.addInstance<FeaturesServicePresenter>(
       FeaturesServicePresenter(
         esService: bindings.get<EsService>(),
+        lsService: bindings.get<LSService>(),
         authService: bindings.get<FAService>(),
         remoteConfigService: bindings.get<FRCService>(),
         restClientCuidaPetApiService: bindings.get<RCCService>(),

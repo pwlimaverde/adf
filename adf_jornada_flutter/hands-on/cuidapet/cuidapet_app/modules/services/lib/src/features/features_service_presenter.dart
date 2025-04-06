@@ -9,6 +9,7 @@ final class FeaturesServicePresenter {
   static FeaturesServicePresenter? _instance;
 
   late ExternalStorage externalStorage;
+  late LocalStorage localStorage;
   late RestClientCuidaPet restClientCuidaPet;
   late FirebaseAuth authInstance;
   late FirebaseRemoteConfig remoteConfigInstance;
@@ -16,6 +17,7 @@ final class FeaturesServicePresenter {
   late String? urlLogo;
 
   final EsService _esService;
+  final LSService _lsService;
   final FAService _authService;
   final FRCService _remoteConfigService;
   final RCCService _restClientCuidaPetApiService;
@@ -23,6 +25,7 @@ final class FeaturesServicePresenter {
 
   FeaturesServicePresenter._({
     required EsService esService,
+    required LSService lsService,
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
@@ -31,10 +34,12 @@ final class FeaturesServicePresenter {
         _remoteConfigService = remoteConfigService,
         _restClientCuidaPetApiService = restClientCuidaPetApiService,
         _alService = appLogger,
+        _lsService = lsService,
         _esService = esService;
 
   factory FeaturesServicePresenter({
     required EsService esService,
+    required LSService lsService,
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
@@ -42,6 +47,7 @@ final class FeaturesServicePresenter {
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
+      lsService: lsService,
       authService: authService,
       remoteConfigService: remoteConfigService,
       appLogger: appLogger,
@@ -62,6 +68,22 @@ final class FeaturesServicePresenter {
       case SuccessReturn<AppLogger>():
         appLogger = data.result;
       case ErrorReturn<AppLogger>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> localStorageService() async {
+    final data = await _lsService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do LocalStorage",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<LocalStorage>():
+        localStorage = data.result;
+      case ErrorReturn<LocalStorage>():
         throw data.result.message;
     }
   }
