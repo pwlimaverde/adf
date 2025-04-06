@@ -12,21 +12,25 @@ final class FeaturesServicePresenter {
   late RestClientCuidaPet restClientCuidaPet;
   late FirebaseAuth authInstance;
   late FirebaseRemoteConfig remoteConfigInstance;
+  late AppLogger appLogger;
   late String? urlLogo;
 
   final EsService _esService;
   final FAService _authService;
   final FRCService _remoteConfigService;
   final RCCService _restClientCuidaPetApiService;
+  final ALService _alService;
 
   FeaturesServicePresenter._({
     required EsService esService,
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
+    required ALService appLogger,
   })  : _authService = authService,
         _remoteConfigService = remoteConfigService,
         _restClientCuidaPetApiService = restClientCuidaPetApiService,
+        _alService = appLogger,
         _esService = esService;
 
   factory FeaturesServicePresenter({
@@ -34,14 +38,32 @@ final class FeaturesServicePresenter {
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
+    required ALService appLogger,
   }) {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
       authService: authService,
       remoteConfigService: remoteConfigService,
+      appLogger: appLogger,
       restClientCuidaPetApiService: restClientCuidaPetApiService
     );
     return _instance!;
+  }
+
+  Future<void> appLoggerService() async {
+    final data = await _alService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do appLogger",
+        ),
+      )
+    );
+    switch (data) {
+      case SuccessReturn<AppLogger>():
+        appLogger = data.result;
+      case ErrorReturn<AppLogger>():
+        throw data.result.message;
+    }
   }
 
   Future<void> externalStorageService() async {

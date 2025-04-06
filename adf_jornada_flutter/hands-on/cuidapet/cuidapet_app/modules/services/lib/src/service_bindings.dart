@@ -1,5 +1,7 @@
 import 'package:dependencies/dependencies.dart';
 
+import 'features/app_logger/datasource/logger/app_logger_datasource.dart';
+import 'features/app_logger/domain/usecase/app_logger_usecase.dart';
 import 'features/external_storage/datasource/firebase/firebase_storage_datasource.dart';
 import 'features/external_storage/domain/usecase/external_storage_usecase.dart';
 import 'features/firebase_auth/domain/usecase/firebase_auth_usecase.dart';
@@ -20,6 +22,7 @@ final class ServiceBindings {
         i.addInstance<FirebaseRemoteConfig>(FirebaseRemoteConfig.instance);
         i.addInstance<FirebaseStorage>(FirebaseStorage.instance);
         i.addInstance<FirebaseAuth>(FirebaseAuth.instance);
+        i.addInstance<Logger>(Logger());
         i.add<DioConnection>(DioConnection.new);
         i.add<RCCServiceData>(DioRestClientDatasource.new);
         i.add<RCCService>(RestClientCuidapetApiUsecase.new);
@@ -27,6 +30,8 @@ final class ServiceBindings {
         i.add<EsService>(ExternalStorageUsecase.new);
         i.add<FAService>(FirebaseAuthUsecase.new);
         i.add<FRCService>(FirebaseRemoteConfigUsecase.new);
+        i.add<ALServiceData>(LoggerAppLoggertDatasource.new);
+        i.add<ALService>(AppLoggerUsecase.new);
         i.commit();
       },
     );
@@ -36,6 +41,7 @@ final class ServiceBindings {
         authService: bindings.get<FAService>(),
         remoteConfigService: bindings.get<FRCService>(),
         restClientCuidaPetApiService: bindings.get<RCCService>(),
+        appLogger: bindings.get<ALService>(),
       ),
     );
     autoInjector.commit();
