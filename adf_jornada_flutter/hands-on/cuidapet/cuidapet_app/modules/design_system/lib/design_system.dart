@@ -1,4 +1,4 @@
-library design_system;
+library;
 
 export 'src/design_system_module.dart';
 export 'src/ui/ui_config.dart';

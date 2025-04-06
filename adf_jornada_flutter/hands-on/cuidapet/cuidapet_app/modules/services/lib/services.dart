@@ -1,4 +1,4 @@
-library services;
+library;
 
 export './src/start_services.dart';
 export './src/features/features_service_presenter.dart';

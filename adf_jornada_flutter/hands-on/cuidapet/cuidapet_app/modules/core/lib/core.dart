@@ -1,4 +1,4 @@
-library core;
+library;
 
 export 'src/utils/routes.dart';
 export 'src/utils/consts_core.dart';
