@@ -10,6 +10,7 @@ Future<void> startServices() async {
   List<Future<dynamic>> sevisesInit = [
     FeaturesServicePresenter.to.externalStorageService(),
     FeaturesServicePresenter.to.localStorageService(),
+    FeaturesServicePresenter.to.safeStorageService(),
     FeaturesServicePresenter.to.authService(),
     FeaturesServicePresenter.to.remoteConfigService(),
     FeaturesServicePresenter.to.restClientCuidaPetApiService(),

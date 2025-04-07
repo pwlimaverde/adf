@@ -10,6 +10,9 @@ typedef EsServiceData = Datasource<ExternalStorage>;
 typedef LSService = UsecaseBaseCallData<LocalStorage, LocalStorage>;
 typedef LSServiceData = Datasource<LocalStorage>;
 
+typedef SSService = UsecaseBaseCallData<SafeStorage, SafeStorage>;
+typedef SSServiceData = Datasource<SafeStorage>;
+
 typedef RCCService = UsecaseBaseCallData<RestClientCuidaPet, RestClientCuidaPet>;
 typedef RCCServiceData = Datasource<RestClientCuidaPet>;
 

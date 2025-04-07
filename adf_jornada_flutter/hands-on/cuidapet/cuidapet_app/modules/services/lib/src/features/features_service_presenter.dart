@@ -10,6 +10,7 @@ final class FeaturesServicePresenter {
 
   late ExternalStorage externalStorage;
   late LocalStorage localStorage;
+  late SafeStorage safeStorage;
   late RestClientCuidaPet restClientCuidaPet;
   late FirebaseAuth authInstance;
   late FirebaseRemoteConfig remoteConfigInstance;
@@ -18,6 +19,7 @@ final class FeaturesServicePresenter {
 
   final EsService _esService;
   final LSService _lsService;
+  final SSService _ssService;
   final FAService _authService;
   final FRCService _remoteConfigService;
   final RCCService _restClientCuidaPetApiService;
@@ -26,6 +28,7 @@ final class FeaturesServicePresenter {
   FeaturesServicePresenter._({
     required EsService esService,
     required LSService lsService,
+    required SSService ssService,
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
@@ -35,11 +38,13 @@ final class FeaturesServicePresenter {
         _restClientCuidaPetApiService = restClientCuidaPetApiService,
         _alService = appLogger,
         _lsService = lsService,
+        _ssService = ssService,
         _esService = esService;
 
   factory FeaturesServicePresenter({
     required EsService esService,
     required LSService lsService,
+    required SSService ssService,
     required FAService authService,
     required FRCService remoteConfigService,
     required RCCService restClientCuidaPetApiService,
@@ -48,6 +53,7 @@ final class FeaturesServicePresenter {
     _instance ??= FeaturesServicePresenter._(
       esService: esService,
       lsService: lsService,
+      ssService: ssService,
       authService: authService,
       remoteConfigService: remoteConfigService,
       appLogger: appLogger,
@@ -68,6 +74,22 @@ final class FeaturesServicePresenter {
       case SuccessReturn<AppLogger>():
         appLogger = data.result;
       case ErrorReturn<AppLogger>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> safeStorageService() async {
+    final data = await _ssService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do LocalStorage",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<SafeStorage>():
+        safeStorage = data.result;
+      case ErrorReturn<SafeStorage>():
         throw data.result.message;
     }
   }

@@ -19,6 +19,7 @@ export 'package:validatorless/validatorless.dart';
 export 'package:logger/logger.dart';
 export 'package:hive/hive.dart';
 export 'package:path_provider/path_provider.dart';
+export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 

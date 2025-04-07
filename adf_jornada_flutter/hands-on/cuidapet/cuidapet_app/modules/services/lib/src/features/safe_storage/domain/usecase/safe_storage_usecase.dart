@@ -1,11 +1,11 @@
 import 'package:dependencies/dependencies.dart';
 
-final class LocalStorageUsecase extends UsecaseBaseCallData<
-    LocalStorage, LocalStorage> {
-  LocalStorageUsecase(super.datasource);
+final class SafeStorageUsecase extends UsecaseBaseCallData<
+    SafeStorage, SafeStorage> {
+  SafeStorageUsecase(super.datasource);
 
   @override
-  Future<ReturnSuccessOrError<LocalStorage>> call(
+  Future<ReturnSuccessOrError<SafeStorage>> call(
       NoParams parameters) async {
     final resultDatacource = await resultDatasource(
       parameters: parameters,
@@ -13,10 +13,10 @@ final class LocalStorageUsecase extends UsecaseBaseCallData<
     );
 
     switch (resultDatacource) {
-      case SuccessReturn<LocalStorage>():
+      case SuccessReturn<SafeStorage>():
         return resultDatacource;
 
-      case ErrorReturn<LocalStorage>():
+      case ErrorReturn<SafeStorage>():
         return ErrorReturn(
           error: ErrorGeneric(
             message: "Erro ao iniciar o serviço LocalStorage",
