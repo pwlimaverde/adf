@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616553576303",
+    "project_id": "cuidapet-24cb1",
+    "storage_bucket": "cuidapet-24cb1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616553576303:android:7190ea14b6ad523f46da9a",
+        "android_client_info": {
+          "package_name": "br.com.pwlimaverde.client_android_cuidapet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTXf04YIYdKsBW1nR6_klvou8ty6gcaxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,174 @@
+import 'package:dependencies/dependencies.dart';
+
+import '../service_bindings.dart';
+import '../utils/erros.dart';
+import '../utils/parameters.dart';
+import '../utils/typedefs.dart';
+
+final class FeaturesServicePresenter {
+  static FeaturesServicePresenter? _instance;
+
+  late ExternalStorage externalStorage;
+  late LocalStorage localStorage;
+  late SafeStorage safeStorage;
+  late RestClientCuidaPet restClientCuidaPet;
+  late FirebaseAuth authInstance;
+  late FirebaseRemoteConfig remoteConfigInstance;
+  late AppLogger appLogger;
+  late String? urlLogo;
+
+  final EsService _esService;
+  final LSService _lsService;
+  final SSService _ssService;
+  final FAService _authService;
+  final FRCService _remoteConfigService;
+  final RCCService _restClientCuidaPetApiService;
+  final ALService _alService;
+
+  FeaturesServicePresenter._({
+    required EsService esService,
+    required LSService lsService,
+    required SSService ssService,
+    required FAService authService,
+    required FRCService remoteConfigService,
+    required RCCService restClientCuidaPetApiService,
+    required ALService appLogger,
+  })  : _authService = authService,
+        _remoteConfigService = remoteConfigService,
+        _restClientCuidaPetApiService = restClientCuidaPetApiService,
+        _alService = appLogger,
+        _lsService = lsService,
+        _ssService = ssService,
+        _esService = esService;
+
+  factory FeaturesServicePresenter({
+    required EsService esService,
+    required LSService lsService,
+    required SSService ssService,
+    required FAService authService,
+    required FRCService remoteConfigService,
+    required RCCService restClientCuidaPetApiService,
+    required ALService appLogger,
+  }) {
+    _instance ??= FeaturesServicePresenter._(
+      esService: esService,
+      lsService: lsService,
+      ssService: ssService,
+      authService: authService,
+      remoteConfigService: remoteConfigService,
+      appLogger: appLogger,
+      restClientCuidaPetApiService: restClientCuidaPetApiService
+    );
+    return _instance!;
+  }
+
+  Future<void> appLoggerService() async {
+    final data = await _alService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do appLogger",
+        ),
+      )
+    );
+    switch (data) {
+      case SuccessReturn<AppLogger>():
+        appLogger = data.result;
+      case ErrorReturn<AppLogger>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> safeStorageService() async {
+    final data = await _ssService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do LocalStorage",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<SafeStorage>():
+        safeStorage = data.result;
+      case ErrorReturn<SafeStorage>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> localStorageService() async {
+    final data = await _lsService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro ao carregar instancia do LocalStorage",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<LocalStorage>():
+        localStorage = data.result;
+      case ErrorReturn<LocalStorage>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> externalStorageService() async {
+    final data = await _esService(
+      NoParams(
+        error: ErrorGeneric(
+          message: "Erro  ao carregar instancia do firebase",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<ExternalStorage>():
+        externalStorage = data.result;
+        await _setLogo();
+      case ErrorReturn<ExternalStorage>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> restClientCuidaPetApiService() async {
+    final data = await _restClientCuidaPetApiService(
+      ParametrosRestClientResponse(
+        error: RestClientResponseError(
+          message: "Erro  ao carregar instancia do RestClientCuidaPet",
+        ),
+      ),
+    );
+    switch (data) {
+      case SuccessReturn<RestClientCuidaPet>():
+        restClientCuidaPet = data.result;
+      case ErrorReturn<RestClientCuidaPet>():
+        throw data.result.message;
+    }
+  }
+
+  Future<void> _setLogo() async {
+    urlLogo = await externalStorage.readUrlMidia('institucional/logo.png');
+  }
+
+  Future<Unit> authService() async {
+    final data = await _authService(NoParams());
+    switch (data) {
+      case SuccessReturn<FirebaseAuth>():
+        authInstance = data.result;
+        return unit;
+      case ErrorReturn<FirebaseAuth>():
+        throw data.result.message;
+    }
+  }
+
+  Future<Unit> remoteConfigService() async {
+    final data = await _remoteConfigService(NoParams());
+    switch (data) {
+      case SuccessReturn<FirebaseRemoteConfig>():
+        remoteConfigInstance = data.result;
+        return unit;
+      case ErrorReturn<FirebaseRemoteConfig>():
+        throw data.result.message;
+    }
+  }
+
+  static FeaturesServicePresenter get to =>
+      autoInjector.get<FeaturesServicePresenter>();
+}

@@ -5,24 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "app_cliente_adf",
-            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "app_cliente_adf (profile mode)",
-            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
+            "name": "client_android_cuidapet - DEV",
+            "cwd": "adf_jornada_flutter\\hands-on\\cuidapet\\cuidapet_app\\apps\\client_android_cuidapet",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "app_cliente_adf (release mode)",
-            "cwd": "adf_jornada_dart\\adf_estudos\\app_cliente_adf",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
+            "args": [
+                "--dart-define-from-file=env/dev.json"
+            ]
         },
         {
             "name": "todo_list_provider",
@@ -30,45 +19,6 @@
             "request": "launch",
             "type": "dart"
         },
-        {
-            "name": "todo_list_provider (profile mode)",
-            "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "todo_list_provider (release mode)",
-            "cwd": "adf_jornada_flutter\\hands-on\\todo_list_provider",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "jornada_dart",
-            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "jornada_dart (profile mode)",
-            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "jornada_dart (release mode)",
-            "cwd": "adf_jornada_dart\\adf_estudos\\modulos\\jornada_dart",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "app_cliente_adf_cli",
-            "cwd": "adf_jornada_dart\\adf_lab\\adf_cli\\app_cliente_adf_cli",
-            "request": "launch",
-            "type": "dart"
-        }
+
     ]
 }

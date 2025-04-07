@@ -1,0 +1,2 @@
+C:/PROJETOS/FLUTTER/APPS/adf/adf_jornada_flutter/hands-on/cuidapet/cuidapet_app/apps/client_android_cuidapet/android/app/.cxx/Debug/4d2e193p/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/PROJETOS/FLUTTER/APPS/adf/adf_jornada_flutter/hands-on/cuidapet/cuidapet_app/apps/client_android_cuidapet/android/app/.cxx/Debug/4d2e193p/armeabi-v7a/CMakeFiles/rebuild_cache.dir

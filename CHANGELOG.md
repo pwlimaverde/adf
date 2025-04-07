@@ -1,3 +1,8 @@
+## [0.3.0] - 29/11/2024.
+1 - Criação do projeto cuidapet.
+2 - Configuração do backend.
+3 - Criação do app cliente android.
+
 ## [0.2.0] - 29/11/2024.
 1 - Conclusão do app todo_list_provider
 

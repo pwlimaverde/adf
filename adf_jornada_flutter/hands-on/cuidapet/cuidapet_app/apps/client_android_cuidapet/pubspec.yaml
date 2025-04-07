@@ -1,0 +1,32 @@
+name: client_android_cuidapet
+description: "A new Flutter project."
+publish_to: 'none' 
+version: 0.3.0
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  #Dependencias internas
+  dependencies:
+ 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  mobx_codegen: ^2.7.0
+  build_runner: ^2.4.15
+  
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+  fonts:
+    - family: CuidapetIcons
+      fonts:
+        - asset: assets/fonts/CuidapetIcons.ttf

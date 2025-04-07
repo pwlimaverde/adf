@@ -1,0 +1,15 @@
+name: cuidapet_app
+publish_to: 'none'
+
+environment:
+  sdk: ^3.7.2
+
+workspace:
+  - apps/client_android_cuidapet
+  - modules/auth
+  - modules/core
+  - modules/dependencies
+  - modules/design_system
+  - modules/home
+  - modules/initial_loading
+  - modules/services
